@@ -28,20 +28,19 @@ Out of scope for the prototype: water level, live talk, video history, final enc
 
 ## Architecture
 
-- **Main board: STM32** (exact part to choose: e.g. STM32N6 with neural accelerator, or STM32H7 + camera, or STM32 + companion module for vision).
-- **Actuation:** motor + auger for portions, load cell (HX711) to weigh grams, speaker for the call.
-- **Connectivity:** Wi-Fi/BLE module to reach the app.
-- **AI:** dog recognition + **generative AI features** (to brainstorm, see below).
+Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 
-## Generative AI: ideas to brainstorm
+- **Main board:** NUCLEO-F439ZI (STM32F439ZI): schedule, motor, scale, sensors, speaker, SD card, button.
+- **Camera + Wi-Fi:** ESP32-CAM.
+- **AI server (Python):** dog recognition + generative AI.
+- **Data:** Firebase. **App:** web app (PWA).
+- **Sensors:** bowl load cell, food tank level, ultrasonic presence sensor.
 
-Open question: what should Kibbly *generate*? Candidate directions to discuss as a team:
+## Generative AI
 
-- Natural-language meal reports ("Mochi ate 30% less this week, here's what that may mean")
-- Personalized feeding plans generated from each dog's profile and history
-- Voice: generated calls/messages in the owner's voice or style
-- Chat with Kibbly about your dog ("Did Biscuit eat today?")
-- Synthetic dog images to augment the recognition dataset
+- **Must have:** feeding plan generator, smart meal reports.
+- **Stretch goals:** Ask Kibbly (chat), synthetic training photos.
+- **Version 2:** explained alerts, dog's daily diary.
 
 ## Repository layout
 
