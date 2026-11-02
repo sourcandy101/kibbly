@@ -1,0 +1,39 @@
+# STM32CubeIDE / build output
+firmware/**/Debug/
+firmware/**/Release/
+firmware/**/.settings/
+*.o
+*.d
+*.elf
+*.map
+*.list
+*.hex
+*.bin
+
+# Python / AI
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+ai/data/raw/
+ai/models/*.pt
+ai/models/*.onnx
+ai/models/*.tflite
+.env
+
+# App
+node_modules/
+dist/
+build/
+
+# KiCad backups
+hardware/**/*-backups/
+hardware/**/*.kicad_prl
+hardware/**/fp-info-cache
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
