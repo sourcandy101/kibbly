@@ -14,8 +14,10 @@ from kibbly_ai.perception.gallery import Gallery
 
 @dataclass(frozen=True)
 class RecognitionSettings:
-    accept_score: float = 0.60      # placeholder: set from the evaluation (step 4.6)
-    min_margin: float = 0.03        # best dog must beat the second best by this much, else unsure
+    # Chosen in step 4.6 (evaluation/recognition/results_recognition.md): DINOv2 small class token,
+    # 3 enrollment photos, 2 photos per check, feeder camera simulation, at most 2% strangers.
+    accept_score: float = 0.61
+    min_margin: float = 0.08        # best dog must beat the second best by this much, else unsure
     min_dog_confidence: float = 0.35
     crop_padding: float = 0.10      # grow the dog box by 10% on each side
 
@@ -47,9 +49,25 @@ class Recognizer:
         vector = self.embedder.embed([crop_box(image, dog.box, self.settings.crop_padding)])[0]
         return self.classify(vector, dog_ids, detection=dog)
 
+    def recognize_frames(self, images: list, dog_ids: list = None) -> RecognitionResult:
+        """Several photos of the same visit (the feeder sends 2): scores are averaged per dog.
+        Frames without a dog are skipped; if none has a dog the result is not_a_dog."""
+        found = [(image, self.find_dog(image)) for image in images]
+        found = [(image, dog) for image, dog in found if dog is not None]
+        if not found:
+            return RecognitionResult("not_a_dog", reason=f"no dog detected in {len(images)} photo(s)")
+        vectors = self.embedder.embed([crop_box(im, dog.box, self.settings.crop_padding) for im, dog in found])
+        per_frame = [{m.dog_id: m.score for m in self.gallery.match(v, dog_ids)} for v in vectors]
+        averaged = {d: sum(f[d] for f in per_frame) / len(per_frame) for d in per_frame[0]}
+        return self._label(averaged, detection=max((dog for _, dog in found), key=lambda d: d.area))
+
     def classify(self, vector, dog_ids: list = None, detection=None) -> RecognitionResult:
         """Label an already computed vector. Used by recognize() and by the evaluation."""
-        matches = self.gallery.match(vector, dog_ids)
+        return self._label({m.dog_id: m.score for m in self.gallery.match(vector, dog_ids)}, detection)
+
+    def _label(self, scores: dict, detection=None) -> RecognitionResult:
+        from kibbly_ai.perception.base import Match
+        matches = sorted((Match(d, s) for d, s in scores.items()), key=lambda m: m.score, reverse=True)
         if not matches:
             return RecognitionResult("unknown_dog", detection=detection, reason="no dog enrolled")
         best = matches[0]

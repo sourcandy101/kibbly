@@ -88,6 +88,22 @@ def test_close_call_between_two_dogs_is_unsure():
     assert result.classification == "unknown_dog" and "unsure" in result.reason
 
 
+def test_two_frames_are_averaged(recognizer):
+    result = recognizer.recognize_frames([photo(green=12), photo(green=8)])
+    assert result.classification == "known_dog" and result.dog_id == "dog_biscuit"
+
+
+def test_frames_without_a_dog_are_skipped(recognizer):
+    result = recognizer.recognize_frames([photo(red=0), photo(green=200)])
+    assert result.dog_id == "dog_mochi"
+    assert recognizer.recognize_frames([photo(red=0), photo(red=0, blue=255)]).classification == "not_a_dog"
+
+
+def test_default_settings_come_from_the_evaluation():
+    settings = RecognitionSettings()
+    assert (settings.accept_score, settings.min_margin) == (0.61, 0.08)
+
+
 def test_gallery_must_match_embedder():
     with pytest.raises(ValueError):
         Recognizer(FakeDetector(), FakeEmbedder(), Gallery("clip_b32"))

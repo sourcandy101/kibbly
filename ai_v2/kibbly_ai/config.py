@@ -15,6 +15,7 @@ class Settings:
     model: str = "gemma3:4b"
     ollama_url: str = "http://localhost:11434/api/chat"
     feeder_key: str = "demo_feeder_key"    # shared secret the ESP32-CAM sends in X-Kibbly-Key
+    yolo_weights: str = "D:/ai_cache/ultralytics/yolo11n.pt"
 
 
 def load_settings() -> Settings:
@@ -26,4 +27,5 @@ def load_settings() -> Settings:
         model=os.environ.get("KIBBLY_MODEL", defaults.model),
         ollama_url=os.environ.get("KIBBLY_OLLAMA_URL", defaults.ollama_url),
         feeder_key=os.environ.get("KIBBLY_FEEDER_KEY", defaults.feeder_key),
+        yolo_weights=os.environ.get("KIBBLY_YOLO_WEIGHTS", defaults.yolo_weights),
     )
