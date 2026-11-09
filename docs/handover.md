@@ -32,7 +32,7 @@ It is the **BEAR** project (Business, Embedded, AI, Research), used across three
 | Moetaz El Ouaer | Web App and Connectivity Lead | `MoetazEO` | write (invited 9 Nov, pending acceptance) |
 
 **Repository (private):** https://github.com/sourcandy101/kibbly  
-**Local clone:** `C:\Users\zayne\kibbly`  
+**Local clone:** `D:\kibbly` (moved from C: on 9 November 2026 because C: was full; the old copy in `C:\Users\zayne\kibbly` is no longer used)  
 **Access you have:** GitHub CLI is installed at `C:\Program Files\GitHub CLI\gh.exe` and logged in as `sourcandy101` (HTTPS, scopes repo, read:org, gist). Git identity: zayneb sassi, zeineb.sassi@medtech.tn. **You are allowed to commit and push to `main`, create branches, open pull requests and invite collaborators** (invite by GitHub username with write permission: `gh api -X PUT repos/sourcandy101/kibbly/collaborators/<username> -f permission=push`). All four members are invited.
 
 Repository layout:
@@ -49,8 +49,10 @@ Repository layout:
 
 1. Windows 10, VS Code with Claude Code. Bash (Git Bash) and PowerShell available.
 2. Python 3.11.9. Standard library preferred for AI code so far (no pip installs unless agreed).
-3. **Ollama** running locally (`http://localhost:11434`). Models: `gemma3:1b` (default, 815 MB), `qwen3.5:2b`, `qwen3.5:0.8b`, plus two custom gemma3 variants. CPU only, about 5 to 10 seconds per call, about 25 seconds for the first call while loading.
+3. **Ollama** running locally (`http://localhost:11434`), models stored in `D:\ollama\models` (user variable `OLLAMA_MODELS`). Models: `gemma3:1b` (default, 815 MB), `qwen3.5:2b`, `qwen3.5:0.8b`, plus two custom gemma3 variants. CPU only, about 5 to 10 seconds per call, about 25 seconds for the first call while loading.
 4. Microsoft Word, Excel and Edge installed.
+5. Disk: C: is almost full. Keep all project work, virtual environments and model caches on D:. User variables already point caches to D: (`HF_HOME`, `PIP_CACHE_DIR` and `TORCH_HOME` under `D:\ai_cache`).
+6. Hardware limits: 8 GB RAM, Intel i5 8265U, integrated GPU only. Local models above about 4B parameters are not practical.
 
 ## 5. Prototype specification (decided by the team)
 
@@ -135,7 +137,7 @@ Pure Python standard library, local model through Ollama.
 
 Known weaknesses of v3 notes: the model says "approximately" for exact amounts and sometimes guesses the dog's sex. Candidates for a new evaluation check. The evaluation also only tests vet_advice where true is expected; cases expecting false would catch an "always true" model.
 
-Demo commands (from `C:\Users\zayne\kibbly\ai`): `python plan_generator.py` (one plan, about 10 s); `python evaluate.py --runs 1` (full table, about 1 minute; it rewrites the results files, so restore them with `git checkout -- ai/results*` if they should not change).
+Demo commands (from `D:\kibbly\ai`): `python plan_generator.py` (one plan, about 10 s); `python evaluate.py --runs 1` (full table, about 1 minute; it rewrites the results files, so restore them with `git checkout -- ai/results*` if they should not change).
 
 ## 7. Open decisions and Claude's recommendations (not yet adopted)
 
