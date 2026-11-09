@@ -1,0 +1,17 @@
+{
+  "home_id": "home_amira",
+  "owner_id": "user_amira",
+  "timezone": "Africa/Tunis",
+  "kibble": {
+    "brand": "Example",
+    "kcal_per_kg": 370
+  },
+  "feeder": {
+    "feeder_id": "feeder_001",
+    "wifi_status": "online",
+    "last_seen_at": "2026-11-09T18:30:00Z",
+    "tank_capacity_grams": 1000,
+    "tank_grams_estimate": 420
+  },
+  "created_at": "2026-11-02T10:00:00Z"
+}

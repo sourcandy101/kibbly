@@ -1,0 +1,27 @@
+{
+  "dog_id": "dog_mochi",
+  "home_id": "home_amira",
+  "meals": [
+    {
+      "slot": 1,
+      "label": "Breakfast",
+      "local_time": "08:00",
+      "grams": 45
+    },
+    {
+      "slot": 2,
+      "label": "Lunch",
+      "local_time": "13:00",
+      "grams": 45
+    },
+    {
+      "slot": 3,
+      "label": "Dinner",
+      "local_time": "18:00",
+      "grams": 45
+    }
+  ],
+  "daily_total_grams": 135,
+  "plan_source": "owner_edited",
+  "confirmed_at": "2026-11-03T09:40:00Z"
+}

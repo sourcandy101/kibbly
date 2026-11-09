@@ -1,0 +1,20 @@
+{
+  "alert_id": "alert_0201",
+  "home_id": "home_amira",
+  "dog_id": "dog_mochi",
+  "meal_id": null,
+  "type": "eating_change",
+  "severity": "warning",
+  "source": "ai_server",
+  "created_at": "2026-11-09T22:00:05Z",
+  "facts": {
+    "grams_eaten": 95,
+    "baseline_grams_eaten": 132,
+    "change_vs_baseline_percent": -28,
+    "days_in_a_row_below_baseline": 2
+  },
+  "message": "Mochi ate 95 g today, 28% less than her usual 132 g, and has been below her usual amount for 2 days. If this continues, please check with your vet.",
+  "message_source": "llm",
+  "photo_url": null,
+  "read_at": null
+}

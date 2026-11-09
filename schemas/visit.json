@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/visit.json",
+  "title": "Visit",
+  "description": "One animal or person in front of the feeder, from presence detected to presence gone. Inside a meal it is an item of meal.visits. Outside meal times it is its own document: visits/{visit_id} with home_id. Written by the feeder.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["visit_id", "started_at", "ended_at", "classification", "dog_id", "confidence",
+               "outcome", "grams_dispensed", "grams_eaten"],
+  "properties": {
+    "visit_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id", "description": "Required when the visit is a standalone document."},
+    "started_at": {"$ref": "common.json#/$defs/timestamp"},
+    "ended_at": {"$ref": "common.json#/$defs/timestamp"},
+    "classification": {
+      "enum": ["known_dog", "unknown_dog", "not_a_dog", "not_checked"],
+      "description": "Answer of the recognition server. not_checked when the server was unreachable."
+    },
+    "dog_id": {
+      "anyOf": [{"$ref": "common.json#/$defs/id"}, {"type": "null"}],
+      "description": "Set only when classification is known_dog."
+    },
+    "confidence": {
+      "anyOf": [{"$ref": "common.json#/$defs/confidence"}, {"type": "null"}],
+      "description": "Confidence of the best match. null when not_checked."
+    },
+    "outcome": {
+      "enum": ["served", "blocked_wrong_dog", "blocked_not_meal_time", "unknown_dog_portion",
+               "served_offline", "nothing_served"],
+      "description": "What the feeder did. blocked_wrong_dog: another known dog during this meal. served_offline: owner order fallback without recognition."
+    },
+    "grams_dispensed": {"$ref": "common.json#/$defs/grams"},
+    "grams_eaten": {
+      "$ref": "common.json#/$defs/grams",
+      "description": "Drop of the bowl weight during this visit, attributed to whoever was in front of the camera."
+    },
+    "photo_url": {
+      "anyOf": [{"$ref": "common.json#/$defs/url"}, {"type": "null"}],
+      "description": "Kept for unknown dogs so the owner can see who came."
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"classification": {"const": "known_dog"}}},
+      "then": {"properties": {"dog_id": {"$ref": "common.json#/$defs/id"}}},
+      "else": {"properties": {"dog_id": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"classification": {"const": "not_checked"}}},
+      "then": {"properties": {"confidence": {"type": "null"}}}
+    }
+  ]
+}

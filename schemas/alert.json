@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/alert.json",
+  "title": "Alert",
+  "description": "A notification for the owner. Firestore path: alerts/{alert_id}. Device alerts are written by the feeder; behavior alerts by the AI server. The app shows them and sends a push notification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["alert_id", "home_id", "dog_id", "meal_id", "type", "severity", "source",
+               "created_at", "facts", "message", "message_source", "photo_url", "read_at"],
+  "properties": {
+    "alert_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "dog_id": {"anyOf": [{"$ref": "common.json#/$defs/id"}, {"type": "null"}]},
+    "meal_id": {"anyOf": [{"$ref": "common.json#/$defs/id"}, {"type": "null"}]},
+    "type": {
+      "enum": ["dog_no_show", "unknown_dog", "wrong_dog", "jam", "low_tank", "empty_tank",
+               "feeder_offline", "power_cut", "eating_change", "weight_change"]
+    },
+    "severity": {"enum": ["info", "warning", "urgent"]},
+    "source": {"enum": ["feeder", "ai_server"]},
+    "created_at": {"$ref": "common.json#/$defs/timestamp"},
+    "facts": {"type": "object", "description": "The measured facts behind the alert. The message must not contain anything that is not here."},
+    "message": {"type": "string", "minLength": 1, "maxLength": 500},
+    "message_source": {"enum": ["template", "llm"], "description": "llm messages passed the safety checks; otherwise the template is used."},
+    "photo_url": {"anyOf": [{"$ref": "common.json#/$defs/url"}, {"type": "null"}]},
+    "read_at": {"anyOf": [{"$ref": "common.json#/$defs/timestamp"}, {"type": "null"}]}
+  }
+}

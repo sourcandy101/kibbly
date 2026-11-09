@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/home.json",
+  "title": "Home",
+  "description": "One owner account with one feeder. Firestore path: homes/{home_id}. Written by the app; feeder fields updated by the ESP32-CAM.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["home_id", "owner_id", "timezone", "kibble", "feeder", "created_at"],
+  "properties": {
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "owner_id": {"$ref": "common.json#/$defs/id", "description": "Firebase Authentication user id."},
+    "timezone": {"type": "string", "minLength": 3, "description": "IANA timezone name, for example Africa/Tunis."},
+    "kibble": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kcal_per_kg"],
+      "properties": {
+        "brand": {"type": ["string", "null"], "maxLength": 80},
+        "kcal_per_kg": {
+          "type": ["integer", "null"],
+          "minimum": 2500,
+          "maximum": 5000,
+          "description": "Energy density printed on the food bag. null when unknown; the nutrition engine then uses a default and says so."
+        }
+      }
+    },
+    "feeder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["feeder_id", "wifi_status", "last_seen_at", "tank_capacity_grams", "tank_grams_estimate"],
+      "properties": {
+        "feeder_id": {"$ref": "common.json#/$defs/id"},
+        "wifi_status": {"enum": ["online", "offline", "pairing"]},
+        "last_seen_at": {"anyOf": [{"$ref": "common.json#/$defs/timestamp"}, {"type": "null"}]},
+        "tank_capacity_grams": {"$ref": "common.json#/$defs/grams"},
+        "tank_grams_estimate": {
+          "anyOf": [{"$ref": "common.json#/$defs/grams"}, {"type": "null"}],
+          "description": "Food left in the tank, from the level sensor and the grams dispensed. null when unknown."
+        }
+      }
+    },
+    "created_at": {"$ref": "common.json#/$defs/timestamp"}
+  }
+}

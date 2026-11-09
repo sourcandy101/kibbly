@@ -16,11 +16,21 @@ A rebuild of the Kibbly AI from scratch, on a stronger foundation. The first ver
 | Step | Topic | Status |
 |---|---|---|
 | 1 | Review the AI feature ideas and agree the scope (see `scope.md`) | done |
-| 2 | Shared data model (dog profile, meal event) agreed with the team | next |
-| 3 | Architecture of the AI server | to do |
+| 2 | Shared data model (see `../schemas/`) | done, waiting for team review |
+| 3 | Architecture of the AI server | next |
 | 4 | Dog recognition | to do |
 | 5 | Nutrition engine and feeding plan | to do |
 | 6 | Meal insights (reports, alerts) | to do |
 | 7 | Server API for the ESP32-CAM and the app | to do |
 
 This table is updated at the end of each step.
+
+## Setup
+
+Everything lives on the D: drive (C: is full).
+
+```
+cd D:\kibbly\ai_v2
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```

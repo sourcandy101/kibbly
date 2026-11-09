@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/meal.json",
+  "title": "Meal",
+  "description": "One scheduled meal slot of one dog, with every visit during that slot. Firestore path: meals/{meal_id}. Written by the feeder through the ESP32-CAM; read by the AI server and the app.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meal_id", "home_id", "dog_id", "slot", "scheduled_at", "planned_grams", "status",
+               "recognition_mode", "call_attempts", "first_arrival_at", "ended_at",
+               "bowl_grams_at_start", "grams_dispensed", "grams_eaten", "grams_left_in_bowl",
+               "visits", "logged_offline"],
+  "properties": {
+    "meal_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "dog_id": {"$ref": "common.json#/$defs/id", "description": "The dog this meal slot belongs to."},
+    "slot": {"type": "integer", "minimum": 1, "maximum": 4},
+    "scheduled_at": {"$ref": "common.json#/$defs/timestamp"},
+    "planned_grams": {"$ref": "common.json#/$defs/grams"},
+    "status": {
+      "enum": ["completed", "partial", "missed_no_show", "served_offline",
+               "not_served_empty_tank", "not_served_jam", "not_served_power_cut"],
+      "description": "completed: full portion served. partial: the dog left before the full portion."
+    },
+    "recognition_mode": {"enum": ["camera", "offline_fallback"]},
+    "call_attempts": {"type": "integer", "minimum": 0, "maximum": 5},
+    "first_arrival_at": {
+      "anyOf": [{"$ref": "common.json#/$defs/timestamp"}, {"type": "null"}],
+      "description": "When this meal's dog first arrived. null if it never came."
+    },
+    "ended_at": {"anyOf": [{"$ref": "common.json#/$defs/timestamp"}, {"type": "null"}]},
+    "bowl_grams_at_start": {
+      "$ref": "common.json#/$defs/grams",
+      "description": "Food already in the bowl when the slot began (leftovers from an earlier meal)."
+    },
+    "grams_dispensed": {"$ref": "common.json#/$defs/grams", "description": "Total dispensed during this slot, all visits."},
+    "grams_eaten": {"$ref": "common.json#/$defs/grams", "description": "Eaten by this meal's dog only (sum of its visits)."},
+    "grams_left_in_bowl": {"$ref": "common.json#/$defs/grams", "description": "Bowl weight when the slot ended."},
+    "visits": {"type": "array", "items": {"$ref": "visit.json"}, "maxItems": 50},
+    "logged_offline": {"type": "boolean", "description": "true when the meal was saved on the SD card and synced later."}
+  }
+}

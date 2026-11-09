@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/weight_entry.json",
+  "title": "Weight entry",
+  "description": "One weigh in entered by the owner in the app. Firestore path: weights/{weight_id}. The app also copies the latest value into the dog profile.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["weight_id", "home_id", "dog_id", "measured_on", "weight_kg", "entered_at"],
+  "properties": {
+    "weight_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "dog_id": {"$ref": "common.json#/$defs/id"},
+    "measured_on": {"$ref": "common.json#/$defs/local_date"},
+    "weight_kg": {"type": "number", "exclusiveMinimum": 0, "maximum": 100},
+    "entered_at": {"$ref": "common.json#/$defs/timestamp"}
+  }
+}

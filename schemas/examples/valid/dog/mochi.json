@@ -1,0 +1,29 @@
+{
+  "dog_id": "dog_mochi",
+  "home_id": "home_amira",
+  "name": "Mochi",
+  "breed": "French Bulldog",
+  "sex": "female",
+  "neutered": true,
+  "birth_month": "2023-06",
+  "activity": "low",
+  "body_condition": "overweight",
+  "current_weight_kg": 9.4,
+  "weight_measured_on": "2026-11-08",
+  "notes": "Greedy, tries to eat Biscuit's food.",
+  "call_order": 2,
+  "media": {
+    "photo_urls": [
+      "gs://kibbly-demo/dogs/dog_mochi/photo_1.jpg"
+    ],
+    "video_url": "gs://kibbly-demo/dogs/dog_mochi/enroll.mp4",
+    "voice_clip_url": null
+  },
+  "recognition": {
+    "status": "ready",
+    "reference_images": 19,
+    "updated_at": "2026-11-03T09:20:00Z"
+  },
+  "created_at": "2026-11-02T10:10:00Z",
+  "updated_at": "2026-11-08T17:00:00Z"
+}

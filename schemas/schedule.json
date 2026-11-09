@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/schedule.json",
+  "title": "Schedule",
+  "description": "The confirmed feeding plan of one dog. Firestore path: schedules/{dog_id}. Suggested by the AI server, confirmed or edited by the owner in the app, read by the feeder.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dog_id", "home_id", "meals", "daily_total_grams", "plan_source", "confirmed_at"],
+  "properties": {
+    "dog_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "meals": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slot", "label", "local_time", "grams"],
+        "properties": {
+          "slot": {"type": "integer", "minimum": 1, "maximum": 4},
+          "label": {"type": "string", "minLength": 1, "maxLength": 20},
+          "local_time": {"$ref": "common.json#/$defs/local_time"},
+          "grams": {"$ref": "common.json#/$defs/grams", "multipleOf": 5}
+        }
+      }
+    },
+    "daily_total_grams": {"$ref": "common.json#/$defs/grams", "description": "Sum of the meal grams."},
+    "plan_source": {"enum": ["ai_suggested", "owner_edited"]},
+    "confirmed_at": {"$ref": "common.json#/$defs/timestamp"}
+  }
+}

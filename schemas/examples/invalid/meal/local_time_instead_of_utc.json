@@ -1,0 +1,19 @@
+{
+  "meal_id": "meal_0199",
+  "home_id": "home_amira",
+  "dog_id": "dog_biscuit",
+  "slot": 1,
+  "scheduled_at": "2026-11-09T08:00:00+01:00",
+  "planned_grams": 185,
+  "status": "completed",
+  "recognition_mode": "camera",
+  "call_attempts": 1,
+  "first_arrival_at": null,
+  "ended_at": null,
+  "bowl_grams_at_start": 0,
+  "grams_dispensed": 185,
+  "grams_eaten": 185,
+  "grams_left_in_bowl": 0,
+  "visits": [],
+  "logged_offline": false
+}

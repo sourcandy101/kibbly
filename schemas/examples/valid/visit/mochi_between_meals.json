@@ -1,0 +1,13 @@
+{
+  "visit_id": "visit_0107",
+  "home_id": "home_amira",
+  "started_at": "2026-11-09T10:22:00Z",
+  "ended_at": "2026-11-09T10:22:50Z",
+  "classification": "known_dog",
+  "dog_id": "dog_mochi",
+  "confidence": 0.93,
+  "outcome": "blocked_not_meal_time",
+  "grams_dispensed": 0,
+  "grams_eaten": 0,
+  "photo_url": null
+}

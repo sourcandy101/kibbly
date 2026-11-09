@@ -1,0 +1,31 @@
+{
+  "summary_id": "dog_mochi_2026-11-09",
+  "home_id": "home_amira",
+  "dog_id": "dog_mochi",
+  "date": "2026-11-09",
+  "computed_at": "2026-11-09T22:00:00Z",
+  "meals_planned": 3,
+  "meals_completed": 3,
+  "meals_missed": 0,
+  "grams_planned": 135,
+  "grams_dispensed": 135,
+  "grams_eaten": 95,
+  "grams_left_in_bowl": 40,
+  "eating_minutes": 7.5,
+  "blocked_attempts": 1,
+  "visits_outside_meals": 6,
+  "baseline_days": 7,
+  "baseline_grams_eaten": 132,
+  "change_vs_baseline_percent": -28,
+  "flags": [
+    {
+      "code": "eating_drop",
+      "detail": "Ate 28% less than the 7 day average, 2 days in a row below it."
+    },
+    {
+      "code": "repeated_leftovers",
+      "detail": "Left food at 3 of 3 meals."
+    }
+  ],
+  "needs_vet": true
+}

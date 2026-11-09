@@ -1,0 +1,15 @@
+{
+  "alert_id": "alert_0299",
+  "home_id": "home_amira",
+  "dog_id": null,
+  "meal_id": null,
+  "type": "sick_dog",
+  "severity": "urgent",
+  "source": "ai_server",
+  "created_at": "2026-11-09T22:00:05Z",
+  "facts": {},
+  "message": "Your dog may be sick.",
+  "message_source": "llm",
+  "photo_url": null,
+  "read_at": null
+}

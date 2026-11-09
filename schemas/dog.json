@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/dog.json",
+  "title": "Dog profile",
+  "description": "One dog in a home. Firestore path: dogs/{dog_id}. Written by the app; the recognition block is written by the AI server.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dog_id", "home_id", "name", "breed", "sex", "neutered", "birth_month", "activity",
+               "body_condition", "current_weight_kg", "weight_measured_on", "call_order", "media",
+               "recognition", "created_at", "updated_at"],
+  "properties": {
+    "dog_id": {"$ref": "common.json#/$defs/id"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "name": {"type": "string", "minLength": 1, "maxLength": 40},
+    "breed": {"type": "string", "minLength": 1, "maxLength": 60, "description": "Free text; Mixed is allowed."},
+    "sex": {"enum": ["male", "female"]},
+    "neutered": {"type": "boolean"},
+    "birth_month": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "description": "Year and month of birth, estimated if unknown. Age is always computed from it, never stored."
+    },
+    "activity": {"enum": ["low", "medium", "high"]},
+    "body_condition": {
+      "enum": ["thin", "ideal", "overweight"],
+      "description": "Chosen by the owner from pictures in the app."
+    },
+    "current_weight_kg": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 100,
+      "description": "Copy of the latest weight log entry, kept here for quick reads."
+    },
+    "weight_measured_on": {"$ref": "common.json#/$defs/local_date"},
+    "notes": {"type": ["string", "null"], "maxLength": 500, "description": "Free text from the owner. Never shown to the model without the safety rules."},
+    "call_order": {"type": "integer", "minimum": 1, "maximum": 8, "description": "Position in the calling order at each meal time."},
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["photo_urls", "video_url", "voice_clip_url"],
+      "properties": {
+        "photo_urls": {"type": "array", "items": {"$ref": "common.json#/$defs/url"}, "maxItems": 20},
+        "video_url": {"anyOf": [{"$ref": "common.json#/$defs/url"}, {"type": "null"}]},
+        "voice_clip_url": {"anyOf": [{"$ref": "common.json#/$defs/url"}, {"type": "null"}]}
+      }
+    },
+    "recognition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reference_images", "updated_at"],
+      "properties": {
+        "status": {"enum": ["not_enrolled", "enrolling", "ready", "failed"]},
+        "reference_images": {"type": "integer", "minimum": 0, "description": "Number of face images the AI server kept for this dog."},
+        "updated_at": {"anyOf": [{"$ref": "common.json#/$defs/timestamp"}, {"type": "null"}]}
+      }
+    },
+    "created_at": {"$ref": "common.json#/$defs/timestamp"},
+    "updated_at": {"$ref": "common.json#/$defs/timestamp"}
+  }
+}

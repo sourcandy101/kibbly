@@ -1,0 +1,30 @@
+{
+  "dog_id": "dog_biscuit",
+  "home_id": "home_amira",
+  "name": "Biscuit",
+  "breed": "Labrador Retriever",
+  "sex": "male",
+  "neutered": true,
+  "birth_month": "2024-03",
+  "activity": "medium",
+  "body_condition": "ideal",
+  "current_weight_kg": 28,
+  "weight_measured_on": "2026-11-01",
+  "notes": "Shy, eats slowly.",
+  "call_order": 1,
+  "media": {
+    "photo_urls": [
+      "gs://kibbly-demo/dogs/dog_biscuit/photo_1.jpg",
+      "gs://kibbly-demo/dogs/dog_biscuit/photo_2.jpg"
+    ],
+    "video_url": "gs://kibbly-demo/dogs/dog_biscuit/enroll.mp4",
+    "voice_clip_url": "gs://kibbly-demo/dogs/dog_biscuit/call.mp3"
+  },
+  "recognition": {
+    "status": "ready",
+    "reference_images": 24,
+    "updated_at": "2026-11-03T09:15:00Z"
+  },
+  "created_at": "2026-11-02T10:05:00Z",
+  "updated_at": "2026-11-03T09:15:00Z"
+}

@@ -1,0 +1,12 @@
+{
+  "visit_id": "visit_0101",
+  "started_at": "2026-11-09T07:01:10Z",
+  "ended_at": "2026-11-09T07:04:30Z",
+  "classification": "known_dog",
+  "dog_id": "dog_biscuit",
+  "confidence": 94,
+  "outcome": "served",
+  "grams_dispensed": 120,
+  "grams_eaten": 110,
+  "photo_url": null
+}

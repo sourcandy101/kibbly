@@ -1,0 +1,56 @@
+{
+  "meal_id": "meal_0101",
+  "home_id": "home_amira",
+  "dog_id": "dog_biscuit",
+  "slot": 1,
+  "scheduled_at": "2026-11-09T07:00:00Z",
+  "planned_grams": 185,
+  "status": "completed",
+  "recognition_mode": "camera",
+  "call_attempts": 1,
+  "first_arrival_at": "2026-11-09T07:01:10Z",
+  "ended_at": "2026-11-09T07:08:30Z",
+  "bowl_grams_at_start": 0,
+  "grams_dispensed": 185,
+  "grams_eaten": 170,
+  "grams_left_in_bowl": 5,
+  "visits": [
+    {
+      "visit_id": "visit_0101",
+      "started_at": "2026-11-09T07:01:10Z",
+      "ended_at": "2026-11-09T07:04:30Z",
+      "classification": "known_dog",
+      "dog_id": "dog_biscuit",
+      "confidence": 0.94,
+      "outcome": "served",
+      "grams_dispensed": 120,
+      "grams_eaten": 110,
+      "photo_url": null
+    },
+    {
+      "visit_id": "visit_0102",
+      "started_at": "2026-11-09T07:04:40Z",
+      "ended_at": "2026-11-09T07:05:20Z",
+      "classification": "known_dog",
+      "dog_id": "dog_mochi",
+      "confidence": 0.91,
+      "outcome": "blocked_wrong_dog",
+      "grams_dispensed": 0,
+      "grams_eaten": 10,
+      "photo_url": null
+    },
+    {
+      "visit_id": "visit_0103",
+      "started_at": "2026-11-09T07:06:00Z",
+      "ended_at": "2026-11-09T07:08:30Z",
+      "classification": "known_dog",
+      "dog_id": "dog_biscuit",
+      "confidence": 0.89,
+      "outcome": "served",
+      "grams_dispensed": 65,
+      "grams_eaten": 60,
+      "photo_url": null
+    }
+  ],
+  "logged_offline": false
+}

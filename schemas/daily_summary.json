@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sourcandy101/kibbly/schemas/daily_summary.json",
+  "title": "Daily summary",
+  "description": "Statistics of one dog for one day, computed by the AI server engines from meals and visits. Firestore path: daily_summaries/{dog_id}_{date}. Read by the app and by the language model, which must use only these facts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary_id", "home_id", "dog_id", "date", "computed_at", "meals_planned",
+               "meals_completed", "meals_missed", "grams_planned", "grams_dispensed", "grams_eaten",
+               "grams_left_in_bowl", "eating_minutes", "blocked_attempts", "visits_outside_meals",
+               "baseline_days", "baseline_grams_eaten", "change_vs_baseline_percent", "flags", "needs_vet"],
+  "properties": {
+    "summary_id": {"type": "string", "pattern": "^[A-Za-z0-9_]+_\\d{4}-\\d{2}-\\d{2}$", "description": "{dog_id}_{date}"},
+    "home_id": {"$ref": "common.json#/$defs/id"},
+    "dog_id": {"$ref": "common.json#/$defs/id"},
+    "date": {"$ref": "common.json#/$defs/local_date"},
+    "computed_at": {"$ref": "common.json#/$defs/timestamp"},
+    "meals_planned": {"type": "integer", "minimum": 0, "maximum": 4},
+    "meals_completed": {"type": "integer", "minimum": 0, "maximum": 4},
+    "meals_missed": {"type": "integer", "minimum": 0, "maximum": 4},
+    "grams_planned": {"$ref": "common.json#/$defs/grams"},
+    "grams_dispensed": {"$ref": "common.json#/$defs/grams"},
+    "grams_eaten": {"$ref": "common.json#/$defs/grams"},
+    "grams_left_in_bowl": {"$ref": "common.json#/$defs/grams", "description": "Left by this dog at the end of its meals, summed over the day."},
+    "eating_minutes": {"type": "number", "minimum": 0, "description": "Time this dog spent eating, summed over its visits."},
+    "blocked_attempts": {"type": "integer", "minimum": 0, "description": "Times this dog was blocked during another dog's meal."},
+    "visits_outside_meals": {"type": "integer", "minimum": 0},
+    "baseline_days": {"type": "integer", "minimum": 0, "maximum": 7, "description": "Days of history used for the baseline."},
+    "baseline_grams_eaten": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Average grams eaten per day over the baseline days. null when fewer than 3 days of history."
+    },
+    "change_vs_baseline_percent": {"type": ["integer", "null"], "description": "Rounded. null when there is no baseline."},
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": {"enum": ["eating_drop", "eating_increase", "missed_meals", "repeated_leftovers",
+                            "many_blocked_attempts", "fast_eating", "slow_eating", "weight_change"]},
+          "detail": {"type": "string", "maxLength": 200, "description": "Fact written by code, for example 2 days in a row below baseline."}
+        }
+      }
+    },
+    "needs_vet": {"type": "boolean", "description": "Decided by code rules, never by the model."}
+  }
+}

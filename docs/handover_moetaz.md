@@ -71,17 +71,20 @@ Team writing rules for the repo: English only; no dashes of any kind in comments
 3. **Feeding level and tank level** shown on the home screen.
 4. **Generative AI screens:** smart meal reports (must have); Ask Kibbly chat (stretch goal).
 
-## 6. Data model (proposed, refine it)
+## 6. Data model (proposed by Zaineb on 9 November 2026, please review)
 
-| Collection | Fields |
-|---|---|
-| `homes/{homeId}` | owner id, feeder id, WiFi status, last seen |
-| `dogs/{dogId}` | home id, name, breed, age_months, weight_kg, activity, notes, photo urls, video url, voice clip url, call order |
-| `schedules/{dogId}` | list of up to 4 meals: time, grams |
-| `meals/{mealId}` | dog id, time, grams served, grams eaten, recognized (true or false), confidence |
-| `alerts/{alertId}` | type (skipped, unknown_dog, wrong_dog, jam, low_tank, offline, power_cut), time, message, photo url |
+The data model now lives in [`schemas/`](../schemas/README.md): one JSON Schema file per Firestore collection, valid and invalid example documents, and a checker script. Use these field names exactly (snake_case) so data passes between the app, the feeder and the AI server without conversion.
 
-Use the same field names as the AI code (snake_case) so data passes between the app and the AI server without conversion.
+Main changes from the first proposal:
+
+1. Dog profile: `birth_month` instead of an age, plus `sex`, `neutered` and `body_condition` (thin, ideal or overweight, chosen from pictures).
+2. Home: the kibble's `kcal_per_kg` from the food bag (may be empty) and the home `timezone`.
+3. New `weights` collection: the owner enters each weigh in; the app copies the latest into the dog profile.
+4. Meals hold a list of visits (which dog came, confidence, what the feeder did, grams eaten).
+5. New `daily_summaries` collection written by the AI server; the reports screen reads it.
+6. All timestamps in UTC; schedules in local clock time.
+
+Section "Open questions for the team" in `schemas/README.md` has one question for you (flat collections or subcollections).
 
 ## 7. Contract with the AI (already built by Zaineb)
 

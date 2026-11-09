@@ -1,0 +1,32 @@
+{
+  "meal_id": "meal_0102",
+  "home_id": "home_amira",
+  "dog_id": "dog_mochi",
+  "slot": 1,
+  "scheduled_at": "2026-11-09T07:00:00Z",
+  "planned_grams": 45,
+  "status": "completed",
+  "recognition_mode": "camera",
+  "call_attempts": 1,
+  "first_arrival_at": "2026-11-09T07:10:05Z",
+  "ended_at": "2026-11-09T07:12:40Z",
+  "bowl_grams_at_start": 0,
+  "grams_dispensed": 45,
+  "grams_eaten": 30,
+  "grams_left_in_bowl": 15,
+  "visits": [
+    {
+      "visit_id": "visit_0104",
+      "started_at": "2026-11-09T07:10:05Z",
+      "ended_at": "2026-11-09T07:12:40Z",
+      "classification": "known_dog",
+      "dog_id": "dog_mochi",
+      "confidence": 0.92,
+      "outcome": "served",
+      "grams_dispensed": 45,
+      "grams_eaten": 30,
+      "photo_url": null
+    }
+  ],
+  "logged_offline": false
+}

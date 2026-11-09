@@ -1,0 +1,13 @@
+{
+  "visit_id": "visit_0108",
+  "home_id": "home_amira",
+  "started_at": "2026-11-09T14:05:00Z",
+  "ended_at": "2026-11-09T14:07:10Z",
+  "classification": "unknown_dog",
+  "dog_id": null,
+  "confidence": 0.41,
+  "outcome": "unknown_dog_portion",
+  "grams_dispensed": 20,
+  "grams_eaten": 20,
+  "photo_url": "gs://kibbly-demo/visits/visit_0108.jpg"
+}

@@ -142,13 +142,7 @@ The team wants **all of these**. Prototype priority keeps the demo safe:
 
 ## 6. Data
 
-**[proposed]** Firebase collections:
-
-- `homes/{homeId}`: owner, feeder ID, Wi-Fi status
-- `dogs/{dogId}`: name, breed, age, weight, activity, photos, voice clip, call order
-- `schedules/{dogId}`: up to 4 meals (time, grams)
-- `meals/{mealId}`: dog, time, grams served, grams eaten, recognized or not, confidence
-- `alerts/{alertId}`: type (skipped, unknown dog, jam, low tank, offline, power cut), time, message
+**[proposed, 9 November 2026]** The data model is defined as JSON Schema files in [`schemas/`](../schemas/README.md), with examples and a checker. Objects: `homes`, `dogs`, `weights`, `schedules`, `meals` (with the visits of each meal slot), `visits` (outside meal times), `daily_summaries` (computed by the AI server) and `alerts`. The schemas are the source of truth; this section only points to them.
 
 **Dataset:** the team has no dogs yet. Use public dog datasets plus friends' dogs; collect real data in the pilot.
 

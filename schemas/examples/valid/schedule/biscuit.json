@@ -1,0 +1,21 @@
+{
+  "dog_id": "dog_biscuit",
+  "home_id": "home_amira",
+  "meals": [
+    {
+      "slot": 1,
+      "label": "Breakfast",
+      "local_time": "08:00",
+      "grams": 185
+    },
+    {
+      "slot": 2,
+      "label": "Dinner",
+      "local_time": "18:00",
+      "grams": 185
+    }
+  ],
+  "daily_total_grams": 370,
+  "plan_source": "ai_suggested",
+  "confirmed_at": "2026-11-03T09:30:00Z"
+}

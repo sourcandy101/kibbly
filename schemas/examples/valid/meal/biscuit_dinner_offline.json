@@ -1,0 +1,32 @@
+{
+  "meal_id": "meal_0105",
+  "home_id": "home_amira",
+  "dog_id": "dog_biscuit",
+  "slot": 2,
+  "scheduled_at": "2026-11-09T17:00:00Z",
+  "planned_grams": 185,
+  "status": "served_offline",
+  "recognition_mode": "offline_fallback",
+  "call_attempts": 1,
+  "first_arrival_at": "2026-11-09T17:00:40Z",
+  "ended_at": "2026-11-09T17:05:00Z",
+  "bowl_grams_at_start": 0,
+  "grams_dispensed": 185,
+  "grams_eaten": 185,
+  "grams_left_in_bowl": 0,
+  "visits": [
+    {
+      "visit_id": "visit_0110",
+      "started_at": "2026-11-09T17:00:40Z",
+      "ended_at": "2026-11-09T17:05:00Z",
+      "classification": "not_checked",
+      "dog_id": null,
+      "confidence": null,
+      "outcome": "served_offline",
+      "grams_dispensed": 185,
+      "grams_eaten": 185,
+      "photo_url": null
+    }
+  ],
+  "logged_offline": true
+}
