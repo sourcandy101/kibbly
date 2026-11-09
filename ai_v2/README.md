@@ -15,8 +15,8 @@ A rebuild of the Kibbly AI from scratch, on a stronger foundation. The first ver
 
 | Step | Topic | Status |
 |---|---|---|
-| 1 | Review the AI feature ideas and agree the scope | in progress |
-| 2 | Shared data model (dog profile, meal event) agreed with the team | to do |
+| 1 | Review the AI feature ideas and agree the scope (see `scope.md`) | done |
+| 2 | Shared data model (dog profile, meal event) agreed with the team | next |
 | 3 | Architecture of the AI server | to do |
 | 4 | Dog recognition | to do |
 | 5 | Nutrition engine and feeding plan | to do |
