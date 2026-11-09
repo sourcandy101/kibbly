@@ -21,36 +21,36 @@ One chosen part per job, picked for reliability and for good support on the STM3
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 6 | **Load cell, bar type, 5 kg** | 1 | Scale under the bowl | 5 kg survives a dog pushing on the bowl; resolution with the HX711 is still well under 1 g | |
-| 7 | **HX711 board** (SparkFun or a shielded clone) | 1 | Reads the load cell | Standard 24 bit amplifier, simple 2 wire interface, many tested drivers | |
-| 8 | **RCWL-1601 or HC-SR04P ultrasonic sensor** (3.3 V versions) | 1 | Detects an animal in front of the bowl | Same as the HC-SR04 the team chose, but runs at 3.3 V, so its signal is safe for the STM32 without a voltage divider | |
-| 9 | **VL53L1X time of flight sensor** | 1 | Food level in the tank, from the lid | Narrow beam that sees the kibble surface; ST provides an official STM32 driver (ULD). Better range and stability than the VL53L0X | |
-| 10 | **DS3231 RTC module** with a CR2032 coin cell | 1 | Keeps the real time during a power cut | Accurate to about 1 minute per year; without it the feeder loses the time after a power cut when WiFi is down | |
+| 6 | **Load cell, bar type, 5 kg** | 1 | Scale under the bowl | 5 kg survives a dog pushing on the bowl; resolution with the HX711 is still well under 1 g | Yes |
+| 7 | **HX711 board** (SparkFun or a shielded clone) | 1 | Reads the load cell | Standard 24 bit amplifier, simple 2 wire interface, many tested drivers | No |
+| 8 | **RCWL-1601 or HC-SR04P ultrasonic sensor** (3.3 V versions) | 1 | Detects an animal in front of the bowl | Same as the HC-SR04 the team chose, but runs at 3.3 V, so its signal is safe for the STM32 without a voltage divider | No |
+| 9 | **VL53L1X time of flight sensor** | 1 | Food level in the tank, from the lid | Narrow beam that sees the kibble surface; ST provides an official STM32 driver (ULD). Better range and stability than the VL53L0X | No |
+| 10 | **DS3231 RTC module** with a CR2032 coin cell | 1 | Keeps the real time during a power cut | Accurate to about 1 minute per year; without it the feeder loses the time after a power cut when WiFi is down | No |
 
 ## 4. Sound and storage
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 11 | **MAX98357A I2S amplifier** | 1 | Plays the voice clips | Digital audio from the STM32 I2S port: no hiss or motor noise, unlike the DAC with an analog amplifier | |
-| 12 | **Speaker, 4 ohm, 3 W** | 1 | The dog's call or a chime | Matches the MAX98357A output; loud enough for a room | |
-| 13 | **MicroSD breakout, 3.3 V, SPI** (Adafruit or similar) and an 8 to 32 GB card from a known brand | 1 | Voice clips, schedule copy, offline meal logs | SPI with FatFs is the simplest reliable setup on STM32; branded cards avoid corrupted files | |
+| 11 | **MAX98357A I2S amplifier** | 1 | Plays the voice clips | Digital audio from the STM32 I2S port: no hiss or motor noise, unlike the DAC with an analog amplifier | No |
+| 12 | **Speaker, 4 ohm, 3 W** | 1 | The dog's call or a chime | Matches the MAX98357A output; loud enough for a room | No |
+| 13 | **MicroSD breakout, 3.3 V, SPI** (Adafruit or similar) and an 8 to 32 GB card from a known brand | 1 | Voice clips, schedule copy, offline meal logs | SPI with FatFs is the simplest reliable setup on STM32; branded cards avoid corrupted files | No |
 
 ## 5. Button and LED
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 14 | **Push button**, 12 mm, panel mount | 1 | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Panel mount survives daily use better than a breadboard button | |
-| 15 | **LED and 330 ohm resistor** | 1 | WiFi status | | |
+| 14 | **Push button**, 12 mm, panel mount | 2 | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Panel mount survives daily use better than a breadboard button | No |
+| 15 | **LED and 330 ohm resistor** | 1 | WiFi status | | Yes |
 
 ## 6. Power
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 16 | **12 V 3 A wall adapter** | 1 | Powers the whole feeder | Covers the motor and the 5 V rail with margin (see the budget below) | |
-| 17 | **DC barrel jack with screw terminals** | 1 | Adapter input | Screw terminals do not shake loose | |
-| 18 | **Inline fuse, 3 A**, and a **reverse polarity diode or MOSFET** | 1 | Protection | A wrong adapter or a short does not burn the boards | |
-| 19 | **XL4015 buck converter** set to 5.0 V (5 A) | 1 | 5 V for the Nucleo, the ESP32, the amplifier and the sensors | Large current margin, so WiFi and audio peaks do not drop the voltage | |
-| 20 | **Capacitors: 1000 uF electrolytic and 100 nF ceramic** | 2 of each | Next to the ESP32 and the motor driver | Absorb current peaks and protect against resets | |
+| 16 | **12 V 3 A wall adapter** | 1 | Powers the whole feeder | Covers the motor and the 5 V rail with margin (see the budget below) | See with Hedi's ISS Group  |
+| 17 | **DC barrel jack with screw terminals** | 1 | Adapter input | Screw terminals do not shake loose | See with Hed's ISS Group|
+| 18 | **Inline fuse, 3 A**, and a **reverse polarity diode or MOSFET** | 1 | Protection | A wrong adapter or a short does not burn the boards | No |
+| 19 | **XL4015 buck converter** set to 5.0 V (5 A) | 1 | 5 V for the Nucleo, the ESP32, the amplifier and the sensors | Large current margin, so WiFi and audio peaks do not drop the voltage | No |
+| 20 | **Capacitors: 1000 uF electrolytic and 100 nF ceramic** | 2 of each | Next to the ESP32 and the motor driver | Absorb current peaks and protect against resets | See with Hedi |
 
 The TMC2209 takes 12 V directly. The Nucleo takes 5 V on its E5V pin (power jumper set to E5V) and makes its own 3.3 V for the sensors.
 
