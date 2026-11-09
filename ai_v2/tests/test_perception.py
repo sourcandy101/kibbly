@@ -99,9 +99,32 @@ def test_frames_without_a_dog_are_skipped(recognizer):
     assert recognizer.recognize_frames([photo(red=0), photo(red=0, blue=255)]).classification == "not_a_dog"
 
 
+class FakeScene:
+    """Says dog for green photos (close up face the detector misses), nothing otherwise."""
+    name = "fake_scene"
+
+    def classify(self, images):
+        return [{"dog": 0.9 if im.getpixel((0, 0))[1] > 100 and im.getpixel((0, 0))[0] < 50 else 0.05,
+                 "cat": 0.0, "person": 0.05, "nothing": 0.05} for im in images]
+
+
+def test_scene_check_finds_a_dog_the_detector_missed():
+    embedder = FakeEmbedder()
+    gallery = Gallery("fake")
+    gallery.enroll("dog_mochi", embedder.embed([photo(red=0, green=200)]))
+    settings = RecognitionSettings(accept_score=0.95, min_margin=0.0)
+    without = Recognizer(FakeDetector(), embedder, gallery, settings)
+    with_scene = Recognizer(FakeDetector(), embedder, gallery, settings, scene=FakeScene())
+    close_up = photo(red=0, green=200)
+    assert without.recognize(close_up).classification == "not_a_dog"
+    result = with_scene.recognize(close_up)
+    assert result.dog_id == "dog_mochi" and result.detection.source == "scene_check"
+    assert with_scene.recognize(photo(red=0, blue=255)).classification == "not_a_dog"
+
+
 def test_default_settings_come_from_the_evaluation():
     settings = RecognitionSettings()
-    assert (settings.accept_score, settings.min_margin) == (0.61, 0.08)
+    assert (settings.accept_score, settings.min_margin, settings.min_scene_dog) == (0.61, 0.08, 0.89)
 
 
 def test_gallery_must_match_embedder():

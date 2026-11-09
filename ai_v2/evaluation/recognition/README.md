@@ -32,10 +32,17 @@ From `ai_v2` (needs DogFaceNet in `D:\kibbly_data\dogfacenet`, see `../../data_c
 | 6 | **Look alike homes lose about 9 points**, but still do not feed the wrong dog. | Feeder, 3 photos, 2 per check: 72.2% vs 81.5%, wrong dog 0.0% |
 | 7 | **The detector is the weak link.** YOLO11n, trained on whole dogs, misses close up faces, and misses all of them at feeder quality (often calls them "person"). The identity results above skip the detector because DogFaceNet images are already face crops. | Dog found: 64% clean close ups, 0% feeder close ups |
 | 8 | **Speed is fine.** | Full pipeline 267 ms median on a 640 x 480 photo, CPU |
+| 9 | **Detector gap fixed with a scene check** (design B): when YOLO finds no dog, CLIP judges the whole photo (dog, cat, person or nothing). CLIP is weak at telling two dogs apart but strong at this question. | `results_gate.md`: close up dog faces found 65% to 100% clean, 0% to 100% at feeder quality |
+| 10 | People are still refused; empty scenes at feeder quality are taken for a dog 3% of the time (target 2%, on 100 images, so 3 images). | Acceptable: the ultrasonic sensor must also see something, and a false dog then meets the identity check, which treats it as unknown. |
+| 11 | **Cats are often taken for dogs** (about 6% to 7%). No target yet, since cats are a later version; a cat then counts as an unknown dog. | `results_gate.md` |
+| 12 | Whole dogs seen from far at feeder quality are found 75% of the time. Less relevant: at the feeder the dog is close. | `results_gate.md` |
+
+The dog or not check is run with `.venv\Scripts\python.exe evaluation\recognition\gate_check.py` (15 minutes the first time, then seconds from the cache). It uses COCO val2017 (CC BY 4.0 annotations) in `D:\kibbly_data\coco` for people, cats and scenes.
 
 ## Operating point (set as default in `kibbly_ai/perception/recognizer.py`)
 
-DINOv2 small class token, at least 3 enrollment photos, 2 photos per check, accept score 0.61, margin 0.08.
+Finding the dog: YOLO11n box, else CLIP scene check with dog probability 0.89 or more.
+Identity: DINOv2 small class token, at least 3 enrollment photos, 2 photos per check, accept score 0.61, margin 0.08.
 
 A refused dog is not a failure: nothing is served and the feeder checks again a few seconds later. A refused dog waits; a wrongly accepted dog eats someone else's food. The settings favor waiting.
 
@@ -50,7 +57,7 @@ A refused dog is not a failure: nothing is served and the feeder checks again a 
 
 | # | Action | Owner |
 |---|---|---|
-| 1 | Fix the detector gap (fallback when no dog box is found, or a detector that handles close ups) | Zaineb |
+| 1 | Fix the detector gap: **done** (finding 9) | Zaineb |
 | 2 | Raise feeder quality accuracy toward 90% (a small learned layer on top of DINOv2, trained on clean and degraded pairs of other dogs) | Zaineb |
 | 3 | Camera position: far enough to see the whole head, not only the muzzle | Youssef |
 | 4 | Real photos: friends' dogs videos, then real ESP32-CAM shots | Zaineb with Youssef and Hedi |

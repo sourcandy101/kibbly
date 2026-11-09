@@ -1,0 +1,53 @@
+{
+  "A": {
+    "threshold": null,
+    "rates": {
+      "cats|clean": 0.03488372093023256,
+      "cats|feeder": 0.011627906976744186,
+      "dog_faces|clean": 0.65,
+      "dog_faces|feeder": 0.0,
+      "people|clean": 0.01,
+      "people|feeder": 0.0,
+      "person_heads|clean": 0.0,
+      "person_heads|feeder": 0.0,
+      "scenes_no_animal|clean": 0.0,
+      "scenes_no_animal|feeder": 0.0,
+      "whole_dogs|clean": 0.7671232876712328,
+      "whole_dogs|feeder": 0.0547945205479452
+    }
+  },
+  "B": {
+    "threshold": 0.89,
+    "rates": {
+      "cats|clean": 0.05813953488372093,
+      "cats|feeder": 0.06976744186046512,
+      "dog_faces|clean": 1.0,
+      "dog_faces|feeder": 1.0,
+      "people|clean": 0.01,
+      "people|feeder": 0.0,
+      "person_heads|clean": 0.0,
+      "person_heads|feeder": 0.012048192771084338,
+      "scenes_no_animal|clean": 0.0,
+      "scenes_no_animal|feeder": 0.03,
+      "whole_dogs|clean": 0.9315068493150684,
+      "whole_dogs|feeder": 0.7534246575342466
+    }
+  },
+  "C": {
+    "threshold": 0.89,
+    "rates": {
+      "cats|clean": 0.023255813953488372,
+      "cats|feeder": 0.05813953488372093,
+      "dog_faces|clean": 1.0,
+      "dog_faces|feeder": 1.0,
+      "people|clean": 0.0,
+      "people|feeder": 0.0,
+      "person_heads|clean": 0.0,
+      "person_heads|feeder": 0.012048192771084338,
+      "scenes_no_animal|clean": 0.0,
+      "scenes_no_animal|feeder": 0.03,
+      "whole_dogs|clean": 0.8904109589041096,
+      "whole_dogs|feeder": 0.7534246575342466
+    }
+  }
+}

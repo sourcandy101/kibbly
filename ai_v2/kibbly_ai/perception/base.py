@@ -19,6 +19,7 @@ class Detection:
     label: str                  # one of LABELS
     confidence: float           # detector confidence, 0 to 1
     box: tuple                  # (x1, y1, x2, y2) in pixels
+    source: str = "detector"    # detector, or scene_check when the whole photo was judged a dog
 
     @property
     def area(self) -> float:
