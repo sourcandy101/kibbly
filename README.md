@@ -31,10 +31,28 @@ Out of scope for the prototype: water level, live talk, video history, final enc
 Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 
 - **Main board:** NUCLEO-F439ZI (STM32F439ZI): schedule, motor, scale, sensors, speaker, SD card, button.
-- **Camera + Wi-Fi:** ESP32-CAM.
+- **Camera + Wi-Fi:** ESP32 camera board (XIAO ESP32S3 Sense recommended, see [hardware/01_hardware_list.md](hardware/01_hardware_list.md)).
 - **AI server (Python):** dog recognition + generative AI.
 - **Data:** Firebase. **App:** web app (PWA).
 - **Sensors:** bowl load cell, food tank level, ultrasonic presence sensor.
+
+## Hardware
+
+**How the feeder works.** At meal time the STM32 plays the dog's call from the SD card. When the ultrasonic sensor sees an animal, the ESP32 camera board takes a photo and asks the AI server which dog it is. If it is the called dog, the STM32 turns the auger in bursts of about 5 g while the dog stays, and the scale under the bowl measures what was served and eaten. Without internet the feeder still follows the schedule saved on the SD card and uploads its logs later.
+
+**The database links hardware and software.** The feeder never talks to the app directly. Through the ESP32 it reads the schedules, dog names and voice clips from Firebase, and writes meals, alerts and its WiFi status back. The app reads and writes the same data.
+
+**Progress.** Youssef and Hedi build the hardware in 7 steps. Technical details are in [hardware/](hardware/) and the code in [firmware/](firmware/).
+
+| Step | What | Status |
+|---|---|---|
+| 1 | List of hardware | In progress |
+| 2 | System architecture | Not started |
+| 3 | Wiring and testing each component alone | Not started |
+| 4 | Wiring list for every component | Not started |
+| 5 | Code for the ESP32 and the STM32 | Not started |
+| 6 | Wiring and testing 2 or more components together | Not started |
+| 7 | Final system | Not started |
 
 ## Generative AI
 
@@ -45,7 +63,7 @@ Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 ## Repository layout
 
 ```
-firmware/   STM32 project (STM32CubeIDE): drivers, scheduler, feeding logic
+firmware/   STM32 (STM32CubeIDE) and ESP32 (PlatformIO) code: drivers, scheduler, feeding logic, component tests
 ai/         dataset tools, recognition model, generative AI experiments
 app/        owner app and backend
 hardware/   enclosure CAD, mechanism, PCB (KiCad), bill of materials
