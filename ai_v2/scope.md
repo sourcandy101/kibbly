@@ -53,3 +53,19 @@ Decision:
 2. **Cloud model: Claude Haiku**, to be compared against gemma3:4b in the meal insights evaluation (step 6). Needs an API key.
 3. The sex guess is fixed with data, not prompting: the dog profile gets a `sex` field (step 2).
 4. Field names must be unambiguous: `grams_left` was read as food left in the feeder. Use names such as `grams_left_in_bowl` (step 2).
+
+## Recognition strategy (9 November 2026)
+
+Decision: **appearance first, colored collar as a tiebreaker.**
+
+| Situation | What decides |
+|---|---|
+| Appearance clearly matches one dog | Appearance alone |
+| Appearance unsure between two dogs | The collar color |
+| No collar visible and appearance unsure | Unknown: nothing served, check again a few seconds later |
+
+Collar rules: wide flat band (2 to 3 cm) in a color never found in dog coats (bright blue, bright green, magenta). No red, orange, brown, black or white.
+
+Why not collar only: Kibbly's promise is recognition by appearance; existing feeders already identify pets with tags or microchips. The ESP32-CAM color balance also shifts with light, and a collar can be hidden or removed.
+
+Order: the collar step comes after the appearance pipeline is measured (step 4.8), because it needs real photos of dogs wearing collars and because the numbers will show whether it is needed beyond look alike pairs.
