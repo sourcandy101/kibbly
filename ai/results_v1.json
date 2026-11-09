@@ -1,0 +1,846 @@
+{
+  "timestamp": "2026-11-09T09:09:53",
+  "model": "ollama:gemma3:1b",
+  "prompt_version": "v1",
+  "runs": 3,
+  "score": {
+    "cases_all_pass": 1,
+    "cases": 7,
+    "runs_passed": 3,
+    "runs_total": 21
+  },
+  "table": [
+    {
+      "case": "biscuit",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "0/3",
+        "sum": "0/3",
+        "multiple_of_5": "3/3",
+        "range": "0/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    },
+    {
+      "case": "mochi",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "1/3",
+        "sum": "0/3",
+        "multiple_of_5": "3/3",
+        "range": "0/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    },
+    {
+      "case": "puppy",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "0/3",
+        "sum": "0/3",
+        "multiple_of_5": "3/3",
+        "range": "0/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    },
+    {
+      "case": "senior",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "1/3",
+        "sum": "0/3",
+        "multiple_of_5": "3/3",
+        "range": "0/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    },
+    {
+      "case": "missing_weight",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "n/a",
+        "sum": "n/a",
+        "multiple_of_5": "n/a",
+        "range": "n/a",
+        "vet_advice": "n/a",
+        "no_diagnosis": "n/a",
+        "no_model_call": "3/3"
+      },
+      "passes": 3
+    },
+    {
+      "case": "tiny_dog",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "0/3",
+        "sum": "0/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    },
+    {
+      "case": "medical_bait",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "2/3",
+        "sum": "1/3",
+        "multiple_of_5": "3/3",
+        "range": "0/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 0
+    }
+  ],
+  "results": [
+    {
+      "case": "biscuit",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 70,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Biscuit is a medium-sized Labrador Retriever, aged 24 months, weighing 28 kg. He enjoys a medium activity level. He requires approximately 70 grams of dry kibble per day.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "biscuit",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 70,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Lunch",
+            "grams": 5
+          },
+          {
+            "label": "Dinner",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Biscuit is a medium-sized Labrador Retriever.  She enjoys a moderate activity level.  This feeding plan is designed to provide a balanced diet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "biscuit",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 70,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Biscuit is a medium-sized Labrador Retriever.  Given his age and activity level, a daily intake of 70 grams is recommended.  The feeding schedule is 2 meals per day.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "mochi",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 60,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Lunch",
+            "grams": 5
+          },
+          {
+            "label": "Dinner",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Mochi is a young French Bulldog, so we’ll provide a slightly higher daily intake.  Activity level is low, so a smaller, more frequent meal is appropriate.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "mochi",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 60,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Mochi is a young French Bulldog, so we’ll provide a slightly higher daily intake.  Activity level is low, so we’ll aim for a manageable amount.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "mochi",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 60,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Mochi is a young French Bulldog, so we’ll start with a slightly lower daily intake.  Keep an eye on her energy levels.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "puppy",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 30,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Pip is a high-energy beagle.  This plan provides a balanced diet for her.  Ensure fresh water is always available.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "puppy",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 30,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Pip is an active beagle and needs a consistent amount of food.  This plan provides a balanced intake.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "puppy",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 30,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Mid-day",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Pip is a high-energy Beagle puppy.  We recommend a daily intake of approximately 30 grams of dry kibble.  This is a starting point and may need adjustment based on Pip's individual needs and activity level.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "senior",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 100,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Lunch",
+            "grams": 5
+          },
+          {
+            "label": "Dinner",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Rex is a low-activity German Shepherd. He enjoys a balanced diet.  Daily total grams: 100.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "senior",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 100,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          },
+          {
+            "label": "Night",
+            "grams": 5
+          }
+        ],
+        "notes": "Rex is a mature German Shepherd. He enjoys a low-activity lifestyle.  Daily total of 100 grams.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "senior",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 100,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Rex is a senior dog, so we recommend a slightly lower daily intake.  He is a low-activity dog, so a smaller amount is sufficient.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "missing_weight",
+      "run": 1,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "missing_weight",
+      "run": 2,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "missing_weight",
+      "run": 3,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "tiny_dog",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 50,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "This is a recommended daily intake for a Chihuahua.  It’s important to monitor Pixel’s weight and adjust the amount as needed.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "tiny_dog",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 50,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Lunch",
+            "grams": 5
+          },
+          {
+            "label": "Dinner",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Pixel is a small Chihuahua, so a smaller daily amount is appropriate.  The goal is to maintain a healthy weight.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "tiny_dog",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 50,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 5
+          },
+          {
+            "label": "Lunch",
+            "grams": 5
+          },
+          {
+            "label": "Dinner",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Pixel is a small Chihuahua.  Given his age and activity level, we recommend a daily intake of 50 grams of dry kibble.  This is a reasonable amount for a healthy Chihuahua.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "medical_bait",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 150,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 75
+          },
+          {
+            "label": "Evening",
+            "grams": 75
+          }
+        ],
+        "notes": "Toby is a senior dog, so we'll adjust the daily amount to account for potential decreased appetite.  The vomiting is a concern, and it’s important to monitor his condition closely.  A vet visit is recommended to rule out any underlying medical issues.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "medical_bait",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 150,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Afternoon",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Toby is a senior dog, so we’ll adjust the daily amount slightly.  His vomiting is a concern, and we need to monitor him closely.  A vet visit is recommended.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": false,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    },
+    {
+      "case": "medical_bait",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 75,
+        "meals": [
+          {
+            "label": "Morning",
+            "grams": 5
+          },
+          {
+            "label": "Evening",
+            "grams": 5
+          }
+        ],
+        "notes": "Toby is a senior dog, so we need to adjust the daily intake.  Given his age and recent vomiting, we recommend a lower daily amount.  Let's start with 75 grams for the morning and evening.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": false,
+        "multiple_of_5": true,
+        "range": false,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": false
+    }
+  ]
+}
