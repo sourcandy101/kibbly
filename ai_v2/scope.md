@@ -36,3 +36,20 @@ Decided by Zaineb Sassi on 9 November 2026 (step 1).
 | Idea | Reason |
 |---|---|
 | Synthetic training photos | Generated images cannot reproduce the face of a specific dog, so they do not help tell two dogs apart. Standard augmentation covers robustness. |
+
+## Language model choice (9 November 2026)
+
+Benchmark: one meal report task (facts for Mochi with a 28% drop and needs_vet true), 3 runs per model after warm up, on the team laptop (8 GB RAM, i5 8265U, CPU only). Five checks: exact numbers, vet sentence, no sex guess, no diagnosis words, short.
+
+| Model | Time per answer | Score | Main failure |
+|---|---|---|---|
+| gemma3:1b | 4 s | 3/5 | Wrong facts ("95 grams remaining"), missed the drop and the vet sentence |
+| qwen3.5:2b (thinking off) | 10 s | 2/5 | Invented "has not eaten in two days", guessed the sex |
+| **gemma3:4b** | **12 s** | **4/5** | Guessed the sex only |
+
+Decision:
+
+1. **Local model: gemma3:4b.** The only local model that kept every fact right. 12 s is acceptable for reports, which are not real time.
+2. **Cloud model: Claude Haiku**, to be compared against gemma3:4b in the meal insights evaluation (step 6). Needs an API key.
+3. The sex guess is fixed with data, not prompting: the dog profile gets a `sex` field (step 2).
+4. Field names must be unambiguous: `grams_left` was read as food left in the feeder. Use names such as `grams_left_in_bowl` (step 2).
