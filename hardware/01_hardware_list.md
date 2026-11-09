@@ -6,7 +6,7 @@ One chosen part per job, picked for reliability and for good support on the STM3
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 1 | **NUCLEO-F439ZI** | 1 | Main controller: schedule, motor, scale, sensors, sound, SD card, button | Team choice. Enough timers, I2C, SPI, I2S and UART for every part below; built in ST-LINK for flashing and debugging | |
+| 1 | **NUCLEO-F439ZI** | 1 | Main controller: schedule, motor, scale, sensors, sound, SD card, button | Team choice. Enough timers, I2C, SPI, I2S and UART for every part below; built in ST-LINK for flashing and debugging | Yes |
 | 2 | **Seeed XIAO ESP32S3 Sense** (camera board) | 1 | Camera and WiFi; link to the AI server and Firebase | More reliable than the AI Thinker ESP32-CAM: USB C for flashing (no extra programmer), 8 MB PSRAM for photos, external antenna for stable WiFi, fewer brownout resets. Fallback: AI Thinker ESP32-CAM with an ESP32-CAM-MB programmer if already bought | |
 
 ## 2. Dispenser
