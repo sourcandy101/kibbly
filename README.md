@@ -10,7 +10,7 @@ It is our **BEAR** project (Business · Embedded · AI · Research), built acros
 
 | Member | Role | Owns |
 |---|---|---|
-| Youssef Bousnina | Product Design & PCB Lead | `hardware/` (enclosure, mechanism, PCB) |
+| Youssef Bousnina | Embedded & Hardware Lead | `firmware/` and `hardware/` (STM32, mechanism, enclosure, PCB) |
 | Hedi Ennaifer | Hardware & Electrical Lead | `firmware/` drivers, wiring, power |
 | Zaineb Sassi | AI & Data Lead | `ai/` (dataset, models, generative features) |
 | Moetaz El Ouaer | Web App & Connectivity Lead | `app/` and device-to-cloud link |

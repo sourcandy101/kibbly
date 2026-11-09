@@ -27,7 +27,7 @@ It is the **BEAR** project (Business, Embedded, AI, Research), used across three
 | Member | Role | GitHub | Repo access |
 |---|---|---|---|
 | **Zaineb Sassi** | AI and Data Lead | `sourcandy101` (owner) | admin |
-| Youssef Bousnina | Product Design and PCB Lead | `bousninayoussef2005-netizen` | write |
+| Youssef Bousnina | Embedded and Hardware Lead | `bousninayoussef2005-netizen` | write |
 | Hedi Ennaifer | Hardware and Electrical Lead | `HediE-source` | write |
 | Moetaz El Ouaer | Web App and Connectivity Lead | `MoetazEO` | write (invited 9 Nov, pending acceptance) |
 
