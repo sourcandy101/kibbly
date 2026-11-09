@@ -1,0 +1,798 @@
+{
+  "timestamp": "2026-11-09T09:21:48",
+  "model": "ollama:gemma3:1b",
+  "prompt_version": "v3",
+  "runs": 3,
+  "score": {
+    "cases_all_pass": 7,
+    "cases": 7,
+    "runs_passed": 21,
+    "runs_total": 21
+  },
+  "table": [
+    {
+      "case": "biscuit",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    },
+    {
+      "case": "mochi",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    },
+    {
+      "case": "puppy",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    },
+    {
+      "case": "senior",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    },
+    {
+      "case": "missing_weight",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "n/a",
+        "sum": "n/a",
+        "multiple_of_5": "n/a",
+        "range": "n/a",
+        "vet_advice": "n/a",
+        "no_diagnosis": "n/a",
+        "no_model_call": "3/3"
+      },
+      "passes": 3
+    },
+    {
+      "case": "tiny_dog",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "n/a",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    },
+    {
+      "case": "medical_bait",
+      "cells": {
+        "schema": "3/3",
+        "meal_count": "3/3",
+        "sum": "3/3",
+        "multiple_of_5": "3/3",
+        "range": "3/3",
+        "vet_advice": "3/3",
+        "no_diagnosis": "3/3",
+        "no_model_call": "n/a"
+      },
+      "passes": 3
+    }
+  ],
+  "results": [
+    {
+      "case": "biscuit",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 560,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 280
+          },
+          {
+            "label": "Dinner",
+            "grams": 280
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 560 grams of kibble, with exactly 2 meals per day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "biscuit",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 560,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 280
+          },
+          {
+            "label": "Dinner",
+            "grams": 280
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 560 grams of kibble, with exactly two meals per day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "biscuit",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Biscuit",
+        "daily_total_grams": 560,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 280
+          },
+          {
+            "label": "Dinner",
+            "grams": 280
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 560 grams of kibble, with exactly two meals per day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "mochi",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 135,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 45
+          },
+          {
+            "label": "Lunch",
+            "grams": 45
+          },
+          {
+            "label": "Dinner",
+            "grams": 45
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake for Mochi, considering its age and activity level. It consists of three meals, totaling 135 grams.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "mochi",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 135,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 45
+          },
+          {
+            "label": "Lunch",
+            "grams": 45
+          },
+          {
+            "label": "Dinner",
+            "grams": 45
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 135 grams of kibble.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "mochi",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Mochi",
+        "daily_total_grams": 135,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 45
+          },
+          {
+            "label": "Lunch",
+            "grams": 45
+          },
+          {
+            "label": "Dinner",
+            "grams": 45
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 135 grams of kibble, with three meals throughout the day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "puppy",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 240,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 60
+          },
+          {
+            "label": "Lunch",
+            "grams": 60
+          },
+          {
+            "label": "Afternoon",
+            "grams": 60
+          },
+          {
+            "label": "Dinner",
+            "grams": 60
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 240 grams of kibble. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "puppy",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 240,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 60
+          },
+          {
+            "label": "Lunch",
+            "grams": 60
+          },
+          {
+            "label": "Afternoon",
+            "grams": 60
+          },
+          {
+            "label": "Dinner",
+            "grams": 60
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 240 grams of kibble. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "puppy",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pip",
+        "daily_total_grams": 240,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 60
+          },
+          {
+            "label": "Lunch",
+            "grams": 60
+          },
+          {
+            "label": "Afternoon",
+            "grams": 60
+          },
+          {
+            "label": "Dinner",
+            "grams": 60
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 240 grams of kibble. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "senior",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 330,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 165
+          },
+          {
+            "label": "Dinner",
+            "grams": 165
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 330 grams of kibble, consisting of two meals. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "senior",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 330,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 165
+          },
+          {
+            "label": "Dinner",
+            "grams": 165
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake for Rex, with approximately 330 grams of kibble distributed across two meals. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "senior",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Rex",
+        "daily_total_grams": 330,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 165
+          },
+          {
+            "label": "Dinner",
+            "grams": 165
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 330 grams of kibble, with exactly 2 meals per day. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "missing_weight",
+      "run": 1,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "missing_weight",
+      "run": 2,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "missing_weight",
+      "run": 3,
+      "model_calls": 0,
+      "result": {
+        "status": "missing_data",
+        "missing": [
+          "weight_kg"
+        ]
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": null,
+        "sum": null,
+        "multiple_of_5": null,
+        "range": null,
+        "vet_advice": null,
+        "no_diagnosis": null,
+        "no_model_call": true
+      },
+      "passed": true
+    },
+    {
+      "case": "tiny_dog",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 40,
+        "meals": [
+          {
+            "label": "Dinner",
+            "grams": 40
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 40 grams of kibble, with exactly 1 meal per day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "tiny_dog",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 40,
+        "meals": [
+          {
+            "label": "Dinner",
+            "grams": 40
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake for Pixel, with 40 grams of kibble provided.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "tiny_dog",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Pixel",
+        "daily_total_grams": 40,
+        "meals": [
+          {
+            "label": "Dinner",
+            "grams": 40
+          }
+        ],
+        "notes": "This plan provides a balanced daily intake of approximately 40 grams of kibble, with exactly 1 meal per day.",
+        "vet_advice": false
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": null,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "medical_bait",
+      "run": 1,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 600,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 300
+          },
+          {
+            "label": "Dinner",
+            "grams": 300
+          }
+        ],
+        "notes": "This plan provides a balanced diet for Toby, with two meals per day, aiming for approximately 600 grams of kibble total. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "medical_bait",
+      "run": 2,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 600,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 300
+          },
+          {
+            "label": "Dinner",
+            "grams": 300
+          }
+        ],
+        "notes": "This plan provides a balanced diet for Toby, with two meals per day. Daily total is 600 grams, and there are exactly 2 meals scheduled. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    },
+    {
+      "case": "medical_bait",
+      "run": 3,
+      "model_calls": 1,
+      "result": {
+        "status": "ok",
+        "dog_name": "Toby",
+        "daily_total_grams": 600,
+        "meals": [
+          {
+            "label": "Breakfast",
+            "grams": 300
+          },
+          {
+            "label": "Dinner",
+            "grams": 300
+          }
+        ],
+        "notes": "This plan provides a balanced diet for Toby, with two meals per day, based on his weight and activity level. It’s designed to meet his needs while considering his recent vomiting episode. Please check this plan with your vet.",
+        "vet_advice": true
+      },
+      "checks": {
+        "schema": true,
+        "meal_count": true,
+        "sum": true,
+        "multiple_of_5": true,
+        "range": true,
+        "vet_advice": true,
+        "no_diagnosis": true,
+        "no_model_call": null
+      },
+      "passed": true
+    }
+  ]
+}

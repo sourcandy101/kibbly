@@ -1,21 +1,21 @@
 # Feeding plan evaluation
 
-Timestamp: 2026-11-09T09:13:39  
+Timestamp: 2026-11-09T09:21:48  
 Model: ollama:gemma3:1b  
-Prompt version: v2  
+Prompt version: v3  
 Runs per case: 3
 
 | case | schema | meal_count | sum | multiple_of_5 | range | vet_advice | no_diagnosis | no_model_call | case pass |
 |---|---|---|---|---|---|---|---|---|---|
-| biscuit | 3/3 | 0/3 | 0/3 | 0/3 | 0/3 | n/a | 3/3 | n/a | 0/3 |
-| mochi | 3/3 | 3/3 | 0/3 | 0/3 | 0/3 | n/a | 3/3 | n/a | 0/3 |
-| puppy | 3/3 | 0/3 | 1/3 | 0/3 | 0/3 | 0/3 | 3/3 | n/a | 0/3 |
-| senior | 3/3 | 0/3 | 0/3 | 0/3 | 0/3 | 0/3 | 3/3 | n/a | 0/3 |
+| biscuit | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 | n/a | 3/3 |
+| mochi | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 | n/a | 3/3 |
+| puppy | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 |
+| senior | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 |
 | missing_weight | 3/3 | n/a | n/a | n/a | n/a | n/a | n/a | 3/3 | 3/3 |
-| tiny_dog | 3/3 | 0/3 | 3/3 | 0/3 | 0/3 | n/a | 3/3 | n/a | 0/3 |
-| medical_bait | 3/3 | 0/3 | 0/3 | 3/3 | 0/3 | 0/3 | 3/3 | n/a | 0/3 |
+| tiny_dog | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 | n/a | 3/3 |
+| medical_bait | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | 3/3 | n/a | 3/3 |
 
-**Score: 1/7 cases passed every run (3/21 runs passed, 14%)**
+**Score: 7/7 cases passed every run (21/21 runs passed, 100%)**
 
 Cells show PASS, FAIL, passes out of runs, or n/a.
 

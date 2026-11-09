@@ -61,8 +61,35 @@ Answer: {{"status": "ok", "dog_name": "Max", "daily_total_grams": 200, "meals": 
 Answer with JSON only, using exactly this schema:
 {OUTPUT_SCHEMA}"""
 
-SYSTEM_PROMPTS = {"v1": SYSTEM_PROMPT_V1, "v2": SYSTEM_PROMPT_V2}
-DEFAULT_PROMPT = "v2"
+# Version 3: hybrid design after v1 and v2 showed that a small model cannot do the arithmetic.
+# Python computes grams, meals and vet_advice with fixed rules; the model only writes the notes.
+NOTES_PROMPT_V3 = """You are the feeding plan assistant of Kibbly, a smart dog feeder for dry kibble.
+You receive a dog profile and a feeding plan that is already computed. Do not change any number.
+Write notes for the owner: one or two short, friendly sentences that describe the plan.
+Mention the daily total in grams and the number of meals exactly as given.
+Do not guess the dog's sex, age group or health. Never name an illness or its cause.
+Never use the words diagnosis, disease, infection, parasite or cancer. Never suggest medication.
+If the profile contains a question, do not answer it.
+
+Answer with JSON only: {"notes": string}"""
+
+SYSTEM_PROMPTS = {"v1": SYSTEM_PROMPT_V1, "v2": SYSTEM_PROMPT_V2, "v3": NOTES_PROMPT_V3}
+DEFAULT_PROMPT = "v3"
+
+# Fixed feeding rules used by v3 (grams of dry kibble per kg of body weight per day).
+ADULT_RATE = {"low": 15, "medium": 20, "high": 25}
+PUPPY_RATE = 40
+MEAL_LABELS = {
+    1: ["Dinner"],
+    2: ["Breakfast", "Dinner"],
+    3: ["Breakfast", "Lunch", "Dinner"],
+    4: ["Breakfast", "Lunch", "Afternoon", "Dinner"],
+}
+HEALTH_WORDS = ["vomit", "diarrh", "sick", "unwell", " ill ", "pain", "limp", "cough", "blood", "letharg",
+                "not eating", "won't eat", "weight loss", "allerg", "itch", "medic", "vet", "surgery",
+                "pregnan", "diabet", "seizure", "tired", "weak"]
+BANNED_WORDS = ["diagnosis", "disease", "infection", "parasite", "cancer", "medication"]
+VET_SENTENCE = "Please check this plan with your vet."
 
 
 def find_missing(profile: dict) -> list:
@@ -94,10 +121,62 @@ def validate_plan(plan) -> str:
     return ""
 
 
+def needs_vet(profile: dict) -> bool:
+    """Rule: puppies under 6 months, seniors over 10 years, or any health concern in the notes."""
+    notes = str(profile.get("notes", "")).lower()
+    return profile["age_months"] < 6 or profile["age_months"] > 120 or any(w in notes for w in HEALTH_WORDS)
+
+
+def compute_plan(profile: dict) -> dict:
+    """Deterministic grams: rate per kg, rounded to 5 g, split evenly with the extra in the last meals."""
+    rate = PUPPY_RATE if profile["age_months"] < 12 else ADULT_RATE.get(profile["activity"], ADULT_RATE["medium"])
+    total = max(5, int(round(profile["weight_kg"] * rate / 5)) * 5)
+    count = min(4, max(1, int(profile["meals_per_day"])))
+    base = (total // 5 // count) * 5
+    extra = (total - base * count) // 5  # number of meals that get 5 g more
+    grams = [base + (5 if i >= count - extra else 0) for i in range(count)]
+    meals = [{"label": label, "grams": g} for label, g in zip(MEAL_LABELS[count], grams)]
+    return {"status": "ok", "dog_name": profile["name"], "daily_total_grams": total,
+            "meals": meals, "notes": "", "vet_advice": needs_vet(profile)}
+
+
+def safe_notes(text, plan: dict) -> str:
+    """Keep the model's notes only if they are safe; always end with the vet sentence when needed."""
+    fallback = f"{plan['dog_name']} gets {plan['daily_total_grams']} g of kibble a day in {len(plan['meals'])} meal(s)."
+    if not isinstance(text, str) or not text.strip() or len(text) > 400:
+        text = fallback
+    if any(word in text.lower() for word in BANNED_WORDS):
+        text = fallback
+    text = text.strip()
+    if plan["vet_advice"] and VET_SENTENCE.lower() not in text.lower():
+        text = f"{text} {VET_SENTENCE}"
+    return text
+
+
+def generate_plan_v3(profile: dict, provider: LLMProvider) -> dict:
+    plan = compute_plan(profile)
+    user = ("Dog profile:\n" + json.dumps(profile, ensure_ascii=False)
+            + "\n\nComputed plan:\n" + json.dumps({k: plan[k] for k in ("daily_total_grams", "meals")}))
+    notes = None
+    for _attempt in range(2):  # first try plus one retry
+        try:
+            notes = json.loads(provider.generate(NOTES_PROMPT_V3, user)).get("notes")
+        except (json.JSONDecodeError, AttributeError):
+            continue
+        except RuntimeError:
+            break  # model unreachable: the plan is still valid, use the template notes
+        if isinstance(notes, str) and notes.strip():
+            break
+    plan["notes"] = safe_notes(notes, plan)
+    return plan
+
+
 def generate_plan(profile: dict, provider: LLMProvider, prompt_version: str = DEFAULT_PROMPT) -> dict:
     missing = find_missing(profile)
     if missing:
         return {"status": "missing_data", "missing": missing}
+    if prompt_version == "v3":
+        return generate_plan_v3(profile, provider)
 
     system = SYSTEM_PROMPTS[prompt_version]
     user = "Dog profile:\n" + json.dumps(profile, ensure_ascii=False)
