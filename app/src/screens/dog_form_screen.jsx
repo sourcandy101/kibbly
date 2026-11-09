@@ -2,36 +2,47 @@ import { useState } from "react";
 import { ChoiceField, TextField } from "../components/form_fields.jsx";
 import { deleteDog, saveDog } from "../data/store.js";
 import { go, pathTo } from "../logic/routes.js";
-import { ACTIVITY_LEVELS, MAX_MEALS_PER_DAY, SEX_OPTIONS, validateDog } from "../logic/validation.js";
+import { localDateIn } from "../logic/time.js";
+import { ACTIVITY_LEVELS, BODY_CONDITIONS, SEX_OPTIONS, validateDog } from "../logic/validation.js";
 
 const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
-const toOptions = (values) => values.map((value) => ({ value, label: capitalize(String(value)) }));
-const MEAL_COUNTS = Array.from({ length: MAX_MEALS_PER_DAY }, (_, index) => String(index + 1));
+const toOptions = (values) => values.map((value) => ({ value, label: capitalize(value) }));
+const YES_NO = toOptions(["yes", "no"]);
 
-const EMPTY_FORM = {
-  name: "",
-  breed: "",
-  sex: "",
-  age_months: "",
-  weight_kg: "",
-  activity: "medium",
-  meals_per_day: "2",
-  notes: "",
-};
+function emptyForm(today) {
+  return {
+    name: "",
+    breed: "",
+    sex: "",
+    neutered: "",
+    birth_month: "",
+    activity: "medium",
+    body_condition: "",
+    current_weight_kg: "",
+    weight_measured_on: today,
+    notes: "",
+  };
+}
 
 function toForm(dog) {
   return {
-    ...EMPTY_FORM,
-    ...dog,
-    age_months: String(dog.age_months),
-    weight_kg: String(dog.weight_kg),
-    meals_per_day: String(dog.meals_per_day),
+    name: dog.name,
+    breed: dog.breed,
+    sex: dog.sex,
+    neutered: dog.neutered ? "yes" : "no",
+    birth_month: dog.birth_month,
+    activity: dog.activity,
+    body_condition: dog.body_condition,
+    current_weight_kg: String(dog.current_weight_kg),
+    weight_measured_on: dog.weight_measured_on,
+    notes: dog.notes ?? "",
   };
 }
 
 export default function DogFormScreen({ data, refresh, dogId = null }) {
-  const dog = dogId ? data.dogs.find((entry) => entry.id === dogId) : null;
-  const [form, setForm] = useState(() => (dog ? toForm(dog) : EMPTY_FORM));
+  const today = localDateIn(new Date(), data.home.timezone);
+  const dog = dogId ? data.dogs.find((entry) => entry.dog_id === dogId) : null;
+  const [form, setForm] = useState(() => (dog ? toForm(dog) : emptyForm(today)));
   const [errors, setErrors] = useState({});
   const [saveError, setSaveError] = useState("");
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -54,18 +65,18 @@ export default function DogFormScreen({ data, refresh, dogId = null }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = validateDog(form);
+    const result = validateDog(form, today);
     setErrors(result.errors);
     setSaveError("");
     if (!result.ok) {
       // Bring the first problem into view on a small screen.
-      requestAnimationFrame(() => document.querySelector("[aria-invalid='true'], .field_error")?.scrollIntoView({ block: "center" }));
+      requestAnimationFrame(() => document.querySelector(".field_error")?.scrollIntoView({ block: "center" }));
       return;
     }
     try {
       const saved = await saveDog(result.value, dogId);
       await refresh();
-      go("schedule", saved.id);
+      go("schedule", saved.dog_id);
     } catch (error) {
       setSaveError(error.message);
     }
@@ -96,24 +107,22 @@ export default function DogFormScreen({ data, refresh, dogId = null }) {
           onChange={setField("sex")}
           error={errors.sex}
         />
-        <div className="field_pair">
-          <TextField
-            label="Age in months"
-            inputMode="numeric"
-            value={form.age_months}
-            onChange={setField("age_months")}
-            error={errors.age_months}
-            autoComplete="off"
-          />
-          <TextField
-            label="Weight in kg"
-            inputMode="decimal"
-            value={form.weight_kg}
-            onChange={setField("weight_kg")}
-            error={errors.weight_kg}
-            autoComplete="off"
-          />
-        </div>
+        <ChoiceField
+          label="Neutered"
+          options={YES_NO}
+          value={form.neutered}
+          onChange={setField("neutered")}
+          error={errors.neutered}
+        />
+        <TextField
+          label="Birth month"
+          type="month"
+          max={today.slice(0, 7)}
+          hint="An estimate is fine. Kibbly works out the age from this."
+          value={form.birth_month}
+          onChange={setField("birth_month")}
+          error={errors.birth_month}
+        />
         <ChoiceField
           label="Activity"
           options={toOptions(ACTIVITY_LEVELS)}
@@ -122,12 +131,30 @@ export default function DogFormScreen({ data, refresh, dogId = null }) {
           error={errors.activity}
         />
         <ChoiceField
-          label="Meals per day"
-          options={toOptions(MEAL_COUNTS)}
-          value={form.meals_per_day}
-          onChange={setField("meals_per_day")}
-          error={errors.meals_per_day}
+          label="Body condition"
+          options={toOptions(BODY_CONDITIONS)}
+          value={form.body_condition}
+          onChange={setField("body_condition")}
+          error={errors.body_condition}
         />
+        <div className="field_pair">
+          <TextField
+            label="Weight in kg"
+            inputMode="decimal"
+            value={form.current_weight_kg}
+            onChange={setField("current_weight_kg")}
+            error={errors.current_weight_kg}
+            autoComplete="off"
+          />
+          <TextField
+            label="Weighed on"
+            type="date"
+            max={today}
+            value={form.weight_measured_on}
+            onChange={setField("weight_measured_on")}
+            error={errors.weight_measured_on}
+          />
+        </div>
         <TextField
           label="Notes (optional)"
           multiline
@@ -153,7 +180,7 @@ export default function DogFormScreen({ data, refresh, dogId = null }) {
         <section className="danger_zone">
           {confirmingDelete ? (
             <div className="confirm" role="group" aria-label="Confirm removal">
-              <p>Remove {dog.name} with its schedule and meal history? This cannot be undone.</p>
+              <p>Remove {dog.name} with its schedule, weights and meal history? This cannot be undone.</p>
               <div className="button_row">
                 <button type="button" className="button button_danger" onClick={handleDelete}>
                   Remove {dog.name}

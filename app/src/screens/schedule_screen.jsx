@@ -11,34 +11,30 @@ import {
   validateSchedule,
 } from "../logic/validation.js";
 
-// Rows start from the saved schedule. When the profile asks for more meals than
-// are saved, empty rows are added. Extra saved meals are kept for the owner to
-// remove, so no meal is ever dropped silently.
-function initialRows(dog, schedule) {
+const DEFAULT_MEAL_COUNT = 2;
+
+function initialRows(schedule) {
   const saved = schedule?.meals ?? [];
-  const rows = saved.map((meal) => ({ time: meal.time, grams: String(meal.grams) }));
-  if (saved.length === 0) {
-    return defaultTimes(dog.meals_per_day).map((time) => ({ time, grams: "" }));
-  }
-  while (rows.length < dog.meals_per_day) {
-    rows.push({ time: nextFreeTime(rows.map((row) => row.time)), grams: "" });
-  }
-  return rows;
+  if (saved.length > 0) return saved.map((meal) => ({ local_time: meal.local_time, grams: String(meal.grams) }));
+  return defaultTimes(DEFAULT_MEAL_COUNT).map((local_time) => ({ local_time, grams: "" }));
 }
 
 function stepGrams(current, direction) {
   const value = parseNumber(current) ?? 0;
-  const snapped = direction > 0 ? Math.floor(value / GRAM_STEP) * GRAM_STEP + GRAM_STEP : Math.ceil(value / GRAM_STEP) * GRAM_STEP - GRAM_STEP;
-  return String(Math.min(MAX_GRAMS_PER_MEAL, Math.max(GRAM_STEP, snapped)));
+  const stepped =
+    direction > 0
+      ? Math.floor(value / GRAM_STEP) * GRAM_STEP + GRAM_STEP
+      : Math.ceil(value / GRAM_STEP) * GRAM_STEP - GRAM_STEP;
+  return String(Math.min(MAX_GRAMS_PER_MEAL, Math.max(GRAM_STEP, stepped)));
 }
 
 export default function ScheduleScreen({ data, refresh, dogId }) {
-  const dog = data.dogs.find((entry) => entry.id === dogId);
+  const dog = data.dogs.find((entry) => entry.dog_id === dogId);
   const schedule = data.schedules[dogId];
   const nextRowId = useRef(0);
   const withId = (row) => ({ ...row, id: nextRowId.current++ });
 
-  const [rows, setRows] = useState(() => (dog ? initialRows(dog, schedule).map(withId) : []));
+  const [rows, setRows] = useState(() => (dog ? initialRows(schedule).map(withId) : []));
   const [validation, setValidation] = useState(null);
   const [saveError, setSaveError] = useState("");
 
@@ -59,7 +55,7 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
   };
 
   const addRow = () => {
-    setRows((current) => [...current, withId({ time: nextFreeTime(current.map((row) => row.time)), grams: "" })]);
+    setRows((current) => [...current, withId({ local_time: nextFreeTime(current.map((row) => row.local_time)), grams: "" })]);
     setValidation(null);
   };
 
@@ -84,7 +80,6 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
   };
 
   const dailyTotal = rows.reduce((sum, row) => sum + (parseNumber(row.grams) ?? 0), 0);
-  const extraMeals = rows.length - dog.meals_per_day;
 
   return (
     <>
@@ -94,13 +89,6 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
           Cancel
         </a>
       </header>
-
-      {extraMeals > 0 && (
-        <p className="notice">
-          The profile says {dog.meals_per_day} {dog.meals_per_day === 1 ? "meal" : "meals"} a day, but this schedule has{" "}
-          {rows.length}. Remove any you no longer want. Saving updates the profile to match.
-        </p>
-      )}
 
       <form onSubmit={handleSubmit} noValidate>
         <ul className="schedule_list">
@@ -127,11 +115,11 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
                     <input
                       id={`time_${row.id}`}
                       type="time"
-                      value={row.time}
-                      onChange={(event) => updateRow(row.id, "time", event.target.value)}
-                      aria-invalid={errors.time ? true : undefined}
+                      value={row.local_time}
+                      onChange={(event) => updateRow(row.id, "local_time", event.target.value)}
+                      aria-invalid={errors.local_time ? true : undefined}
                     />
-                    {errors.time && <p className="field_error">{errors.time}</p>}
+                    {errors.local_time && <p className="field_error">{errors.local_time}</p>}
                   </div>
                   <div className="field">
                     <label htmlFor={`grams_${row.id}`}>Grams</label>
@@ -139,7 +127,7 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
                       <button
                         type="button"
                         onClick={() => updateRow(row.id, "grams", stepGrams(row.grams, -1))}
-                        aria-label={`${GRAM_STEP} grams less for meal ${index + 1}`}
+                        aria-label={`${GRAM_STEP} g less for meal ${index + 1}`}
                       >
                         −
                       </button>
@@ -154,7 +142,7 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
                       <button
                         type="button"
                         onClick={() => updateRow(row.id, "grams", stepGrams(row.grams, 1))}
-                        aria-label={`${GRAM_STEP} grams more for meal ${index + 1}`}
+                        aria-label={`${GRAM_STEP} g more for meal ${index + 1}`}
                       >
                         +
                       </button>

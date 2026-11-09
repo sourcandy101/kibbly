@@ -1,93 +1,170 @@
-// Sample content for preview mode, used until Firebase and the feeder are linked.
+// Sample documents for preview mode, in the exact shape of schemas/.
+// Used until Firebase and the feeder are linked.
 
-import { clockTime } from "../logic/today_meals.js";
+import { localDateIn, localTimeIn, localToUtc, utcStamp } from "../logic/time.js";
 
 export const SAMPLE_HOME_ID = "home_sample";
+const SAMPLE_WEIGHED_ON = "2026-11-01";
 
-export function makeSampleDogs() {
-  const shared = { home_id: SAMPLE_HOME_ID, photo_urls: [], video_url: null, voice_clip_url: null };
+export function emptyMedia() {
+  return { photo_urls: [], video_url: null, voice_clip_url: null };
+}
+
+export function emptyRecognition() {
+  return { status: "not_enrolled", reference_images: 0, updated_at: null };
+}
+
+export function makeSampleHome(ownerId, timezone, now = new Date()) {
+  return {
+    home_id: SAMPLE_HOME_ID,
+    owner_id: ownerId,
+    timezone,
+    kibble: { brand: null, kcal_per_kg: null },
+    feeder: {
+      feeder_id: "feeder_sample",
+      wifi_status: "online",
+      last_seen_at: utcStamp(now),
+      tank_capacity_grams: 1000,
+      tank_grams_estimate: 620,
+    },
+    created_at: utcStamp(now),
+  };
+}
+
+export function makeSampleDogs(now = new Date()) {
+  const shared = {
+    home_id: SAMPLE_HOME_ID,
+    weight_measured_on: SAMPLE_WEIGHED_ON,
+    media: emptyMedia(),
+    recognition: emptyRecognition(),
+    created_at: utcStamp(now),
+    updated_at: utcStamp(now),
+  };
   return [
     {
       ...shared,
-      id: "dog_biscuit",
+      dog_id: "dog_biscuit",
       name: "Biscuit",
       breed: "Labrador Retriever",
       sex: "male",
-      age_months: 24,
-      weight_kg: 28,
+      neutered: true,
+      birth_month: "2024-03",
       activity: "medium",
-      meals_per_day: 2,
-      notes: "Shy, so he eats first.",
+      body_condition: "ideal",
+      current_weight_kg: 28,
+      notes: "Shy, eats slowly.",
       call_order: 1,
     },
     {
       ...shared,
-      id: "dog_mochi",
+      dog_id: "dog_mochi",
       name: "Mochi",
       breed: "French Bulldog",
       sex: "female",
-      age_months: 36,
-      weight_kg: 9,
+      neutered: true,
+      birth_month: "2023-06",
       activity: "low",
-      meals_per_day: 3,
+      body_condition: "overweight",
+      current_weight_kg: 9,
       notes: "Tries to eat everyone's dinner.",
       call_order: 2,
     },
   ];
 }
 
-export function makeSampleSchedules() {
+export function makeSampleWeights(dogs, now = new Date()) {
+  return dogs.map((dog) => ({
+    weight_id: `weight_${dog.dog_id}`,
+    home_id: dog.home_id,
+    dog_id: dog.dog_id,
+    measured_on: dog.weight_measured_on,
+    weight_kg: dog.current_weight_kg,
+    entered_at: utcStamp(now),
+  }));
+}
+
+function makeSampleSchedule(dogId, meals, now) {
   return {
-    dog_biscuit: {
-      dog_id: "dog_biscuit",
-      home_id: SAMPLE_HOME_ID,
-      meals: [
-        { time: "07:30", grams: 280 },
-        { time: "18:00", grams: 280 },
-      ],
-    },
-    dog_mochi: {
-      dog_id: "dog_mochi",
-      home_id: SAMPLE_HOME_ID,
-      meals: [
-        { time: "07:30", grams: 45 },
-        { time: "12:30", grams: 45 },
-        { time: "18:00", grams: 45 },
-      ],
-    },
+    dog_id: dogId,
+    home_id: SAMPLE_HOME_ID,
+    meals,
+    daily_total_grams: meals.reduce((sum, meal) => sum + meal.grams, 0),
+    plan_source: "owner_edited",
+    confirmed_at: utcStamp(now),
   };
 }
 
-export function makeSampleHome(ownerId, now = new Date()) {
+export function makeSampleSchedules(now = new Date()) {
   return {
-    id: SAMPLE_HOME_ID,
-    owner_id: ownerId,
-    feeder_id: "feeder_sample",
-    wifi_status: "connected",
-    last_seen: now.toISOString(),
-    tank_level_percent: 62,
+    dog_biscuit: makeSampleSchedule(
+      "dog_biscuit",
+      [
+        { slot: 1, label: "Breakfast", local_time: "08:00", grams: 280 },
+        { slot: 2, label: "Dinner", local_time: "18:00", grams: 280 },
+      ],
+      now,
+    ),
+    dog_mochi: makeSampleSchedule(
+      "dog_mochi",
+      [
+        { slot: 1, label: "Breakfast", local_time: "08:00", grams: 45 },
+        { slot: 2, label: "Lunch", local_time: "13:00", grams: 45 },
+        { slot: 3, label: "Dinner", local_time: "18:00", grams: 45 },
+      ],
+      now,
+    ),
   };
+}
+
+function plusMinutes(date, minutes) {
+  return new Date(date.getTime() + minutes * 60000);
 }
 
 // Pretends the feeder served every meal whose time has already passed today.
-export function makeSampleMealLogs(dogs, schedules, now = new Date()) {
-  const currentTime = clockTime(now);
+export function makeSampleMeals(dogs, schedules, timezone, now = new Date()) {
+  const today = localDateIn(now, timezone);
+  const currentTime = localTimeIn(now, timezone);
+  const dayId = today.replaceAll("-", "");
+
   return dogs.flatMap((dog) =>
-    (schedules[dog.id]?.meals ?? [])
-      .filter((meal) => meal.time <= currentTime)
-      .map((meal, index) => {
-        const [hours, minutes] = meal.time.split(":").map(Number);
-        const when = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+    (schedules[dog.dog_id]?.meals ?? [])
+      .filter((meal) => meal.local_time <= currentTime)
+      .map((meal) => {
+        const scheduledAt = localToUtc(today, meal.local_time, timezone);
+        const arrivedAt = utcStamp(plusMinutes(scheduledAt, 1));
+        const endedAt = utcStamp(plusMinutes(scheduledAt, 5));
+        const gramsEaten = meal.slot % 2 === 0 ? Math.max(0, meal.grams - 5) : meal.grams;
         return {
-          id: `meal_${dog.id}_${meal.time}`,
+          meal_id: `meal_${dog.dog_id}_${meal.slot}_${dayId}`,
           home_id: dog.home_id,
-          dog_id: dog.id,
-          scheduled_time: meal.time,
-          time: when.toISOString(),
-          grams_served: meal.grams,
-          grams_eaten: index % 2 === 0 ? meal.grams : Math.max(0, meal.grams - 5),
-          recognized: true,
-          confidence: 0.94,
+          dog_id: dog.dog_id,
+          slot: meal.slot,
+          scheduled_at: utcStamp(scheduledAt),
+          planned_grams: meal.grams,
+          status: "completed",
+          recognition_mode: "camera",
+          call_attempts: 1,
+          first_arrival_at: arrivedAt,
+          ended_at: endedAt,
+          bowl_grams_at_start: 0,
+          grams_dispensed: meal.grams,
+          grams_eaten: gramsEaten,
+          grams_left_in_bowl: meal.grams - gramsEaten,
+          visits: [
+            {
+              visit_id: `visit_${dog.dog_id}_${meal.slot}_${dayId}`,
+              started_at: arrivedAt,
+              ended_at: endedAt,
+              classification: "known_dog",
+              dog_id: dog.dog_id,
+              confidence: 0.94,
+              outcome: "served",
+              grams_dispensed: meal.grams,
+              grams_eaten: gramsEaten,
+              photo_url: null,
+            },
+          ],
+          logged_offline: false,
         };
       }),
   );

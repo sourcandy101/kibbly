@@ -1,51 +1,37 @@
-// Combines schedules and meal logs into the list shown on the home screen.
+// Combines schedules and meal documents into the list shown on the home screen.
 
-function isSameLocalDay(isoTime, now) {
-  const date = new Date(isoTime);
-  return (
-    date.getFullYear() === now.getFullYear() &&
-    date.getMonth() === now.getMonth() &&
-    date.getDate() === now.getDate()
-  );
-}
+import { localDateIn, localTimeIn } from "./time.js";
 
-export function clockTime(date) {
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
-}
-
-// Status of each row:
-//   done       the feeder logged this meal today
+// A row's status is the meal document's status from schemas/meal.json, or one of:
 //   upcoming   the meal time has not arrived
-//   no_report  the meal time passed with no log from the feeder
-export function buildTodayMeals(dogs, schedules, mealLogs, now = new Date()) {
-  const currentTime = clockTime(now);
-  const orderedDogs = [...dogs].sort((a, b) => a.call_order - b.call_order);
-  const todayLogs = mealLogs.filter((log) => isSameLocalDay(log.time, now));
+//   no_report  the meal time passed and the feeder has not reported yet
+export function buildTodayMeals(dogs, schedules, mealDocs, timezone, now = new Date()) {
+  const today = localDateIn(now, timezone);
+  const currentTime = localTimeIn(now, timezone);
+  const todayDocs = mealDocs.filter((doc) => localDateIn(new Date(doc.scheduled_at), timezone) === today);
 
-  const rows = orderedDogs.flatMap((dog) => {
-    const planned = schedules[dog.id]?.meals ?? [];
-    return planned.map((meal) => {
-      const log = todayLogs.find((entry) => entry.dog_id === dog.id && entry.scheduled_time === meal.time);
+  const rows = dogs.flatMap((dog) =>
+    (schedules[dog.dog_id]?.meals ?? []).map((meal) => {
+      const doc = todayDocs.find((entry) => entry.dog_id === dog.dog_id && entry.slot === meal.slot);
       let status = "no_report";
-      if (log) status = "done";
-      else if (meal.time > currentTime) status = "upcoming";
+      if (doc) status = doc.status;
+      else if (meal.local_time > currentTime) status = "upcoming";
       return {
-        key: `${dog.id}_${meal.time}`,
-        dog_id: dog.id,
+        key: `${dog.dog_id}_${meal.slot}`,
+        dog_id: dog.dog_id,
         dog_name: dog.name,
         call_order: dog.call_order,
-        time: meal.time,
+        label: meal.label,
+        local_time: meal.local_time,
         planned_grams: meal.grams,
-        grams_served: log?.grams_served ?? null,
-        grams_eaten: log?.grams_eaten ?? null,
+        grams_dispensed: doc?.grams_dispensed ?? null,
+        grams_eaten: doc?.grams_eaten ?? null,
         status,
       };
-    });
-  });
+    }),
+  );
 
-  return rows.sort((a, b) => a.time.localeCompare(b.time) || a.call_order - b.call_order);
+  return rows.sort((a, b) => a.local_time.localeCompare(b.local_time) || a.call_order - b.call_order);
 }
 
 export function summarizeToday(rows) {

@@ -11,7 +11,7 @@ export default function CallingOrderScreen({ data, refresh }) {
     const reordered = [...dogs];
     const [dog] = reordered.splice(index, 1);
     reordered.splice(index + offset, 0, dog);
-    await saveCallOrder(reordered.map((entry) => entry.id));
+    await saveCallOrder(reordered.map((entry) => entry.dog_id));
     await refresh();
     setAnnouncement(`${dog.name} is now number ${index + offset + 1}.`);
   };
@@ -33,7 +33,7 @@ export default function CallingOrderScreen({ data, refresh }) {
       ) : (
         <ol className="order_list">
           {dogs.map((dog, index) => (
-            <li key={dog.id} className="card order_row">
+            <li key={dog.dog_id} className="card order_row">
               <span className="order_rank">{index + 1}</span>
               <DogAvatar name={dog.name} />
               <strong className="order_name">{dog.name}</strong>

@@ -451,19 +451,24 @@ a {
   font-weight: 700;
 }
 
-.badge_done {
+.badge_good {
   background: var(--good_soft);
   color: var(--good);
 }
 
-.badge_upcoming {
+.badge_quiet {
   background: var(--quiet_soft);
   color: var(--ink_soft);
 }
 
-.badge_no_report {
+.badge_warn {
   background: var(--warn_soft);
   color: var(--warn);
+}
+
+.badge_bad {
+  background: var(--danger);
+  color: var(--card);
 }
 
 /* Dogs */
