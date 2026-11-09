@@ -27,7 +27,7 @@ This table is updated at the end of each step.
 
 ## Setup
 
-Everything lives on the D: drive (C: is full).
+Everything lives on the D: drive (C: is full). Model caches: `D:i_cache` (user variables `HF_HOME`, `YOLO_CONFIG_DIR`, `TORCH_HOME`, `PIP_CACHE_DIR`). Datasets: `D:\kibbly_data`, never in the repo.
 
 ```
 cd D:\kibbly\ai_v2

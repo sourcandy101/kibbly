@@ -69,3 +69,14 @@ Collar rules: wide flat band (2 to 3 cm) in a color never found in dog coats (br
 Why not collar only: Kibbly's promise is recognition by appearance; existing feeders already identify pets with tags or microchips. The ESP32-CAM color balance also shifts with light, and a collar can be hidden or removed.
 
 Order: the collar step comes after the appearance pipeline is measured (step 4.8), because it needs real photos of dogs wearing collars and because the numbers will show whether it is needed beyond look alike pairs.
+
+## Recognition decisions (step 4.1, 9 November 2026)
+
+| Topic | Decision | Note |
+|---|---|---|
+| Test data | DogFaceNet now, friends' dogs videos, PetFace requested | DogFaceNet: 8,363 aligned face images of 1,393 dogs, CC BY 4.0 (credit the authors). PetFace: research use only, request form. Friends' dogs: see `data_collection_guide.md`. |
+| Detector | YOLO (Ultralytics) | AGPL 3.0 license: fine for the course prototype. Before any commercial use, switch to a permissive detector (the detector sits behind an interface) or buy an Ultralytics license. |
+| Image model | Compare DINOv2 small and CLIP, keep the best | Same evaluation for both |
+| Error targets | At most 2% of unknown or wrong dogs accepted, at least 90% of correct dogs accepted at the first check | The threshold is chosen from data to meet the first number |
+
+Data lives in `D:\kibbly_data`, never in the repo (size and privacy).
