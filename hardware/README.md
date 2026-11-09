@@ -45,7 +45,7 @@ We build the hardware in 7 steps, in order. Each step has its own file or folder
 | Step | What | Where | Status |
 |---|---|---|---|
 | 1 | List of hardware | [01_hardware_list.md](01_hardware_list.md) | In progress |
-| 2 | System architecture | `02_system_architecture.md` | Not started |
+| 2 | System architecture | [02_system_architecture.md](02_system_architecture.md) | Done (decisions to confirm) |
 | 3 | Wiring and testing each component alone | [03_component_tests/](03_component_tests/) | Not started |
 | 4 | Wiring list for every component | `04_wiring_list.md` | Not started |
 | 5 | Code for the ESP32 and the STM32 | [`firmware/`](../firmware/) | Not started |
