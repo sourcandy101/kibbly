@@ -29,11 +29,11 @@ It is the **BEAR** project (Business, Embedded, AI, Research), used across three
 | **Zaineb Sassi** | AI and Data Lead | `sourcandy101` (owner) | admin |
 | Youssef Bousnina | Product Design and PCB Lead | `bousninayoussef2005-netizen` | write |
 | Hedi Ennaifer | Hardware and Electrical Lead | `HediE-source` | write |
-| Moetaz El Ouaer | Web App and Connectivity Lead | not known yet | not invited yet |
+| Moetaz El Ouaer | Web App and Connectivity Lead | `MoetazEO` | write (invited 9 Nov, pending acceptance) |
 
 **Repository (private):** https://github.com/sourcandy101/kibbly  
 **Local clone:** `C:\Users\zayne\kibbly`  
-**Access you have:** GitHub CLI is installed at `C:\Program Files\GitHub CLI\gh.exe` and logged in as `sourcandy101` (HTTPS, scopes repo, read:org, gist). Git identity: zayneb sassi, zeineb.sassi@medtech.tn. **You are allowed to commit and push to `main`, create branches, open pull requests and invite collaborators** (invite by GitHub username with write permission: `gh api -X PUT repos/sourcandy101/kibbly/collaborators/<username> -f permission=push`). To invite Moetaz, ask Zaineb for his username.
+**Access you have:** GitHub CLI is installed at `C:\Program Files\GitHub CLI\gh.exe` and logged in as `sourcandy101` (HTTPS, scopes repo, read:org, gist). Git identity: zayneb sassi, zeineb.sassi@medtech.tn. **You are allowed to commit and push to `main`, create branches, open pull requests and invite collaborators** (invite by GitHub username with write permission: `gh api -X PUT repos/sourcandy101/kibbly/collaborators/<username> -f permission=push`). All four members are invited.
 
 Repository layout:
 
