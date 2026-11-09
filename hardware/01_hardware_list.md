@@ -13,8 +13,8 @@ One chosen part per job, picked for reliability and for good support on the STM3
 
 | # | Part | Qty | Job | Why this one | Have it |
 |---|---|---|---|---|---|
-| 3 | **NEMA 17 stepper motor**, 42 x 40 mm, about 0.4 Nm, 1.5 A | 1 | Turns the auger | Precise, repeatable rotation, so each burst gives the same amount of kibble | |
-| 4 | **TMC2209 driver module** (BigTreeTech or FYSETC) | 1 | Drives the stepper from the STM32 | Silent, current set in software over UART, built in stall detection (StallGuard) as a second jam check next to the scale | |
+| 3 | **NEMA 17 stepper motor**, 42 x 40 mm, about 0.4 Nm, 1.5 A | 1 | Turns the auger | Precise, repeatable rotation, so each burst gives the same amount of kibble | See with Hedi's ISS Group |
+| 4 | **TMC2209 driver module** (BigTreeTech or FYSETC) | 1 | Drives the stepper from the STM32 | Silent, current set in software over UART, built in stall detection (StallGuard) as a second jam check next to the scale | See with Hedi's ISS Group|
 | 5 | **Auger**, 3D printed in PETG, with a 5 mm shaft coupler | 1 | Pushes about 5 g of kibble per burst | An auger meters dry kibble evenly and rarely jams; PETG is stronger and safer for food than PLA | |
 
 ## 3. Sensors
