@@ -4,6 +4,34 @@ Owners: Youssef Bousnina (Embedded and Hardware Lead) and Hedi Ennaifer (Hardwar
 
 This folder holds everything technical about the feeder: parts, architecture, wiring and test results. The code for the STM32 and the ESP32 lives in [`firmware/`](../firmware/). The main [README](../README.md) explains the project in general.
 
+## MUST DO NOW: real hardware inventory
+
+**Owners: Youssef and Hedi. The hardware work is blocked until this is done.**
+
+The parts list in [step 1](01_hardware_list.md) and the architecture in [step 2](02_system_architecture.md) are based on recommended parts. Before any coding or wiring, they must match the parts we really have.
+
+| # | Task | Who | Done |
+|---|---|---|---|
+| 1 | Gather every hardware part the team physically has, in one place | Youssef and Hedi | |
+| 2 | Write the exact list of components (see what to record below) | Youssef and Hedi | |
+| 3 | Compare the real list with [01_hardware_list.md](01_hardware_list.md): what matches, what differs, what is missing | Youssef with Claude | |
+| 4 | Decide the changes: keep, replace or buy each differing or missing part | Youssef and Hedi | |
+| 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | |
+| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | |
+| 7 | Start coding the boards (step 3 component tests, then step 5) | Youssef and Hedi | |
+
+What to record for each part:
+
+| Item | Example |
+|---|---|
+| Name | Load cell amplifier |
+| Exact model printed on the board or the chip | HX711, green board, pins VCC DT SCK GND |
+| Quantity | 1 |
+| Supply voltage written on it or on the seller page | 2.6 to 5.5 V |
+| Photo of both sides | `hx711_front.jpg`, `hx711_back.jpg` |
+| Seller link, if known | |
+| Condition | New, used, untested |
+
 ## What the feeder does
 
 1. At meal time the feeder plays the call of the first dog ("Biscuit!") from the SD card.

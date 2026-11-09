@@ -42,6 +42,8 @@ Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 
 **The database links hardware and software.** The feeder never talks to the app directly. Through the ESP32 it reads the schedules, dog names and voice clips from Firebase, and writes meals, alerts and its WiFi status back. The app reads and writes the same data.
 
+**Must do now (hardware).** Youssef and Hedi gather every physical part the team has and write the exact list of components. The parts list and the system architecture are then updated to match the real parts, and only after that does coding of the boards start. Details in [hardware/README.md](hardware/README.md#must-do-now-real-hardware-inventory).
+
 **Progress.** Youssef and Hedi build the hardware in 7 steps. Technical details are in [hardware/](hardware/) and the code in [firmware/](firmware/).
 
 | Step | What | Status |
