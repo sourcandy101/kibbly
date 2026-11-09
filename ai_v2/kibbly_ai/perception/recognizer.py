@@ -17,9 +17,10 @@ from kibbly_ai.perception.scene import SceneClassifier
 
 @dataclass(frozen=True)
 class RecognitionSettings:
-    # Chosen in step 4.6 (evaluation/recognition/results_recognition.md): DINOv2 small class token,
-    # 3 enrollment photos, 2 photos per check, feeder camera simulation, at most 2% strangers.
-    accept_score: float = 0.61
+    # Chosen in step 4.6 (evaluation/recognition/results_recognition.md) for the embedder
+    # dinov2_small_cls_proj (DINOv2 small with the learned layer), 3 enrollment photos,
+    # 2 photos per check, feeder camera simulation, at most 2% strangers on calibration dogs.
+    accept_score: float = 0.485
     min_margin: float = 0.08        # best dog must beat the second best by this much, else unsure
     min_dog_confidence: float = 0.35
     min_scene_dog: float = 0.89     # CLIP dog probability, chosen by evaluation/recognition/gate_check.py

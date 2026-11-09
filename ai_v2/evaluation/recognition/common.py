@@ -54,3 +54,23 @@ def color_signature(image: Image.Image) -> np.ndarray:
 
 def cache_file(model: str, condition: str) -> pathlib.Path:
     return CACHE / f"{model}_{condition}.npz"
+
+
+def images_by_dog(labels) -> list:
+    """List of image index arrays, one per dog, in dog folder order."""
+    by_dog = {}
+    for i, label in enumerate(labels):
+        by_dog.setdefault(str(label), []).append(i)
+    return [np.array(v) for _, v in sorted(by_dog.items(), key=lambda kv: int(kv[0]))]
+
+
+def split_dogs(groups: list, seed: int = 7):
+    """Three disjoint sets of dogs: train (learned layer), calibration (thresholds), test (results).
+    Dogs with at least 4 images: 50% train, 25% calibration, 25% test. Dogs with fewer images
+    cannot be evaluated and all go to train."""
+    rng = np.random.default_rng(seed)
+    eligible = [d for d in range(len(groups)) if len(groups[d]) >= 4]
+    small = [d for d in range(len(groups)) if len(groups[d]) < 4]
+    eligible = list(rng.permutation(eligible))
+    half, three_q = len(eligible) // 2, (3 * len(eligible)) // 4
+    return (sorted(eligible[:half] + small), sorted(eligible[half:three_q]), sorted(eligible[three_q:]))

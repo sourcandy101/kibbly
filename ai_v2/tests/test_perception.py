@@ -11,6 +11,8 @@ from kibbly_ai.perception.enrollment import build_references, most_varied
 from kibbly_ai.perception.gallery import Gallery
 from kibbly_ai.perception.recognizer import RecognitionSettings, Recognizer
 
+DOGFACENET = pathlib.Path("D:/kibbly_data/dogfacenet/extracted/after_4_bis")
+
 
 class FakeDetector(Detector):
     """Reads what to 'see' from the image color: red = dog, blue = person, black = nothing."""
@@ -124,7 +126,25 @@ def test_scene_check_finds_a_dog_the_detector_missed():
 
 def test_default_settings_come_from_the_evaluation():
     settings = RecognitionSettings()
-    assert (settings.accept_score, settings.min_margin, settings.min_scene_dog) == (0.61, 0.08, 0.89)
+    assert (settings.accept_score, settings.min_margin, settings.min_scene_dog) == (0.485, 0.08, 0.89)
+
+
+def test_projection_weights_are_shipped_and_valid():
+    from kibbly_ai.perception.models import PROJECTION
+    with np.load(PROJECTION) as data:
+        matrix = data["matrix"]
+    assert matrix.shape == (384, 384) and np.isfinite(matrix).all()
+
+
+@pytest.mark.skipif(not DOGFACENET.exists(), reason="DogFaceNet not downloaded")
+def test_projected_embedder_tells_two_dogs_apart():
+    from kibbly_ai.perception.models import ProjectedEmbedder
+    embedder = ProjectedEmbedder()
+    a = sorted((DOGFACENET / "0").iterdir())
+    b = sorted((DOGFACENET / "1").iterdir())
+    vectors = embedder.embed([Image.open(p) for p in (a[0], a[1], b[0])])
+    assert embedder.name == "dinov2_small_cls_proj" and vectors.shape == (3, 384)
+    assert float(vectors[0] @ vectors[1]) > float(vectors[0] @ vectors[2])
 
 
 def test_gallery_must_match_embedder():
@@ -151,8 +171,6 @@ def test_build_references_drops_frames_without_a_dog():
     vectors, report = build_references(frames, FakeDetector(), FakeEmbedder(), k=5)
     assert len(vectors) == 0 and report["dropped"]["no_single_dog"] == 2
 
-
-DOGFACENET = pathlib.Path("D:/kibbly_data/dogfacenet/extracted/after_4_bis")
 
 
 @pytest.mark.skipif(not DOGFACENET.exists(), reason="DogFaceNet not downloaded")

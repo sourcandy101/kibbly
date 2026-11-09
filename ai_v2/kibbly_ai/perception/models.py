@@ -87,6 +87,26 @@ class ClipEmbedder(_TorchEmbedder):
         return features.numpy()
 
 
+PROJECTION = __import__("pathlib").Path(__file__).resolve().parent / "weights" / "dinov2_projection.npz"
+
+
+class ProjectedEmbedder(Embedder):
+    """DINOv2 small class token followed by the learned 384 x 384 layer (evaluation/recognition/
+    train_projection.py), trained on DogFaceNet train dogs so that clean and feeder quality
+    photos of the same dog match better."""
+
+    def __init__(self, base: Embedder = None, weights=PROJECTION):
+        import numpy as np
+        self.base = base or DinoV2Embedder(pooling="cls")
+        with np.load(weights) as data:
+            self.matrix = data["matrix"].astype(np.float32)
+        self.dim = self.matrix.shape[1]
+        self.name = "dinov2_small_cls_proj"
+
+    def embed(self, images: list) -> np.ndarray:
+        return normalize(self.base.embed(images) @ self.matrix)
+
+
 def normalize_t(torch, x):
     return x / x.norm(dim=1, keepdim=True).clamp_min(1e-12)
 
@@ -98,4 +118,6 @@ def make_embedder(name: str) -> Embedder:
         return DinoV2Embedder(pooling="cls_mean")
     if name == "clip_b32":
         return ClipEmbedder()
+    if name == "dinov2_small_cls_proj":
+        return ProjectedEmbedder()
     raise ValueError(f"unknown embedder {name}")

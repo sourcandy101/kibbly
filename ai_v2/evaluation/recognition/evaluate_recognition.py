@@ -3,8 +3,9 @@
   python evaluation/recognition/evaluate_recognition.py [--homes 1500]
 
 Method
-1. Dogs with at least 4 images are split in two halves: calibration dogs (used to choose
-   the threshold) and test dogs (used to report results). No dog is in both.
+1. Dogs are split three ways (common.split_dogs): train dogs (only used to train the learned
+   layer, see train_projection.py), calibration dogs (choose the threshold) and test dogs
+   (report results). No dog is in two sets.
 2. A simulated home has 2 to 4 dogs. Each dog is enrolled with K clean photos (the owner's
    phone). Queries are the dog's other photos, clean or through the feeder camera simulation.
 3. Strangers: 6 dogs from outside the home (same half) try to eat.
@@ -27,9 +28,9 @@ import numpy as np
 
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[2]))
 
-from evaluation.recognition.common import HERE, cache_file  # noqa: E402
+from evaluation.recognition.common import HERE, cache_file, split_dogs  # noqa: E402
 
-MODELS = ["dinov2_small_cls", "dinov2_small_cls_mean", "clip_b32"]
+MODELS = ["dinov2_small_cls_proj", "dinov2_small_cls", "dinov2_small_cls_mean", "clip_b32"]
 TARGET_STRANGER, TARGET_WRONG, TARGET_RIGHT = 0.02, 0.02, 0.90
 STRANGERS_PER_HOME = 6
 THRESHOLDS = np.round(np.arange(0.30, 0.995, 0.005), 3)
@@ -141,10 +142,7 @@ def run(homes_per_setting, seed):
     colors = np.load(cache_file("colors", "clean"))["colors"]
     color_sim = color_similarity(images_by_dog, colors)
 
-    rng = np.random.default_rng(seed)
-    dogs = [d for d in range(len(images_by_dog)) if len(images_by_dog[d]) >= 4]
-    dogs = list(rng.permutation(dogs))
-    calibration, test = sorted(dogs[: len(dogs) // 2]), sorted(dogs[len(dogs) // 2:])
+    _, calibration, test = split_dogs(images_by_dog, seed)
 
     rows = []
     for k in (1, 3, 5):
