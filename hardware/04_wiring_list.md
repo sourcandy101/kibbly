@@ -246,6 +246,8 @@ Differences from the TMC2209 wiring of section 6:
 
 ## 7. Load cell and HX711
 
+Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 22 to 25** of the bottom half; the board hangs over the bottom edge.
+
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
 | H1 | Load cell red | HX711 `E+` | Red (cell wire) | Colours vary by brand; see below | |
@@ -253,12 +255,15 @@ Differences from the TMC2209 wiring of section 6:
 | H3 | Load cell white | HX711 `A-` | White (cell wire) | | |
 | H4 | Load cell green | HX711 `A+` | Green (cell wire) | | |
 | H5 | HX711 `B+`, `B-` | Not connected | | Channel B is not used | |
-| H6 | HX711 `VCC` | 3.3 V bus | Yellow | 3.3 V | |
-| H7 | HX711 `VDD` (SparkFun board only) | 3.3 V bus | Yellow | Must equal VCC | |
-| H8 | HX711 `GND` | GND rail | Black | | |
-| H9 | HX711 `DT` or `DOUT` | STM32 PF14 (CN10, D4) | Grey | | |
-| H10 | HX711 `SCK` or `CLK` | STM32 PE13 (CN10, D3) | Grey | | |
-| H11 | HX711 `RATE` (if present) | GND | Black | 10 readings per second, less noise | |
+| H6 | HX711 `VCC` (column 25) | Bottom + rail (3.3 V), column 27 | Yellow | 3.3 V, so DT stays safe for the STM32 | |
+| H7 | HX711 `GND` (column 22) | Bottom − rail (GND), column 20 | Black | | |
+| H8 | HX711 `DT` or `DOUT` (column 23) | Nucleo D4 · PF14 (CN10 pin 8) | Brown | Row d | |
+| H9 | HX711 `SCK` or `CLK` (column 24) | Nucleo D3 · PE13 (CN10 pin 10) | Grey | Row c | |
+| H10 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | Same wire as V20 when circuit 1 is wired | |
+| H11 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21 when circuit 1 is wired | |
+| H12 | HX711 `VDD` (SparkFun board only) | 3.3 V rail | Yellow | Must equal VCC; generic boards do not have it | |
+
+The `RATE` pin (10 or 80 readings per second) is fixed on most generic boards at 10 per second, which gives less noise.
 
 Checking the load cell colours: with the cell unplugged, the pair with the **highest** resistance (about 1 kohm) is the excitation pair (E+ and E minus); the other pair is the signal (A+ and A minus). If the weight reads negative, swap A+ and A minus.
 
@@ -360,8 +365,8 @@ For the Adafruit MAX98357A breakout.
 |---|---|---|
 | 12 V | TMC2209 VM, XL4015 IN+ | P1, P3, M1 |
 | 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V | P5, P7, E1, A1, S1 |
-| 3.3 V | TMC2209 VIO, HX711, ultrasonic, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, H7, U1, I3, I9 |
-| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H8, H11, U4, I4, I10, S2, A2, B2, L3 |
+| 3.3 V | TMC2209 VIO, HX711, ultrasonic, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, U1, I3, I9 |
+| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, I4, I10, S2, A2, B2, L3 |
 
 ## 14. STM32CubeMX settings
 
