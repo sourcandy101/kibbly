@@ -34,6 +34,11 @@ ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 43
        "e": 476, "d": 496, "c": 516, "b": 536, "a": 556, "bot-": 600, "bot+": 620}
 
 
+# ESP32-CAM pin rows as seen from the camera side, left to right
+ESP_BOTTOM = ["IO4", "IO2", "IO14", "IO15", "IO13", "IO12", "GND", "5V"]
+ESP_TOP = ["GND", "U0T", "U0R", "VCC", "GND", "IO0", "IO16", "3V3"]
+
+
 def X(c):
     return 500 + (c - 1) * 20
 
@@ -203,6 +208,42 @@ class Drawing:
     def ground_link(self, col=1):
         """Join the top − rail and the bottom − rail."""
         self.wire(f"M{X(col)},{ROW['top-']} L{X(col)},{ROW['bot-']}", BLACK, [(X(col), ROW['top-']), (X(col), ROW['bot-'])])
+
+    def esp32_cam(self, x0, y0=96, used_bottom=(), used_top=()):
+        """ESP32-CAM seen from the camera side, pins every 20 px. x0: x of the left pins; y0: top of the board.
+        The bottom row (5V ... IO4) points down, the top row (3V3 ... GND, used to load programs) points up.
+        Returns (bottom, top): pin name to (x, y) of the pin tip. In the top row 'GND' is the pin next to
+        IO0 and 'GND end' the one next to U0T. Used pins get white labels."""
+        a, t = self.add, self.text
+        bx1, bx2 = x0 - 176, x0 + 156
+        a(f'<rect x="{bx1}" y="{y0}" width="{bx2 - bx1}" height="140" rx="6" fill="#262626" stroke="#000" stroke-width="2"/>')
+        a(f'<rect x="{bx1 + 10}" y="{y0 + 12}" width="128" height="116" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>')
+        a(f'<path d="M{bx1 + 16},{y0 + 24} L{bx1 + 16},{y0 + 116} M{bx1 + 22},{y0 + 24} L{bx1 + 22},{y0 + 116} '
+          f'M{bx1 + 16},{y0 + 24} L{bx1 + 22},{y0 + 24} M{bx1 + 16},{y0 + 116} L{bx1 + 22},{y0 + 116}" '
+          f'stroke="#d4af37" stroke-width="2" fill="none"/>')
+        t(bx1 + 80, y0 + 66, "ESP32-S", 12, "#455a64", "middle", "bold")
+        t(bx1 + 80, y0 + 82, "WiFi module", 9, "#607d8b", "middle")
+        cx, cy = x0 + 50, y0 + 72
+        a(f'<rect x="{cx - 30}" y="{cy - 30}" width="60" height="60" rx="4" fill="#3a3a3a" stroke="#111"/>')
+        a(f'<circle cx="{cx}" cy="{cy}" r="22" fill="#111" stroke="#555" stroke-width="2"/>')
+        a(f'<circle cx="{cx}" cy="{cy}" r="12" fill="#1a237e"/>')
+        a(f'<circle cx="{cx - 4}" cy="{cy - 4}" r="4" fill="#90caf9"/>')
+        t(cx, cy + 44, "camera", 9, "#bbb", "middle")
+        a(f'<rect x="{x0 + 114}" y="{cy - 8}" width="16" height="16" rx="2" fill="#fff9c4" stroke="#f9a825"/>')
+        t(x0 + 122, cy + 22, "flash", 8, "#bbb", "middle")
+        bottom, top = {}, {}
+        for k, name in enumerate(ESP_BOTTOM):
+            x = x0 + 20 * k
+            a(f'<rect x="{x - 3}" y="{y0 + 140}" width="6" height="12" fill="#d4af37"/>')
+            t(x, y0 + 134, name, 7 if len(name) > 3 else 8, "#fff" if name in used_bottom else "#8a8a8a", "middle", "bold")
+            bottom[name] = (x, y0 + 152)
+        for k, name in enumerate(ESP_TOP):
+            x = x0 + 20 * k
+            key = "GND end" if name == "GND" and k == 0 else name
+            a(f'<rect x="{x - 3}" y="{y0 - 12}" width="6" height="12" fill="#d4af37"/>')
+            t(x, y0 + 21, name, 6.5, "#fff" if key in used_top else "#9e9e9e", "middle", "bold")
+            top[key] = (x, y0 - 12)
+        return bottom, top
 
     def notes_box(self, x, y, w, h):
         self.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#fafafa" stroke="#dddddd"/>')

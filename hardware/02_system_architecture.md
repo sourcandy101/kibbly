@@ -11,7 +11,7 @@ How the parts from [step 1](01_hardware_list.md) fit together: which board does 
 | 1 | [Overview](#1-overview) | The whole system in layers: cloud, boards, parts |
 | 2 | [Who decides what](#2-who-decides-what) | The job of the STM32 and the job of the ESP32 |
 | 3 | [Connection diagram](#3-connection-diagram) | Every part, its bus and its pins |
-| 4 | [Communication links](#4-communication-links) | Bus types, speeds, addresses, UART messages |
+| 4 | [Communication links](#4-communication-links) | Bus types, speeds, addresses, UART messages, loading programs |
 | 5 | [Power](#5-power) | Power tree, voltages, currents, safety rules |
 | 6 | [Pin plan](#6-pin-plan) | The exact pin for every wire |
 | 7 | [One meal in time order](#7-one-meal-in-time-order) | Messages between STM32, ESP32, AI server and Firebase |
@@ -169,6 +169,33 @@ One message per line, readable as text, so we can watch and type them in a seria
 | STM32 to ESP32 | `PAIR` | Button pressed twice: start WiFi pairing |
 | Both | `OK`, `ERR` | Reply to every message |
 
+### Loading programs and reading logs
+
+Each board gets its program and shows its messages through its own USB cable, so both can stay plugged into the same laptop at once.
+
+```mermaid
+flowchart LR
+    PC["Laptop"]
+    subgraph NU["NUCLEO-F439ZI"]
+        STL["ST-LINK"] <--> STM["STM32"]
+    end
+    subgraph DK["ESP32 DevKit V1, EN on GND"]
+        USB["USB chip"]
+    end
+    CAM["ESP32-CAM<br/>IO0 on GND while loading"]
+    PC <-->|"USB cable"| STL
+    PC <-->|"USB cable"| USB
+    USB <-->|"RX0 to U0R<br/>TX0 to U0T"| CAM
+    STM <-->|"UART link<br/>(circuit 5)"| CAM
+```
+
+| Board | Tool | Loading a program | Messages for debugging |
+|---|---|---|---|
+| NUCLEO-F439ZI | STM32CubeIDE | Through the ST-LINK on the Nucleo USB cable: one click on Run | USART3 (PD8, PD9) through the ST-LINK serial port, 115200 baud |
+| ESP32-CAM | PlatformIO, board `esp32cam` | Through the DevKit USB chip ([circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md)): IO0 on GND, press RST, upload at 115200, remove IO0, press RST | UART0 (U0T) through the DevKit, 115200 baud |
+
+The DevKit is a tool, not a part of the feeder: it is plugged in only to load programs or read the ESP32-CAM messages. With both USB cables in, the laptop shows two serial ports, so the UART link between the boards can be watched from both ends.
+
 ## 5. Power
 
 ```mermaid
@@ -260,9 +287,9 @@ Built in parts kept for debugging: LD1 green (PB0), LD2 blue (PB7), LD3 red (PB1
 | UART RX | IO14 | STM32 PC6, through 1 kohm |
 | 5V | 5V | 5 V top + rail, with a 1000 uF capacitor next to the wires |
 | GND | GND, next to 5V | Common ground |
-| Loading programs | U0T, U0R, IO0 | Left free; used with the ESP32 DevKit V1 |
+| Loading programs | U0T, U0R, IO0 | Left free; used with the ESP32 DevKit V1 ([circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md)) |
 
-The OV2640 camera is on the board. Its microSD slot stays empty, because a card would share IO14 and IO15 with the link. The ESP32-CAM has no USB port, so programs are loaded through the ESP32 DevKit V1 (see the programming note in [step 1](01_hardware_list.md)). Wiring: [circuit 5](circuits_by_part/05_esp32_cam_link/README.md).
+The OV2640 camera is on the board. Its microSD slot stays empty, because a card would share IO14 and IO15 with the link. The ESP32-CAM has no USB port, so programs are loaded through the ESP32 DevKit V1 (see [Loading programs and reading logs](#loading-programs-and-reading-logs)). Wiring: [circuit 5](circuits_by_part/05_esp32_cam_link/README.md).
 
 ### DRV8825 module
 

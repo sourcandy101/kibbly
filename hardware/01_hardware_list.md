@@ -82,6 +82,8 @@ Programming note: the ESP32-CAM has no USB port and we have no USB board for it.
 5. Upload from the computer through the DevKit USB port.
 6. Remove the `IO0` wire and press reset again to run the program.
 
+Drawn in [circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md), with a second way that loads programs while the ESP32-CAM stays wired to the feeder.
+
 If this is unreliable, the ESP32-CAM-MB USB board costs about 9 TND at [Little Son](https://little-son.tn/accueil/1410-module-shield-de-programmation-televersement-pour-esp32-cam.html).
 
 Driver note: with the DRV8825 the scale is the only jam check, which is enough for the demo. Its wiring (no UART wire, three microstep pins) is in section 6B of the [wiring list](04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) and in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).

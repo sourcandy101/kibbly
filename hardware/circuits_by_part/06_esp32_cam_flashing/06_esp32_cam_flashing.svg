@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="960" viewBox="0 0 1880 960">
+<rect width="1880" height="960" fill="#ffffff"/>
+<text x="40" y="46" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#c62828" text-anchor="start" font-weight="bold">PART 6: FLASHING THE ESP32-CAM WITH THE DEVKIT</text>
+<text x="40" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#444" text-anchor="start" font-weight="normal">Flashing = loading a program into the board. Bench setup, no Nucleo needed: the DevKit lends its USB chip.</text>
+<rect x="280" y="150" width="220" height="480" rx="8" fill="#1c2833" stroke="#0b1015" stroke-width="2"/>
+<rect x="336" y="156" width="108" height="144" rx="3" fill="#2b2b2b"/>
+<path d="M344,164 L344,178 L356,178 L356,164 L368,164 L368,178 L380,178 L380,164 L392,164 L392,178 L404,178 L404,164 L416,164 L416,178 L428,178 L428,164 L436,164" stroke="#d4af37" stroke-width="2" fill="none"/>
+<rect x="342" y="186" width="96" height="108" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>
+<text x="390" y="236" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#455a64" text-anchor="middle" font-weight="bold">ESP32</text>
+<text x="390" y="252" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#607d8b" text-anchor="middle" font-weight="normal">held off</text>
+<text x="390" y="264" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#607d8b" text-anchor="middle" font-weight="normal">by EN</text>
+<rect x="372" y="470" width="36" height="36" rx="2" fill="#111"/>
+<text x="390" y="522" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#cfd8dc" text-anchor="middle" font-weight="bold">USB chip</text>
+<text x="390" y="534" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#9e9e9e" text-anchor="middle" font-weight="normal">CP2102 or CH340</text>
+<rect x="321" y="594" width="18" height="16" rx="2" fill="#9e9e9e"/>
+<circle cx="330" cy="602" r="5" fill="#424242"/>
+<text x="330" y="622" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#bdbdbd" text-anchor="middle" font-weight="normal">EN</text>
+<rect x="441" y="594" width="18" height="16" rx="2" fill="#9e9e9e"/>
+<circle cx="450" cy="602" r="5" fill="#424242"/>
+<text x="450" y="622" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#bdbdbd" text-anchor="middle" font-weight="normal">BOOT</text>
+<rect x="372" y="620" width="36" height="20" rx="3" fill="#b0b0b0" stroke="#757575"/>
+<path d="M390,640 L390,668" stroke="#555" stroke-width="7" stroke-linecap="round"/>
+<text x="402" y="662" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="start" font-weight="normal">USB cable to the laptop</text>
+<rect x="294.5" y="210.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="218" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="start" font-weight="bold">EN</text>
+<rect x="478.5" y="210.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="218" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D23</text>
+<rect x="294.5" y="236.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="244" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">VP</text>
+<rect x="478.5" y="236.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="244" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D22</text>
+<rect x="294.5" y="262.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="270" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">VN</text>
+<rect x="478.5" y="262.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="270" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="end" font-weight="bold">TX0</text>
+<rect x="294.5" y="288.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="296" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D34</text>
+<rect x="478.5" y="288.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="296" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="end" font-weight="bold">RX0</text>
+<rect x="294.5" y="314.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="322" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D35</text>
+<rect x="478.5" y="314.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="322" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D21</text>
+<rect x="294.5" y="340.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="348" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D32</text>
+<rect x="478.5" y="340.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="348" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D19</text>
+<rect x="294.5" y="366.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="374" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D33</text>
+<rect x="478.5" y="366.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="374" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D18</text>
+<rect x="294.5" y="392.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="400" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D25</text>
+<rect x="478.5" y="392.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="400" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D5</text>
+<rect x="294.5" y="418.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="426" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D26</text>
+<rect x="478.5" y="418.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="426" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">TX2</text>
+<rect x="294.5" y="444.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="452" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D27</text>
+<rect x="478.5" y="444.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="452" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">RX2</text>
+<rect x="294.5" y="470.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="478" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D14</text>
+<rect x="478.5" y="470.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="478" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D4</text>
+<rect x="294.5" y="496.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="504" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D12</text>
+<rect x="478.5" y="496.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="504" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D2</text>
+<rect x="294.5" y="522.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="530" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="start" font-weight="normal">D13</text>
+<rect x="478.5" y="522.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="530" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">D15</text>
+<rect x="294.5" y="548.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="556" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="start" font-weight="bold">GND</text>
+<rect x="478.5" y="548.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="556" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="end" font-weight="bold">GND</text>
+<rect x="294.5" y="574.5" width="7" height="7" fill="#d4af37"/>
+<text x="312" y="582" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#fff" text-anchor="start" font-weight="bold">VIN</text>
+<rect x="478.5" y="574.5" width="7" height="7" fill="#d4af37"/>
+<text x="468" y="582" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#78909c" text-anchor="end" font-weight="normal">3V3</text>
+<text x="390" y="138" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="middle" font-weight="bold">ESP32 DevKit V1</text>
+<rect x="884" y="330" width="332" height="140" rx="6" fill="#262626" stroke="#000" stroke-width="2"/>
+<rect x="894" y="342" width="128" height="116" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>
+<path d="M900,354 L900,446 M906,354 L906,446 M900,354 L906,354 M900,446 L906,446" stroke="#d4af37" stroke-width="2" fill="none"/>
+<text x="964" y="396" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#455a64" text-anchor="middle" font-weight="bold">ESP32-S</text>
+<text x="964" y="412" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#607d8b" text-anchor="middle" font-weight="normal">WiFi module</text>
+<rect x="1080" y="372" width="60" height="60" rx="4" fill="#3a3a3a" stroke="#111"/>
+<circle cx="1110" cy="402" r="22" fill="#111" stroke="#555" stroke-width="2"/>
+<circle cx="1110" cy="402" r="12" fill="#1a237e"/>
+<circle cx="1106" cy="398" r="4" fill="#90caf9"/>
+<text x="1110" y="446" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#bbb" text-anchor="middle" font-weight="normal">camera</text>
+<rect x="1174" y="394" width="16" height="16" rx="2" fill="#fff9c4" stroke="#f9a825"/>
+<text x="1182" y="424" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#bbb" text-anchor="middle" font-weight="normal">flash</text>
+<rect x="1057" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1060" y="464" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO4</text>
+<rect x="1077" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1080" y="464" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO2</text>
+<rect x="1097" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1100" y="464" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO14</text>
+<rect x="1117" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1120" y="464" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO15</text>
+<rect x="1137" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1140" y="464" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO13</text>
+<rect x="1157" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1160" y="464" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO12</text>
+<rect x="1177" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1180" y="464" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="1197" y="470" width="6" height="12" fill="#d4af37"/>
+<text x="1200" y="464" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">5V</text>
+<rect x="1057" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1060" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="1077" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1080" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#fff" text-anchor="middle" font-weight="bold">U0T</text>
+<rect x="1097" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1100" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#fff" text-anchor="middle" font-weight="bold">U0R</text>
+<rect x="1117" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1120" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">VCC</text>
+<rect x="1137" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1140" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="1157" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1160" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#fff" text-anchor="middle" font-weight="bold">IO0</text>
+<rect x="1177" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1180" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">IO16</text>
+<rect x="1197" y="318" width="6" height="12" fill="#d4af37"/>
+<text x="1200" y="351" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">3V3</text>
+<text x="872" y="370" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="end" font-weight="bold">ESP32-CAM</text>
+<text x="872" y="388" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">same board as circuit 5,</text>
+<text x="872" y="404" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">seen from the camera side</text>
+<text x="872" y="426" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#c62828" text-anchor="end" font-weight="bold">Match every wire by its printed name</text>
+<text x="1000" y="512" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#555" text-anchor="middle" font-weight="normal">RST button: on the back of the board</text>
+<path d="M298,214 C262,214 250,226 250,246 L250,520 C250,540 262,552 298,552" fill="none" stroke="#5f5f5f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M298,214 C262,214 250,226 250,246 L250,520 C250,540 262,552 298,552" fill="none" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="298" cy="214" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="298" cy="552" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
+<text x="238" y="370" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="bold">EN to GND (grey wire):</text>
+<text x="238" y="386" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">holds the DevKit chip off,</text>
+<text x="238" y="402" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">so only its USB chip works</text>
+<path d="M482,266 L560,266 C590,266 600,304 630,304 L1066,304 C1074,304 1080,308 1080,314 L1080,318" fill="none" stroke="#1b5e20" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M482,266 L560,266 C590,266 600,304 630,304 L1066,304 C1074,304 1080,308 1080,314 L1080,318" fill="none" stroke="#43a047" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="482" cy="266" r="4.6" fill="#1b5e20" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="1080" cy="318" r="4.6" fill="#1b5e20" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M482,292 L560,292 C590,292 600,276 630,276 L1086,276 C1094,276 1100,282 1100,290 L1100,318" fill="none" stroke="#558b2f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M482,292 L560,292 C590,292 600,276 630,276 L1086,276 C1094,276 1100,282 1100,290 L1100,318" fill="none" stroke="#9ccc65" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="482" cy="292" r="4.6" fill="#558b2f" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="1100" cy="318" r="4.6" fill="#558b2f" stroke="#ffffff" stroke-width="1.2"/>
+<text x="640" y="248" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#2e7d32" text-anchor="start" font-weight="bold">TX0 to U0T and RX0 to U0R is right here: the DevKit</text>
+<text x="640" y="261" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#2e7d32" text-anchor="start" font-weight="normal">pins are named for its own chip, which is held off</text>
+<path d="M1140,318 C1140,296 1160,296 1160,318" fill="none" stroke="#5f5f5f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1140,318 C1140,296 1160,296 1160,318" fill="none" stroke="#a8a8a8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1140" cy="318" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="1160" cy="318" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
+<text x="1176" y="294" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#555" text-anchor="start" font-weight="bold">IO0 to GND (grey):</text>
+<text x="1176" y="307" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#555" text-anchor="start" font-weight="normal">only while loading</text>
+<path d="M482,552 L1166,552 C1174,552 1180,546 1180,538 L1180,482" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M482,552 L1166,552 C1174,552 1180,546 1180,538 L1180,482" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="482" cy="552" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="1180" cy="482" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M298,578 C272,578 264,590 264,606 L264,690 C264,702 274,710 290,710 L1186,710 C1196,710 1200,702 1200,692 L1200,482" fill="none" stroke="#a65c00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M298,578 C272,578 264,590 264,606 L264,690 C264,702 274,710 290,710 L1186,710 C1196,710 1200,702 1200,692 L1200,482" fill="none" stroke="#fb8c00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="298" cy="578" r="4.6" fill="#a65c00" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="1200" cy="482" r="4.6" fill="#a65c00" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="1300" y="130" width="560" height="210" rx="10" fill="#fafafa" stroke="#dddddd"/>
+<text x="1320" y="158" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">LOADING A PROGRAM</text>
+<text x="1320" y="184" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">1. Wire everything with the USB unplugged.</text>
+<text x="1320" y="206" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">2. Join IO0 to GND on the ESP32-CAM (grey wire).</text>
+<text x="1320" y="228" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3. Plug the DevKit USB into the laptop.</text>
+<text x="1320" y="250" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">4. Press the ESP32-CAM RST button (on the back).</text>
+<text x="1320" y="272" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">5. Upload from PlatformIO.</text>
+<text x="1320" y="294" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">6. Remove the IO0 wire and press RST again: the program</text>
+<text x="1320" y="316" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">runs, and its messages show in the serial monitor.</text>
+<rect x="1300" y="360" width="560" height="190" rx="10" fill="#fafafa" stroke="#dddddd"/>
+<text x="1320" y="388" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">ALREADY WIRED TO THE FEEDER (CIRCUIT 5)?</text>
+<text x="1320" y="414" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Keep the 4 wires of circuit 5 and add the DevKit:</text>
+<text x="1320" y="435" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">1. No orange VIN wire: the top + rail powers the ESP32-CAM.</text>
+<text x="1320" y="456" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">2. Black GND wire to the top − rail, column 39: the GND</text>
+<text x="1320" y="477" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">pin next to 5V is already taken by circuit 5.</text>
+<text x="1320" y="498" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3. TX0, RX0, EN and IO0 wires as in this picture.</text>
+<text x="1320" y="519" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">4. Plug in the Nucleo USB first, then the DevKit USB.</text>
+<rect x="40" y="740" width="1820" height="190" rx="10" fill="#fafafa" stroke="#dddddd"/>
+<text x="60" y="768" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">WIRE COLOURS</text>
+<line x1="62" y1="788" x2="100" y2="788" stroke="#a65c00" stroke-width="7" stroke-linecap="round"/>
+<line x1="62" y1="788" x2="100" y2="788" stroke="#fb8c00" stroke-width="4.5" stroke-linecap="round"/>
+<text x="112" y="792" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">5 V: DevKit VIN to ESP32-CAM 5V (bench only)</text>
+<line x1="62" y1="810" x2="100" y2="810" stroke="#000000" stroke-width="7" stroke-linecap="round"/>
+<line x1="62" y1="810" x2="100" y2="810" stroke="#333333" stroke-width="4.5" stroke-linecap="round"/>
+<text x="112" y="814" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">GND: DevKit GND to ESP32-CAM GND</text>
+<line x1="62" y1="832" x2="100" y2="832" stroke="#1b5e20" stroke-width="7" stroke-linecap="round"/>
+<line x1="62" y1="832" x2="100" y2="832" stroke="#43a047" stroke-width="4.5" stroke-linecap="round"/>
+<text x="112" y="836" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">ESP32-CAM U0T to DevKit TX0</text>
+<line x1="62" y1="854" x2="100" y2="854" stroke="#558b2f" stroke-width="7" stroke-linecap="round"/>
+<line x1="62" y1="854" x2="100" y2="854" stroke="#9ccc65" stroke-width="4.5" stroke-linecap="round"/>
+<text x="112" y="858" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">DevKit RX0 to ESP32-CAM U0R</text>
+<line x1="62" y1="876" x2="100" y2="876" stroke="#5f5f5f" stroke-width="7" stroke-linecap="round"/>
+<line x1="62" y1="876" x2="100" y2="876" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round"/>
+<text x="112" y="880" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">EN to GND (DevKit), IO0 to GND (ESP32-CAM)</text>
+<text x="62" y="908" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">All female to female jumper wires: both boards have pins</text>
+<text x="680" y="768" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">PLATFORMIO SETTINGS</text>
+<text x="680" y="792" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">board = esp32cam</text>
+<text x="680" y="812" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">upload_speed = 115200 (slow but sure)</text>
+<text x="680" y="832" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">monitor_speed = 115200</text>
+<text x="680" y="852" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Port: the one that appears when the DevKit is plugged in</text>
+<text x="680" y="872" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">No port: install the CP210x or CH340 driver,</text>
+<text x="680" y="892" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">named after the USB chip on the DevKit</text>
+<text x="1260" y="768" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">IF IT FAILS</text>
+<text x="1260" y="792" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Timed out waiting for packet header: IO0 not on GND,</text>
+<text x="1260" y="812" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">or RST not pressed just before the upload</text>
+<text x="1260" y="832" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">The program lands in the DevKit itself: EN wire missing</text>
+<text x="1260" y="852" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Nothing in the monitor: IO0 still on GND, press RST</text>
+<text x="1260" y="872" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Brownout detector was triggered: weak 5 V, try</text>
+<text x="1260" y="892" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">another USB port or a shorter cable</text>
+<text x="40" y="944" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#9e9e9e" text-anchor="start" font-weight="normal">Kibbly hardware · circuit 6 of the circuits by part · wires F1 to F7 in hardware/04_wiring_list.md section 5B</text>
+</svg>

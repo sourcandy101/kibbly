@@ -14,6 +14,7 @@ Every wire of the feeder, part by part: from which pin, to which pin, which colo
 | 4 | [Power](#4-power) |
 | 4B | [Breadboard rails and power entries](#4b-breadboard-rails-and-power-entries) |
 | 5 | [ESP32-CAM camera board](#5-esp32-cam-camera-board) |
+| 5B | [Flashing the ESP32-CAM with the DevKit](#5b-flashing-the-esp32-cam-with-the-devkit) |
 | 6 | [TMC2209 driver and stepper motor](#6-tmc2209-driver-and-stepper-motor) |
 | 6B | [DRV8825 driver and stepper motor (demo driver)](#6b-drv8825-driver-and-stepper-motor-demo-driver) |
 | 7 | [Load cell and HX711](#7-load-cell-and-hx711) |
@@ -163,6 +164,22 @@ Also needed: R1, R3 and R4 from section 4B.
 3. The 100 nF capacitor of the first plan is left out: the ESP32-CAM already has small capacitors next to its chips, and the 1000 uF gives the big reserve it lacks.
 
 If the XIAO ESP32S3 Sense is ever used instead: `5V` and `GND` as E1 and E2, `D6` (GPIO43, TX) in place of IO15 and `D7` (GPIO44, RX) in place of IO14; everything else stays the same.
+
+## 5B. Flashing the ESP32-CAM with the DevKit
+
+Drawn in [circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md). Loads programs into the ESP32-CAM, which has no USB port, through the USB chip of the ESP32 DevKit V1. On the table, with female to female wires; no breadboard needed.
+
+| # | From | To | Colour | Measure or note | Checked |
+|---|---|---|---|---|---|
+| F1 | DevKit `EN` | DevKit `GND` (left row) | Grey | Holds the DevKit chip off | |
+| F2 | DevKit `VIN` | ESP32-CAM `5V` | Orange | On the table only; leave it out when the ESP32-CAM is wired to the feeder | |
+| F3 | DevKit `GND` (right row) | ESP32-CAM `GND` (next to 5V) | Black | ESP32-CAM wired to the feeder: to the top − rail, column 39, instead | |
+| F4 | DevKit `TX0` | ESP32-CAM `U0T` | Green | TX to TX is right here: the DevKit pins are named for its own chip | |
+| F5 | DevKit `RX0` | ESP32-CAM `U0R` | Light green | | |
+| F6 | ESP32-CAM `IO0` | ESP32-CAM `GND` (next to IO0) | Grey | Only while loading; remove it and press RST to run the program | |
+| F7 | DevKit micro USB | Laptop | USB cable | Plug in last; with the feeder, after the Nucleo USB | |
+
+Settings for PlatformIO: `board = esp32cam`, `upload_speed = 115200`, `monitor_speed = 115200`.
 
 ## 6. TMC2209 driver and stepper motor
 
@@ -401,7 +418,7 @@ For the breadboard plan of section 4B. Each rail hole takes one wire, so every w
 | Rail or point | Wires (rail column) |
 |---|---|
 | Top + (5 V) | R1 (2, tests on USB), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
-| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), A2 (22), U4 (27), E2 (36), E5 short leg (38) |
+| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder) |
 | Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20) |
 | Bottom − (GND) | R4 (1), R3 (3), H7 (14), U6 (26) |
 | Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
@@ -465,3 +482,4 @@ Go through it every time something new is wired.
 | 10 | Capacitor polarity: long leg on + | E5, V3 |
 | 11 | After power on: touch the regulators and the driver | Warm is normal, too hot to hold means power off now |
 | 12 | After power on: 12 V, 5 V and 3.3 V measured on the rails | Within 5% |
+| 13 | Loading a program into the ESP32-CAM: DevKit EN on GND, and never the DevKit VIN and the feeder 5 V on the ESP32-CAM at once | Section 5B |

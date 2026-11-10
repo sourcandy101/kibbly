@@ -1221,22 +1221,6 @@
 <text x="1130" y="212" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#bbb" text-anchor="middle" font-weight="normal">camera</text>
 <rect x="1194" y="160" width="16" height="16" rx="2" fill="#fff9c4" stroke="#f9a825"/>
 <text x="1202" y="190" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#bbb" text-anchor="middle" font-weight="normal">flash</text>
-<rect x="1077" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1080" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">GND</text>
-<rect x="1097" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1100" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">U0T</text>
-<rect x="1117" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1120" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">U0R</text>
-<rect x="1137" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1140" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">VCC</text>
-<rect x="1157" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1160" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">GND</text>
-<rect x="1177" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1180" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">IO0</text>
-<rect x="1197" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1200" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">IO16</text>
-<rect x="1217" y="98" width="6" height="8" fill="#d4af37"/>
-<text x="1220" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">3V3</text>
 <rect x="1077" y="236" width="6" height="12" fill="#d4af37"/>
 <text x="1080" y="230" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#8a8a8a" text-anchor="middle" font-weight="bold">IO4</text>
 <rect x="1097" y="236" width="6" height="12" fill="#d4af37"/>
@@ -1253,6 +1237,22 @@
 <text x="1200" y="230" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
 <rect x="1217" y="236" width="6" height="12" fill="#d4af37"/>
 <text x="1220" y="230" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">5V</text>
+<rect x="1077" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1080" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="1097" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1100" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">U0T</text>
+<rect x="1117" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1120" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">U0R</text>
+<rect x="1137" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1140" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">VCC</text>
+<rect x="1157" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1160" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="1177" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1180" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">IO0</text>
+<rect x="1197" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1200" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">IO16</text>
+<rect x="1217" y="84" width="6" height="12" fill="#d4af37"/>
+<text x="1220" y="117" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#9e9e9e" text-anchor="middle" font-weight="bold">3V3</text>
 <text x="892" y="136" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="end" font-weight="bold">ESP32-CAM camera board</text>
 <text x="892" y="154" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">outside the board, camera facing the bowl,</text>
 <text x="892" y="170" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">joined with 4 female to male wires</text>

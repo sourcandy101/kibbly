@@ -14,33 +14,10 @@ d.nucleo([(CN8(9), "5V (CN8 pin 9)", ORANGE, "right"), (CN7(1), "D16 · PC6 TX (
 d.breadboard(used=(True, True, True, False))
 
 # ESP32-CAM outside the board. The pin row used here (5V ... IO4) sits over columns 30 to 37,
-# the other row (3V3 ... GND, used only for flashing) along the top edge.
-bottom = ["IO4", "IO2", "IO14", "IO15", "IO13", "IO12", "GND", "5V"]
-top = ["GND", "U0T", "U0R", "VCC", "GND", "IO0", "IO16", "3V3"]
-px = {name: X(30 + k) for k, name in enumerate(bottom)}
-bx1, bx2 = X(30) - 176, X(37) + 16
-a(f'<rect x="{bx1}" y="96" width="{bx2 - bx1}" height="140" rx="6" fill="#262626" stroke="#000" stroke-width="2"/>')
-# ESP32-S module with its antenna, camera, flash LED
-a(f'<rect x="{bx1 + 10}" y="108" width="128" height="116" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>')
-a(f'<path d="M{bx1 + 16},120 L{bx1 + 16},212 M{bx1 + 22},120 L{bx1 + 22},212 M{bx1 + 16},120 L{bx1 + 22},120 '
-  f'M{bx1 + 16},212 L{bx1 + 22},212" stroke="#d4af37" stroke-width="2" fill="none"/>')
-t(bx1 + 80, 162, "ESP32-S", 12, "#455a64", "middle", "bold")
-t(bx1 + 80, 178, "WiFi module", 9, "#607d8b", "middle")
-cx, cy = X(32) + 10, 168
-a(f'<rect x="{cx - 30}" y="{cy - 30}" width="60" height="60" rx="4" fill="#3a3a3a" stroke="#111"/>')
-a(f'<circle cx="{cx}" cy="{cy}" r="22" fill="#111" stroke="#555" stroke-width="2"/>')
-a(f'<circle cx="{cx}" cy="{cy}" r="12" fill="#1a237e"/>')
-a(f'<circle cx="{cx - 4}" cy="{cy - 4}" r="4" fill="#90caf9"/>')
-t(cx, cy + 44, "camera", 9, "#bbb", "middle")
-a(f'<rect x="{X(36) - 6}" y="{cy - 8}" width="16" height="16" rx="2" fill="#fff9c4" stroke="#f9a825"/>')
-t(X(36) + 2, cy + 22, "flash", 8, "#bbb", "middle")
-for x, lab in zip([X(30 + k) for k in range(8)], top):
-    a(f'<rect x="{x - 3}" y="98" width="6" height="8" fill="#d4af37"/>')
-    t(x, 117, lab, 6.5, "#9e9e9e", "middle", "bold")
-used = {"IO14", "IO15", "GND", "5V"}
-for name, x in px.items():
-    a(f'<rect x="{x - 3}" y="236" width="6" height="12" fill="#d4af37"/>')
-    t(x, 230, name, 7 if len(name) > 3 else 8, "#fff" if name in used else "#8a8a8a", "middle", "bold")
+# the other row (3V3 ... GND, used only to load programs) along the top edge.
+pins, _ = d.esp32_cam(X(30), 96, used_bottom={"IO14", "IO15", "GND", "5V"})
+px = {name: x for name, (x, y) in pins.items()}
+bx1, bx2 = X(30) - 176, X(30) + 156
 t(bx1 - 12, 136, "ESP32-CAM camera board", 14, "#c62828", "end", "bold")
 t(bx1 - 12, 154, "outside the board, camera facing the bowl,", 11, "#555", "end")
 t(bx1 - 12, 170, "joined with 4 female to male wires", 11, "#555", "end")

@@ -11,8 +11,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 3 | Ultrasonic sensor (HC-SR04) | [03_ultrasonic_hc_sr04/](03_ultrasonic_hc_sr04/README.md) | [svg](03_ultrasonic_hc_sr04/03_ultrasonic_hc_sr04.svg) | [Section 8](../04_wiring_list.md#8-ultrasonic-sensor) | Done |
 | 4 | Sound: MAX98357A amplifier and speaker | [04_sound_max98357a/](04_sound_max98357a/README.md) | [svg](04_sound_max98357a/04_sound_max98357a.svg) | [Section 11](../04_wiring_list.md#11-max98357a-and-speaker) | Done |
 | 5 | ESP32-CAM link to the STM32 | [05_esp32_cam_link/](05_esp32_cam_link/README.md) | [svg](05_esp32_cam_link/05_esp32_cam_link.svg) | [Section 5](../04_wiring_list.md#5-esp32-cam-camera-board) | Done |
-| 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | | | Parts list, programming note | Next |
-| 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | | | Section 4 | |
+| 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | [06_esp32_cam_flashing/](06_esp32_cam_flashing/README.md) | [svg](06_esp32_cam_flashing/06_esp32_cam_flashing.svg) | [Section 5B](../04_wiring_list.md#5b-flashing-the-esp32-cam-with-the-devkit) | Done |
+| 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | | | Section 4 | Next |
 | 8 | I2C bus: DS3231 clock and VL53L0X (after the demo essentials) | | | Section 9 | |
 | 9 | microSD card (after the demo essentials) | | | Section 10 | |
 | 10 | Button and status LED (after the demo essentials) | | | Section 12 | |
@@ -22,7 +22,7 @@ Order: the parts the demo needs come first (1 to 7), then the parts that can wai
 
 ## Board and column map
 
-All circuits are drawn on **one 830 point breadboard (63 columns)**, each in its own zone, so they can stay plugged in together. Every part fits in columns 1 to 49, so a 60 column board works too. Each picture shows this map at the bottom, with its own zone highlighted.
+Circuit 6 (flashing) is a bench setup off the breadboard. All the other circuits are drawn on **one 830 point breadboard (63 columns)**, each in its own zone, so they can stay plugged in together. Every part fits in columns 1 to 49, so a 60 column board works too. Each picture shows this map at the bottom, with its own zone highlighted.
 
 Checked on the team's board (10 November 2026): 830 points, 63 columns, and the rails run along the whole length, so no bridge wires are needed.
 
