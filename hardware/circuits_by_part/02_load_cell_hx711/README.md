@@ -4,9 +4,11 @@
 
 **What it is for:** the second half of the first milestone, "the scale reads the grams". Only the laptop USB is needed: the HX711 and the load cell run on 3.3 V from the Nucleo.
 
+**Where on the board:** columns 15 to 18, bottom half (see the [column map](../README.md#board-and-column-map)).
+
 **Parts:** NUCLEO-F439ZI, 5 kg load cell (owned), HX711 board, breadboard, jumper wires, USB cable, a known weight or a kitchen scale for calibration.
 
-**Wire table:** wires H1 to H12 in [04_wiring_list.md, section 7](../../04_wiring_list.md#7-load-cell-and-hx711).
+**Wire table:** wires H1 to H10 in [04_wiring_list.md, section 7](../../04_wiring_list.md#7-load-cell-and-hx711), plus rails R2 and R3 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 
 ## How the parts talk
 
@@ -42,7 +44,7 @@ The 4 thin wires come from the bar and go **only to the HX711**, on its 6 pin si
 
 ## The HX711 on the breadboard
 
-The 4 pin side (GND, DT, SCK, VCC) plugs into **row a, columns 22 to 25**, and the board hangs over the bottom edge of the breadboard. Check the order printed on your board: if it is different, keep the same wires but follow the labels.
+The 4 pin side (GND, DT, SCK, VCC) plugs into **row a, columns 15 to 18**, and the board hangs over the bottom edge of the breadboard. Check the order printed on your board: if it is different, keep the same wires but follow the labels.
 
 | Pin left empty | Why |
 |---|---|
@@ -65,12 +67,12 @@ For the first test, the bar can lie on the table with a weight pressing its free
 
 1. USB unplugged.
 2. Solder the header and the load cell wires to the HX711 if needed (H1 to H4).
-3. Push the HX711 4 pin header into row a, columns 22 to 25.
-4. H7: HX711 GND (column 22) to the bottom − rail.
-5. H6: HX711 VCC (column 25) to the bottom + rail (3.3 V).
-6. H8: DT (column 23) to Nucleo D4 · PF14. H9: SCK (column 24) to Nucleo D3 · PE13.
-7. H10 and H11: Nucleo 3V3 and GND to the bottom rails (skip if circuit 1 is already wired: they are the same wires as V20 and V21).
-8. Check: VCC goes to the 3.3 V rail, not to 5 V or 12 V.
+3. Push the HX711 4 pin header into row a, columns 15 to 18.
+4. R2 and R3: Nucleo 3V3 and GND to the bottom rails (already there if circuit 1 is wired).
+5. H7: HX711 GND (column 15) to the bottom − rail.
+6. H6: HX711 VCC (column 18) to the bottom + rail (3.3 V).
+7. H8: DT (column 16) to Nucleo D4 · PF14. H9: SCK (column 17) to Nucleo D3 · PE13.
+8. Check: VCC goes to the bottom + rail (3.3 V), not to the top + rail (5 V).
 9. Plug in the USB.
 
 ## First test

@@ -12,6 +12,7 @@ Every wire of the feeder, part by part: from which pin, to which pin, which colo
 | 2 | [Wire colours](#2-wire-colours) |
 | 3 | [Nucleo header map](#3-nucleo-header-map) |
 | 4 | [Power](#4-power) |
+| 4B | [Breadboard rails and power entries](#4b-breadboard-rails-and-power-entries) |
 | 5 | [ESP32S3 camera board](#5-esp32s3-camera-board) |
 | 6 | [TMC2209 driver and stepper motor](#6-tmc2209-driver-and-stepper-motor) |
 | 6B | [DRV8825 driver and stepper motor (local option)](#6b-drv8825-driver-and-stepper-motor-local-option) |
@@ -99,6 +100,8 @@ flowchart LR
     B12 --> VM["TMC2209 VM"]
 ```
 
+Breadboard version: section 4B (rails) and circuit 7 (power), which will update this table: the 5 V bus becomes the top + rail and the 12 V bus becomes column 5.
+
 | # | From | To | Colour | Measure before connecting | Checked |
 |---|---|---|---|---|---|
 | P1 | Barrel jack centre (+) | **12 V bus** (screw terminal or Wago) | Red | 11.5 to 12.5 V between jack + and jack GND | |
@@ -115,6 +118,27 @@ flowchart LR
 No fuse or reverse polarity protection is fitted. Before the first plug in, check that the adapter label shows the centre pin as +, and never let the 12 V bus touch GND or a board pin.
 
 During development, power the Nucleo from USB and leave P7 unplugged. Connect P7 only when the whole feeder runs from the adapter.
+
+## 4B. Breadboard rails and power entries
+
+Used by every circuit of [circuits_by_part](circuits_by_part/README.md). One 830 point breadboard (63 columns); every part fits in columns 1 to 49, so a 60 column board works too.
+
+| Rail | Use |
+|---|---|
+| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD) |
+| Top − | GND |
+| Bottom − | GND |
+| Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
+| 12 V | **On no rail.** Only in column 5, top half (the driver VMOT column), framed in red in the pictures |
+
+If the rails of your board are cut in the middle (a break in the red and blue lines), bridge each of the 4 rails across the cut with a short wire of the same colour.
+
+| # | From | To | Colour | Note | Checked |
+|---|---|---|---|---|---|
+| R1 | Nucleo 5V (CN8 pin 9) | Top + rail (5 V), column 2 | Orange | Tests on USB only. Replaced by the 5 V supply in circuit 7; never both at once | |
+| R2 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | | |
+| R3 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | | |
+| R4 | Top − rail | Bottom − rail, column 1 | Black | Joins both GND rails | |
 
 ## 5. ESP32S3 camera board
 
@@ -197,43 +221,42 @@ How to find the coil pairs: with the motor unplugged, measure the resistance bet
 
 Use this section instead of section 6 when the driver is a DRV8825 (sold locally) and not a TMC2209. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
 
-Breadboard layout: the DRV8825 straddles the middle gap in **columns 12 to 19**, turned so that **VMOT is top left (column 12, row f) and EN is bottom left (column 12, row e)**. Top half: power and motor. Bottom half: control. **Top + rail = 12 V, bottom + rail = 3.3 V.**
+Breadboard layout: the DRV8825 straddles the middle gap in **columns 5 to 12**, turned so that **VMOT is top left (column 5, row f) and EN is bottom left (column 5, row e)**. Top half: power and motor. Bottom half: control. **12 V lives only in column 5, top half**; the rails are 5 V (top) and 3.3 V (bottom), see section 4B.
 
 | Driver pin | Column | Row | Driver pin | Column | Row |
 |---|---|---|---|---|---|
-| VMOT | 12 | f | EN | 12 | e |
-| GND | 13 | f | M0 | 13 | e |
-| B2 | 14 | f | M1 | 14 | e |
-| B1 | 15 | f | M2 | 15 | e |
-| A1 | 16 | f | RST | 16 | e |
-| A2 | 17 | f | SLP | 17 | e |
-| FLT | 18 | f | STEP | 18 | e |
-| GND | 19 | f | DIR | 19 | e |
+| VMOT | 5 | f | EN | 5 | e |
+| GND | 6 | f | M0 | 6 | e |
+| B2 | 7 | f | M1 | 7 | e |
+| B1 | 8 | f | M2 | 8 | e |
+| A1 | 9 | f | RST | 9 | e |
+| A2 | 10 | f | SLP | 10 | e |
+| FLT | 11 | f | STEP | 11 | e |
+| GND | 12 | f | DIR | 12 | e |
 
 | # | From | To | Colour | Note | Checked |
 |---|---|---|---|---|---|
-| V1 | DC jack `+` | Top + rail (12 V), column 3 | Red | | |
-| V2 | DC jack `−` | Top − rail (GND), column 2 | Black | | |
-| V3 | 1000 uF capacitor | Long leg (+) in the top + rail, column 10; short leg in the top − rail, column 7 | | Stripe side is the short leg | |
-| V4 | VMOT (column 12) | Top + rail (12 V) | Red | From row j | |
-| V5 | GND (column 13) | Top − rail (GND) | Black | From row j | |
-| V6 | GND (column 19, above DIR) | No wire | | Linked to the other GND inside the board | |
-| V7 | A2 (column 17) | Motor green | Green (motor cable) | Row j; coil A | |
-| V8 | A1 (column 16) | Motor black | Black (motor cable) | Row i; coil A | |
-| V9 | B1 (column 15) | Motor red | Red (motor cable) | Row h; coil B | |
-| V10 | B2 (column 14) | Motor blue | Blue (motor cable) | Row g; coil B | |
-| V11 | FLT (column 18) | No wire | | Fault output, not used | |
-| V12 | EN (column 12) | Nucleo D2 · PF15 (CN10 pin 12) | Blue grey | Row b. Low = motor on | |
-| V13 | 10 kohm resistor | Column 12 row a to bottom + rail (3.3 V) | | Keeps the motor off while the STM32 resets | |
-| V14 | M0, M1 (columns 13, 14) | No wire | | Pulled to 0 inside the driver | |
-| V15 | M2 (column 15) | Bottom + rail (3.3 V) | Yellow | Row a. With M0 = M1 = 0: 1/16 step, 3200 steps per turn | |
-| V16 | RST (column 16) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver running | |
-| V17 | SLP (column 17) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver awake | |
-| V18 | STEP (column 18) | Nucleo D6 · PE9 (CN10 pin 4) | Grey | Row c | |
-| V19 | DIR (column 19) | Nucleo D7 · PF13 (CN10 pin 2) | Brown | Row d | |
-| V20 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | | |
-| V21 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | | |
-| V22 | Top − rail | Bottom − rail, column 1 | Black | Joins both GND rails | |
+| V1 | DC jack `+` | Column 5, top half, row g (12 V) | Red | Never on a rail | |
+| V2 | DC jack `−` | Top − rail (GND), column 3 | Black | | |
+| V3 | 1000 uF capacitor | Long leg (+) in column 5, row j; short leg in the top − rail, column 4 | | Stripe side is the short leg | |
+| V4 | VMOT (column 5) | No wire | | Gets 12 V through column 5 | |
+| V5 | GND (column 6) | Top − rail (GND), column 6 | Black | From row j | |
+| V6 | GND (column 12, above DIR) | No wire | | Linked to the other GND inside the board | |
+| V7 | A2 (column 10) | Motor green | Green (motor cable) | Row j; coil A | |
+| V8 | A1 (column 9) | Motor black | Black (motor cable) | Row i; coil A | |
+| V9 | B1 (column 8) | Motor red | Red (motor cable) | Row h; coil B | |
+| V10 | B2 (column 7) | Motor blue | Blue (motor cable) | Row g; coil B | |
+| V11 | FLT (column 11) | No wire | | Fault output, not used | |
+| V12 | EN (column 5) | Nucleo D2 · PF15 (CN10 pin 12) | Blue grey | Row b. Low = motor on | |
+| V13 | 10 kohm resistor | Column 5 row a to bottom + rail (3.3 V) | | Keeps the motor off while the STM32 resets | |
+| V14 | M0, M1 (columns 6, 7) | No wire | | Pulled to 0 inside the driver | |
+| V15 | M2 (column 8) | Bottom + rail (3.3 V) | Yellow | Row a. With M0 = M1 = 0: 1/16 step, 3200 steps per turn | |
+| V16 | RST (column 9) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver running | |
+| V17 | SLP (column 10) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver awake | |
+| V18 | STEP (column 11) | Nucleo D6 · PE9 (CN10 pin 4) | Grey | Row c | |
+| V19 | DIR (column 12) | Nucleo D7 · PF13 (CN10 pin 2) | Brown | Row d | |
+
+Also needed: R2, R3 and R4 from section 4B.
 
 Current limit: the DRV8825 gives a current of 2 x Vref. Measure Vref between the potentiometer and GND with 12 V on, and set it to **about 0.5 V (1 A)**. Without a multimeter: turn the potentiometer to the lowest current (usually fully anticlockwise), run the motor, then turn it up in small steps until the motor turns without skipping, and stop there.
 
@@ -246,7 +269,7 @@ Differences from the TMC2209 wiring of section 6:
 
 ## 7. Load cell and HX711
 
-Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 22 to 25** of the bottom half; the board hangs over the bottom edge.
+Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 15 to 18** of the bottom half; the board hangs over the bottom edge.
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
@@ -255,13 +278,13 @@ Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic gre
 | H3 | Load cell white | HX711 `A-` | White (cell wire) | | |
 | H4 | Load cell green | HX711 `A+` | Green (cell wire) | | |
 | H5 | HX711 `B+`, `B-` | Not connected | | Channel B is not used | |
-| H6 | HX711 `VCC` (column 25) | Bottom + rail (3.3 V), column 27 | Yellow | 3.3 V, so DT stays safe for the STM32 | |
-| H7 | HX711 `GND` (column 22) | Bottom − rail (GND), column 20 | Black | | |
-| H8 | HX711 `DT` or `DOUT` (column 23) | Nucleo D4 · PF14 (CN10 pin 8) | Brown | Row d | |
-| H9 | HX711 `SCK` or `CLK` (column 24) | Nucleo D3 · PE13 (CN10 pin 10) | Grey | Row c | |
-| H10 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | Same wire as V20 when circuit 1 is wired | |
-| H11 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21 when circuit 1 is wired | |
-| H12 | HX711 `VDD` (SparkFun board only) | 3.3 V rail | Yellow | Must equal VCC; generic boards do not have it | |
+| H6 | HX711 `VCC` (column 18) | Bottom + rail (3.3 V), column 20 | Yellow | From row b. 3.3 V keeps DT safe for the STM32 | |
+| H7 | HX711 `GND` (column 15) | Bottom − rail (GND), column 14 | Black | From row b | |
+| H8 | HX711 `DT` or `DOUT` (column 16) | Nucleo D4 · PF14 (CN10 pin 8) | Brown | Row d | |
+| H9 | HX711 `SCK` or `CLK` (column 17) | Nucleo D3 · PE13 (CN10 pin 10) | Grey | Row c | |
+| H10 | HX711 `VDD` (SparkFun board only) | 3.3 V rail | Yellow | Must equal VCC; generic boards do not have it | |
+
+Also needed: R2 and R3 from section 4B.
 
 The `RATE` pin (10 or 80 readings per second) is fixed on most generic boards at 10 per second, which gives less noise.
 
@@ -271,17 +294,20 @@ Mounting: the arrow on the bar must point down, one end fixed to the base, the o
 
 ## 8. Ultrasonic sensor
 
-Drawn in [circuit 3](circuits_by_part/03_ultrasonic_hc_sr04/README.md). Standard 5 V HC-SR04 (the 3.3 V versions are not sold locally), so **Echo goes through a voltage divider**. The 4 pins plug into **row j, columns 22 to 25** of the top half (VCC, Trig, Echo, Gnd).
+Drawn in [circuit 3](circuits_by_part/03_ultrasonic_hc_sr04/README.md). Standard 5 V HC-SR04 (the 3.3 V versions are not sold locally), so **Echo goes through a voltage divider**. The sensor sits **outside the board**, facing the dog, joined by 4 female to male wires: power to the top rails, Trig and Echo to **columns 25 and 26**.
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| U1 | Sensor `VCC` (column 22) | Nucleo 5V (CN8 pin 9) | Orange | Row i. 5 V straight from the Nucleo for the test; from the 5 V supply in the full circuit | |
-| U2 | Sensor `Trig` (column 23) | Nucleo D10 · PD14 (CN7 pin 16) | Grey | Row h. No resistor needed | |
-| U3 | 1 kohm resistor | Column 24 top half (Echo, row f) to column 24 bottom half (row e), across the middle gap | | Bands brown, black, red | |
-| U4 | 2 kohm resistor | Column 24 bottom half (row a) to bottom − rail (GND) | | Bands red, black, red | |
-| U5 | Column 24 bottom half (middle of the divider) | Nucleo D9 · PD15 (CN7 pin 18) | Brown | Row c. Must read 3.3 V high, never 5 V | |
-| U6 | Sensor `Gnd` (column 25) | Bottom − rail (GND), column 26 | Black | From row i | |
-| U7 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21 and H11 when circuits 1 or 2 are wired | |
+| U1 | Sensor `VCC` | Top + rail (5 V), column 24 | Orange | | |
+| U2 | Sensor `Trig` | Column 25, row j | Grey | | |
+| U3 | Sensor `Echo` | Column 26, row j | Blue grey | 5 V signal: goes only to the divider | |
+| U4 | Sensor `Gnd` | Top − rail (GND), column 27 | Black | | |
+| U5 | 1 kohm resistor | Column 26 top half (row f) to column 26 bottom half (row e), across the middle gap | | Bands brown, black, red | |
+| U6 | 2 kohm resistor | Column 26 bottom half (row a) to bottom − rail (GND) | | Bands red, black, red | |
+| U7 | Column 25 (row h) | Nucleo D10 · PD14 (CN7 pin 16) | Grey | No resistor needed | |
+| U8 | Column 26 bottom half (row c), middle of the divider | Nucleo D9 · PD15 (CN7 pin 18) | Brown | Must read 3.3 V high, never 5 V | |
+
+Also needed: R1, R3 and R4 from section 4B.
 
 The divider gives 5 V × 2 ÷ 3 = 3.3 V on PD15. Never connect Echo straight to the Nucleo.
 
@@ -337,22 +363,21 @@ Card: format as FAT32 on the computer before first use.
 
 ## 11. MAX98357A and speaker
 
-Drawn in [circuit 4](circuits_by_part/04_sound_max98357a/README.md). The 7 pins plug into **row j, columns 5 to 11** of the top half (LRC, BCLK, DIN, GAIN, SD, GND, Vin); 5 V and GND cross the middle gap with two short jumpers.
+Drawn in [circuit 4](circuits_by_part/04_sound_max98357a/README.md). The 7 pins plug into **row j, columns 15 to 21** of the top half (LRC, BCLK, DIN, GAIN, SD, GND, Vin); the board stands over the top edge. 5 V and GND come straight from the top rails.
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| A1 | `Vin` (column 11, top half, row f) | Column 11 bottom half (row e), jumper across the gap | Orange | | |
-| A2 | `GND` (column 10, top half, row f) | Column 10 bottom half (row e), jumper across the gap | Black | | |
-| A3 | `BCLK` (column 6) | Nucleo PC10 · D45 (CN8 pin 6) | Purple | Row i | |
-| A4 | `DIN` (column 7) | Nucleo PC12 · D47 (CN8 pin 10) | Dark purple | Row h | |
-| A5 | `LRC` (column 5) | Nucleo PA4 · D24 (CN7 pin 17) | Light purple | Row g | |
-| A6 | `GAIN` (column 8) | Not connected | | 9 dB; connect to GND for 12 dB if too quiet | |
-| A7 | `SD` (column 9) | Not connected | | Plays a mono mix of left and right | |
+| A1 | `Vin` (column 21) | Top + rail (5 V), column 24 | Orange | From row h | |
+| A2 | `GND` (column 20) | Top − rail (GND), column 23 | Black | From row i | |
+| A3 | `BCLK` (column 16) | Nucleo PC10 · D45 (CN8 pin 6) | Purple | Row i | |
+| A4 | `DIN` (column 17) | Nucleo PC12 · D47 (CN8 pin 10) | Dark purple | Row h | |
+| A5 | `LRC` (column 15) | Nucleo PA4 · D24 (CN7 pin 17) | Light purple | Row g | |
+| A6 | `GAIN` (column 18) | Not connected | | 9 dB; connect to GND for 12 dB if too quiet | |
+| A7 | `SD` (column 19) | Not connected | | Plays a mono mix of left and right | |
 | A8 | Speaker `+` | Breakout output `+` (screw terminal) | Red (speaker wire) | | |
 | A9 | Speaker `minus` | Breakout output `minus` (screw terminal) | Black (speaker wire) | **Never connect a speaker wire to GND**; both outputs carry signal | |
-| A10 | Column 11 bottom half (row c) | Nucleo 5V (CN8 pin 9) | Orange | Test only; from the 5 V supply in the full circuit. Low volume on USB power | |
-| A11 | Column 10 bottom half (row a) | Bottom − rail (GND) | Black | | |
-| A12 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21, H11 and U7 when other circuits are wired | |
+
+Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume low; full volume needs the 5 V supply of circuit 7.
 
 ## 12. Button and LED
 
@@ -367,12 +392,15 @@ Drawn in [circuit 4](circuits_by_part/04_sound_max98357a/README.md). The 7 pins 
 
 ## 13. Totals per rail
 
-| Rail | Connected parts | Wires on the rail |
-|---|---|---|
-| 12 V | TMC2209 VM, XL4015 IN+ | P1, P3, M1 |
-| 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V, ultrasonic | P5, P7, E1, A1, S1, U1 |
-| 3.3 V | TMC2209 VIO, HX711, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, I3, I9 |
-| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, U6, I4, I10, S2, A2, A11, B2, L3 |
+For the breadboard plan of section 4B. Circuits not drawn yet (ESP32-CAM, power, clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
+
+| Rail or point | Wires |
+|---|---|
+| Top + (5 V) | R1 (tests on USB), U1, A1 |
+| Top − (GND) | R4, V2, V3 (short leg), V5, U4, A2 |
+| Bottom + (3.3 V) | R2, V13, V15, V16, V17, H6 |
+| Bottom − (GND) | R3, R4, H7, U6 |
+| Column 5, top half (12 V) | V1, V3 (long leg), driver VMOT |
 
 ## 14. STM32CubeMX settings
 

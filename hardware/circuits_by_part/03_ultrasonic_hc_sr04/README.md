@@ -2,11 +2,13 @@
 
 ![Circuit 3: ultrasonic sensor HC-SR04](03_ultrasonic_hc_sr04.svg)
 
-**What it is for:** the sensor that notices an animal in front of the bowl and starts the photo. Only the laptop USB is needed: the sensor takes 5 V from the Nucleo 5V pin.
+**What it is for:** the sensor that notices an animal in front of the bowl and starts the photo. Only the laptop USB is needed: the Nucleo 5V pin feeds the top + rail (5 V).
 
-**Parts:** NUCLEO-F439ZI, HC-SR04, one 1 kohm resistor, one 2 kohm resistor, breadboard, jumper wires, USB cable.
+**Where on the board:** columns 24 to 27, with the divider in column 26 (see the [column map](../README.md#board-and-column-map)). The sensor itself sits outside the board.
 
-**Wire table:** wires U1 to U7 in [04_wiring_list.md, section 8](../../04_wiring_list.md#8-ultrasonic-sensor).
+**Parts:** NUCLEO-F439ZI, HC-SR04, one 1 kohm resistor, one 2 kohm resistor, breadboard, 4 female to male jumper wires for the sensor, other jumper wires, USB cable.
+
+**Wire table:** wires U1 to U8 in [04_wiring_list.md, section 8](../../04_wiring_list.md#8-ultrasonic-sensor), plus rails R1, R3 and R4 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 
 ## How it measures
 
@@ -20,39 +22,37 @@ Nucleo ◄── Echo (pulse, through the divider) ── HC-SR04 ◄── the 
 3. The Nucleo times the Echo pulse with timer TIM4: **distance in cm = pulse length in µs ÷ 58**.
 4. Under 40 cm means an animal is in front of the bowl.
 
+## Why the sensor is outside the board
+
+In the feeder the sensor is mounted on the front, facing the dog, so it is joined to the board with 4 female to male wires: VCC and Gnd straight into the top rails (5 V and GND), Trig and Echo into columns 25 and 26.
+
 ## Why two resistors
 
 The HC-SR04 runs on 5 V, so its **Echo** pin goes up to 5 V. An STM32 pin wants 3.3 V. The two resistors form a **voltage divider**:
 
 | Resistor | From | To | Colour bands |
 |---|---|---|---|
-| 1 kohm | Echo (column 24, top half) | Column 24, bottom half, across the middle gap | brown, black, red |
-| 2 kohm | Column 24, bottom half | Bottom − rail (GND) | red, black, red |
+| 1 kohm | Echo (column 26, top half) | Column 26, bottom half, across the middle gap | brown, black, red |
+| 2 kohm | Column 26, bottom half | Bottom − rail (GND) | red, black, red |
 
-The middle point (column 24, bottom half) sees 5 V × 2 ÷ 3 = **3.3 V**: this is where the Nucleo PD15 wire goes. **Never connect Echo straight to the Nucleo.**
+The middle point (column 26, bottom half) sees 5 V × 2 ÷ 3 = **3.3 V**: this is where the Nucleo PD15 wire goes. **Never connect Echo straight to the Nucleo.**
 
 **Trig** needs no resistor: the Nucleo sends 3.3 V, which the sensor accepts as "high".
 
 ## Where 5 V comes from
 
-Our breadboard rails are 12 V (top) and 3.3 V (bottom); there is no 5 V rail. For this test the sensor takes 5 V **straight from the Nucleo 5V pin** (CN8 pin 9) with its own orange wire, so a 5 V rail can never be mixed up with the 12 V one. In the full circuit, 5 V comes from the 5 V supply of circuit 7 (power).
-
-## The sensor on the breadboard
-
-The 4 pins plug into **row j, columns 22 to 25** (VCC, Trig, Echo, Gnd), and the sensor stands up over the top edge with its two round transducers facing out. Check the order printed on your sensor. In the feeder, the sensor is mounted on the front, facing the dog, and joined by 4 female to male jumper wires.
+The top + rail is the 5 V rail. For the tests it is fed by the Nucleo 5V pin (wire R1); in the full circuit it is fed by the 5 V supply of circuit 7 (power), and R1 is removed.
 
 ## Wiring order
 
 1. USB unplugged.
-2. Push the HC-SR04 into row j, columns 22 to 25.
-3. U3: 1 kohm across the middle gap in column 24 (row f to row e).
-4. U4: 2 kohm from column 24, row a, to the bottom − rail.
-5. U6: sensor Gnd (column 25) to the bottom − rail. U7: Nucleo GND to the bottom − rail.
-6. U2: Trig (column 23) to Nucleo D10 · PD14.
-7. U5: middle of the divider (column 24, bottom half) to Nucleo D9 · PD15.
-8. U1 last: sensor VCC (column 22) to Nucleo 5V.
-9. Check: no wire from column 24 **top half** (Echo, 5 V) goes to the Nucleo. Only the bottom half of column 24 does.
-10. Plug in the USB.
+2. Rails: R4 (join the two GND rails, column 1), R3 (Nucleo GND), R1 (Nucleo 5V to the top + rail).
+3. U5: 1 kohm across the middle gap in column 26 (row f to row e).
+4. U6: 2 kohm from column 26, row a, to the bottom − rail.
+5. U7: column 25 (row h) to Nucleo D10 · PD14. U8: column 26 bottom half (row c) to Nucleo D9 · PD15.
+6. Sensor: U4 (Gnd to the top − rail), U2 (Trig to column 25), U3 (Echo to column 26), then U1 (VCC to the top + rail).
+7. Check: no wire from column 26 **top half** (Echo, 5 V) goes to the Nucleo. Only the bottom half of column 26 does.
+8. Plug in the USB.
 
 ## First test
 

@@ -20,11 +20,42 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 
 Order: the parts the demo needs come first (1 to 7), then the parts that can wait (8 to 10), then the full circuit.
 
+## Board and column map
+
+All circuits are drawn on **one 830 point breadboard (63 columns)**, each in its own zone, so they can stay plugged in together. Every part fits in columns 1 to 49, so a 60 column board works too. Each picture shows this map at the bottom, with its own zone highlighted.
+
+**Rails**
+
+| Rail | Use |
+|---|---|
+| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD) |
+| Top − and bottom − | GND (joined by wire R4 in column 1) |
+| Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
+| 12 V | **On no rail**: only column 5, top half (the driver VMOT column). Mark it with red tape |
+
+If the rails of your board are cut in the middle (a break in the red and blue lines), bridge each rail across the cut with a short wire of the same colour.
+
+**Columns** (each column has a top half, rows f to j, and a bottom half, rows a to e, which are not connected to each other)
+
+| Columns | Top half | Bottom half |
+|---|---|---|
+| 1 to 3 | Power entries: rails R1 to R4, DC jack GND | Power entries |
+| 5 to 12 | 1: driver power and motor (12 V in column 5) | 1: driver control |
+| 15 to 21 | 4: sound amplifier | 2: HX711 (columns 15 to 18) |
+| 24 to 27 | 3: HC-SR04 wires | 3: voltage divider (column 26) |
+| 29 to 34 | 5: ESP32-CAM link | 8: clock (DS3231) |
+| 36 to 42 | 9: microSD | 8: tank sensor (VL53L0X) |
+| 44 to 49 | | 10: button and LED |
+
+Parts that must face outside (HC-SR04, ESP32-CAM camera, tank sensor, speaker, load cell, motor) sit off the board and reach their zone with jumper wires.
+
+Rail wires shared by every circuit (R1 to R4) are in [04_wiring_list.md, section 4B](../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
+
 ## How to read the pictures
 
 1. **A dot with a white ring** is a wire end plugged into that hole. A wire drawn over other holes is not connected to them.
 2. **Colours** follow the colour code of the wiring list: red 12 V, orange 5 V, yellow 3.3 V, black GND, grey and brown for signals. Cables that come with a part (like the motor cable) keep their own colours, which do not follow this code.
-3. **Breadboard:** columns 1 to 30, rows a to j. The 5 holes of one column on the same side of the middle gap are connected together. Each rail row is connected along its length; on some breadboards the rail is cut in the middle (a break in the red and blue lines): bridge it with a short wire if so.
+3. **Breadboard:** columns 1 to 63, rows a to j. The 5 holes of one column on the same side of the middle gap are connected together. Each rail row is connected along its length; on some breadboards the rail is cut in the middle (a break in the red and blue lines): bridge it with a short wire if so.
 4. **Nucleo pins** are named three ways: board label (D6), STM32 pin (PE9) and header pin number (CN10 pin 4). Pin numbers come from the Nucleo user manual UM1974: check them on the board before plugging.
 
 ## Folder layout

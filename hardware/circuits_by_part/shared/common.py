@@ -21,7 +21,14 @@ PURPLE = ("#8e24aa", "#4a148c")
 DARKPURPLE = ("#5e35b1", "#311b92")
 LIGHTPURPLE = ("#ce93d8", "#7b1fa2")
 
-# breadboard geometry: column c (1 to 30) and named rows
+# breadboard geometry: 830 point board, columns 1 to 63, and named rows
+COLS = 63
+RIGHT = 500 + (COLS - 1) * 20  # x of column 63
+
+# column map of the whole feeder on one board (every part fits in columns 1 to 49)
+ZONES = [(1, 3, "power", (1,)), (5, 12, "1 motor driver", (1,)), (15, 21, "4 sound · 2 HX711", (2, 4)),
+         (24, 27, "3 HC-SR04", (3,)), (29, 34, "5 ESP32-CAM · 8 clock", (5, 8)),
+         (36, 42, "9 microSD · 8 tank", (8, 9)), (44, 49, "10 button, LED", (10,))]
 ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 436,
        "e": 476, "d": 496, "c": 516, "b": 536, "a": 556, "bot-": 600, "bot+": 620}
 
@@ -53,7 +60,7 @@ def CN9(p):
 
 
 class Drawing:
-    def __init__(self, width=1420, height=1020):
+    def __init__(self, width=1880, height=1020):
         self.w, self.h = width, height
         self.out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
                     f'<rect width="{width}" height="{height}" fill="#ffffff"/>']
@@ -133,17 +140,15 @@ class Drawing:
             else:
                 self.text(128, y + 4, label, 10, col[1], weight="bold")
 
-    def breadboard(self, top=("12 V", "GND"), bottom=("GND", "3.3 V"), top_used=True, bottom_used=True, used=None):
-        """used: optional (top +, top −, bottom −, bottom +) flags; unused rail labels are grey."""
-        if used is None:
-            used = (top_used, top_used, bottom_used, bottom_used)
+    def breadboard(self, top=("5 V", "GND"), bottom=("GND", "3.3 V"), used=(True, True, True, True)):
+        """830 point breadboard. used: (top +, top −, bottom −, bottom +); unused rail labels are grey."""
         a, t = self.add, self.text
-        a('<rect x="474" y="262" width="632" height="388" rx="8" fill="#f1f1f1" stroke="#c8c8c8" stroke-width="2"/>')
-        a('<rect x="480" y="448" width="620" height="16" fill="#dadada"/>')
+        a(f'<rect x="474" y="262" width="{RIGHT + 26 - 474}" height="388" rx="8" fill="#f1f1f1" stroke="#c8c8c8" stroke-width="2"/>')
+        a(f'<rect x="480" y="448" width="{RIGHT + 14 - 480}" height="16" fill="#dadada"/>')
         for y, col in ((281, "#e53935"), (323, "#1e88e5"), (589, "#1e88e5"), (631, "#e53935")):
-            a(f'<line x1="490" y1="{y}" x2="1092" y2="{y}" stroke="{col}" stroke-width="2"/>')
+            a(f'<line x1="490" y1="{y}" x2="{RIGHT + 12}" y2="{y}" stroke="{col}" stroke-width="2"/>')
         for name, y in ROW.items():
-            for c in range(1, 31):
+            for c in range(1, COLS + 1):
                 a(f'<rect x="{X(c) - 3}" y="{y - 3}" width="6" height="6" rx="1" fill="#4a4a4a"/>')
             if len(name) == 1:
                 t(484, y + 4, name, 10, "#999", "middle")
@@ -151,14 +156,52 @@ class Drawing:
         t(486, 316, "−", 13, "#1e88e5", "middle", "bold")
         t(486, 604, "−", 13, "#1e88e5", "middle", "bold")
         t(486, 625, "+", 13, "#e53935", "middle", "bold")
-        for c in (1, 5, 10, 15, 20, 25, 30):
+        for c in (1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 63):
             t(X(c), 344, str(c), 9, "#9a9a9a", "middle")
             t(X(c), 577, str(c), 9, "#9a9a9a", "middle")
         grey = "#b0b0b0"
-        t(1114, 297, top[0], 13, "#c62828" if used[0] else grey, weight="bold")
-        t(1114, 317, top[1], 13, "#222" if used[1] else grey, weight="bold")
-        t(1114, 605, bottom[0], 13, "#222" if used[2] else grey, weight="bold")
-        t(1114, 625, bottom[1], 13, "#b8860b" if used[3] else grey, weight="bold")
+        lx = RIGHT + 34
+        t(lx, 297, top[0], 13, "#a65c00" if used[0] else grey, weight="bold")
+        t(lx, 317, top[1], 13, "#222" if used[1] else grey, weight="bold")
+        t(lx, 605, bottom[0], 13, "#222" if used[2] else grey, weight="bold")
+        t(lx, 625, bottom[1], 13, "#b8860b" if used[3] else grey, weight="bold")
+        for y, u in ((333, used[0] or used[1]), (641, used[2] or used[3])):
+            if not u:
+                t(lx, y, "(not used)", 10, grey)
+
+    def zones(self, circuit, y=676):
+        """Column map strip under the board; the zones of this circuit are highlighted."""
+        a, t = self.add, self.text
+        t(480, y - 6, "Column map of the whole feeder:", 10, "#777", weight="bold")
+        for c1, c2, label, circuits in ZONES:
+            on = circuit in circuits
+            x1, x2 = X(c1) - 9, X(c2) + 9
+            a(f'<rect x="{x1}" y="{y}" width="{x2 - x1}" height="22" rx="4" fill="{"#ffe0b2" if on else "#f3f3f3"}" '
+              f'stroke="{"#ef6c00" if on else "#d6d6d6"}" stroke-width="{1.5 if on else 1}"/>')
+            t((x1 + x2) / 2, y + 15, label, 9, "#a65c00" if on else "#9a9a9a", "middle", "bold" if on else "normal")
+
+    def five_volt_feed(self, col=2):
+        """Nucleo 5V (CN8 pin 9) over the top of the board to the top + rail (5 V)."""
+        x, y = CN8(9)
+        self.wire(f"M{x},{y} C90,{y} 86,346 86,330 L86,250 C86,242 92,238 100,238 L{X(col) - 12},238 "
+                  f"C{X(col) - 4},238 {X(col)},244 {X(col)},252 L{X(col)},{ROW['top+']}",
+                  ORANGE, [(x, y), (X(col), ROW['top+'])])
+
+    def three_volt_feed(self, col=2):
+        """Nucleo 3V3 (CN8 pin 7) around the left and bottom of the board to the bottom + rail (3.3 V)."""
+        x, y = CN8(7)
+        self.wire(f"M{x},{y} C40,{y} 22,380 22,440 L22,866 C22,886 40,892 64,892 L430,892 C456,892 464,876 464,850 "
+                  f"L464,654 C464,644 470,640 480,640 L{X(col) - 10},640 C{X(col) - 4},640 {X(col)},634 {X(col)},{ROW['bot+']}",
+                  YELLOW, [(x, y), (X(col), ROW['bot+'])])
+
+    def ground_feed(self, col=3):
+        """Nucleo GND (CN10 pin 5) to the bottom − rail."""
+        x, y = CN10(5)
+        self.wire(f"M{x},{y} C380,{y} 470,{ROW['bot-']} {X(col)},{ROW['bot-']}", BLACK, [(x, y), (X(col), ROW['bot-'])])
+
+    def ground_link(self, col=1):
+        """Join the top − rail and the bottom − rail."""
+        self.wire(f"M{X(col)},{ROW['top-']} L{X(col)},{ROW['bot-']}", BLACK, [(X(col), ROW['top-']), (X(col), ROW['bot-'])])
 
     def notes_box(self, x, y, w, h):
         self.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#fafafa" stroke="#dddddd"/>')
