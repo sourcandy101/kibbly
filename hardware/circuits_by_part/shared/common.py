@@ -18,6 +18,8 @@ GREEN = ("#43a047", "#1b5e20")
 BLUE = ("#1e88e5", "#0d47a1")
 WHITE = ("#f5f5f5", "#8a8a8a")
 PURPLE = ("#8e24aa", "#4a148c")
+DARKPURPLE = ("#5e35b1", "#311b92")
+LIGHTPURPLE = ("#ce93d8", "#7b1fa2")
 
 # breadboard geometry: column c (1 to 30) and named rows
 ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 436,
@@ -78,7 +80,8 @@ class Drawing:
 
     def nucleo(self, pins):
         """Draw the NUCLEO-F439ZI. pins: list of (position, label, colour, side) to highlight;
-        side is 'left' for labels left of the pin (right headers) or 'right'."""
+        side is 'left' for labels left of the pin (right headers) or 'right'. An optional fifth
+        item (x, y) places the label there, with a thin line to the pin."""
         a, t = self.add, self.text
         a('<rect x="40" y="130" width="300" height="720" rx="10" fill="#f6f6f3" stroke="#9e9e9e" stroke-width="2"/>')
         a('<line x1="40" y1="270" x2="340" y2="270" stroke="#bdbdbd" stroke-width="2" stroke-dasharray="6 5"/>')
@@ -118,9 +121,14 @@ class Drawing:
 
     def nucleo_labels(self):
         """Pin rings and labels, drawn after the wires so they stay on top."""
-        for (x, y), label, col, side in self._pins:
+        for pin in self._pins:
+            (x, y), label, col, side = pin[:4]
             self.add(f'<circle cx="{x}" cy="{y}" r="7" fill="none" stroke="{col[1]}" stroke-width="2"/>')
-            if side == "left":
+            if len(pin) > 4:
+                lx, ly = pin[4]
+                self.add(f'<line x1="{x}" y1="{y + 7}" x2="{lx - 3}" y2="{ly - 4}" stroke="{col[1]}" stroke-width="1.2"/>')
+                self.text(lx, ly, label, 10, col[1], weight="bold")
+            elif side == "left":
                 self.text(252, y + 4, label, 10, col[1], "end", "bold")
             else:
                 self.text(128, y + 4, label, 10, col[1], weight="bold")

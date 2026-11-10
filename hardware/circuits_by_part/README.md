@@ -9,14 +9,16 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 1 | Stepper motor and DRV8825 driver | [01_stepper_motor_drv8825/](01_stepper_motor_drv8825/README.md) | [svg](01_stepper_motor_drv8825/01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option) | Done |
 | 2 | Load cell and HX711 | [02_load_cell_hx711/](02_load_cell_hx711/README.md) | [svg](02_load_cell_hx711/02_load_cell_hx711.svg) | [Section 7](../04_wiring_list.md#7-load-cell-and-hx711) | Done |
 | 3 | Ultrasonic sensor (HC-SR04) | [03_ultrasonic_hc_sr04/](03_ultrasonic_hc_sr04/README.md) | [svg](03_ultrasonic_hc_sr04/03_ultrasonic_hc_sr04.svg) | [Section 8](../04_wiring_list.md#8-ultrasonic-sensor) | Done |
-| 4 | I2C bus: DS3231 clock and VL53L0X | | | Section 9 | Next |
-| 5 | microSD card | | | Section 10 | |
-| 6 | MAX98357A amplifier and speaker | | | Section 11 | |
-| 7 | Button and status LED | | | Section 12 | |
-| 8 | ESP32-CAM link to the STM32 | | | Section 5 | |
-| 9 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | | | Parts list, programming note | |
-| 10 | Power: 12 V, XL4015 to 5 V, 3.3 V | | | Section 4 | |
+| 4 | Sound: MAX98357A amplifier and speaker | [04_sound_max98357a/](04_sound_max98357a/README.md) | [svg](04_sound_max98357a/04_sound_max98357a.svg) | [Section 11](../04_wiring_list.md#11-max98357a-and-speaker) | Done |
+| 5 | ESP32-CAM link to the STM32 | | | Section 5 | Next |
+| 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | | | Parts list, programming note | |
+| 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | | | Section 4 | |
+| 8 | I2C bus: DS3231 clock and VL53L0X (after the demo essentials) | | | Section 9 | |
+| 9 | microSD card (after the demo essentials) | | | Section 10 | |
+| 10 | Button and status LED (after the demo essentials) | | | Section 12 | |
 | 11 | Full circuit | | | All sections | |
+
+Order: the parts the demo needs come first (1 to 7), then the parts that can wait (8 to 10), then the full circuit.
 
 ## How to read the pictures
 

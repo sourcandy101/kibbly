@@ -35,7 +35,7 @@ The middle point (column 24, bottom half) sees 5 V × 2 ÷ 3 = **3.3 V**: this i
 
 ## Where 5 V comes from
 
-Our breadboard rails are 12 V (top) and 3.3 V (bottom); there is no 5 V rail. For this test the sensor takes 5 V **straight from the Nucleo 5V pin** (CN8 pin 9) with its own orange wire, so a 5 V rail can never be mixed up with the 12 V one. In the full circuit, 5 V comes from the 5 V supply of circuit 10.
+Our breadboard rails are 12 V (top) and 3.3 V (bottom); there is no 5 V rail. For this test the sensor takes 5 V **straight from the Nucleo 5V pin** (CN8 pin 9) with its own orange wire, so a 5 V rail can never be mixed up with the 12 V one. In the full circuit, 5 V comes from the 5 V supply of circuit 7 (power).
 
 ## The sensor on the breadboard
 

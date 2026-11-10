@@ -337,19 +337,22 @@ Card: format as FAT32 on the computer before first use.
 
 ## 11. MAX98357A and speaker
 
-For the Adafruit MAX98357A breakout.
+Drawn in [circuit 4](circuits_by_part/04_sound_max98357a/README.md). The 7 pins plug into **row j, columns 5 to 11** of the top half (LRC, BCLK, DIN, GAIN, SD, GND, Vin); 5 V and GND cross the middle gap with two short jumpers.
 
-| # | Breakout pin | To | Colour | Measure or note | Checked |
+| # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| A1 | `Vin` | 5 V bus | Orange | 5 V gives the full 3 W | |
-| A2 | `GND` | GND rail | Black | | |
-| A3 | `BCLK` | STM32 PC10 (CN8, D45) | Purple | | |
-| A4 | `DIN` | STM32 PC12 (CN8, D47) | Purple | | |
-| A5 | `LRC` | STM32 PA4 (CN7, D24) | Purple | | |
-| A6 | `GAIN` | Not connected | | 9 dB; connect to GND for 12 dB if too quiet | |
-| A7 | `SD` | Not connected | | Plays a mono mix of left and right | |
-| A8 | Speaker `+` | Breakout output `+` | Red (speaker wire) | | |
-| A9 | Speaker `minus` | Breakout output `minus` | Black (speaker wire) | **Never connect a speaker wire to GND**; both outputs carry signal | |
+| A1 | `Vin` (column 11, top half, row f) | Column 11 bottom half (row e), jumper across the gap | Orange | | |
+| A2 | `GND` (column 10, top half, row f) | Column 10 bottom half (row e), jumper across the gap | Black | | |
+| A3 | `BCLK` (column 6) | Nucleo PC10 · D45 (CN8 pin 6) | Purple | Row i | |
+| A4 | `DIN` (column 7) | Nucleo PC12 · D47 (CN8 pin 10) | Dark purple | Row h | |
+| A5 | `LRC` (column 5) | Nucleo PA4 · D24 (CN7 pin 17) | Light purple | Row g | |
+| A6 | `GAIN` (column 8) | Not connected | | 9 dB; connect to GND for 12 dB if too quiet | |
+| A7 | `SD` (column 9) | Not connected | | Plays a mono mix of left and right | |
+| A8 | Speaker `+` | Breakout output `+` (screw terminal) | Red (speaker wire) | | |
+| A9 | Speaker `minus` | Breakout output `minus` (screw terminal) | Black (speaker wire) | **Never connect a speaker wire to GND**; both outputs carry signal | |
+| A10 | Column 11 bottom half (row c) | Nucleo 5V (CN8 pin 9) | Orange | Test only; from the 5 V supply in the full circuit. Low volume on USB power | |
+| A11 | Column 10 bottom half (row a) | Bottom − rail (GND) | Black | | |
+| A12 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21, H11 and U7 when other circuits are wired | |
 
 ## 12. Button and LED
 
@@ -369,7 +372,7 @@ For the Adafruit MAX98357A breakout.
 | 12 V | TMC2209 VM, XL4015 IN+ | P1, P3, M1 |
 | 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V, ultrasonic | P5, P7, E1, A1, S1, U1 |
 | 3.3 V | TMC2209 VIO, HX711, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, I3, I9 |
-| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, U6, I4, I10, S2, A2, B2, L3 |
+| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, U6, I4, I10, S2, A2, A11, B2, L3 |
 
 ## 14. STM32CubeMX settings
 
