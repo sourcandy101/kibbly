@@ -14,6 +14,7 @@ Every wire of the feeder, part by part: from which pin, to which pin, which colo
 | 4 | [Power](#4-power) |
 | 5 | [ESP32S3 camera board](#5-esp32s3-camera-board) |
 | 6 | [TMC2209 driver and stepper motor](#6-tmc2209-driver-and-stepper-motor) |
+| 6B | [DRV8825 driver and stepper motor (local option)](#6b-drv8825-driver-and-stepper-motor-local-option) |
 | 7 | [Load cell and HX711](#7-load-cell-and-hx711) |
 | 8 | [Ultrasonic sensor](#8-ultrasonic-sensor) |
 | 9 | [I2C bus: VL53L1X and DS3231](#9-i2c-bus-vl53l1x-and-ds3231) |
@@ -191,6 +192,57 @@ flowchart LR
 How to find the coil pairs: with the motor unplugged, measure the resistance between wires. Two wires with **1 to 5 ohm** between them are one coil. Wires of different coils show no connection. If the motor only shakes, swap the two wires of one coil.
 
 **Never plug or unplug the motor while the driver has 12 V.** This destroys the TMC2209.
+
+## 6B. DRV8825 driver and stepper motor (local option)
+
+Use this section instead of section 6 when the driver is a DRV8825 (sold locally) and not a TMC2209. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825.md).
+
+Breadboard layout: the DRV8825 straddles the middle gap in **columns 12 to 19**, turned so that **VMOT is top left (column 12, row f) and EN is bottom left (column 12, row e)**. Top half: power and motor. Bottom half: control. **Top + rail = 12 V, bottom + rail = 3.3 V.**
+
+| Driver pin | Column | Row | Driver pin | Column | Row |
+|---|---|---|---|---|---|
+| VMOT | 12 | f | EN | 12 | e |
+| GND | 13 | f | M0 | 13 | e |
+| B2 | 14 | f | M1 | 14 | e |
+| B1 | 15 | f | M2 | 15 | e |
+| A1 | 16 | f | RST | 16 | e |
+| A2 | 17 | f | SLP | 17 | e |
+| FLT | 18 | f | STEP | 18 | e |
+| GND | 19 | f | DIR | 19 | e |
+
+| # | From | To | Colour | Note | Checked |
+|---|---|---|---|---|---|
+| V1 | DC jack `+` | Top + rail (12 V), column 3 | Red | | |
+| V2 | DC jack `−` | Top − rail (GND), column 2 | Black | | |
+| V3 | 1000 uF capacitor | Long leg (+) in the top + rail, column 10; short leg in the top − rail, column 7 | | Stripe side is the short leg | |
+| V4 | VMOT (column 12) | Top + rail (12 V) | Red | From row j | |
+| V5 | GND (column 13) | Top − rail (GND) | Black | From row j | |
+| V6 | GND (column 19, above DIR) | No wire | | Linked to the other GND inside the board | |
+| V7 | A2 (column 17) | Motor green | Green (motor cable) | Row j; coil A | |
+| V8 | A1 (column 16) | Motor black | Black (motor cable) | Row i; coil A | |
+| V9 | B1 (column 15) | Motor red | Red (motor cable) | Row h; coil B | |
+| V10 | B2 (column 14) | Motor blue | Blue (motor cable) | Row g; coil B | |
+| V11 | FLT (column 18) | No wire | | Fault output, not used | |
+| V12 | EN (column 12) | Nucleo D2 · PF15 (CN10 pin 12) | Blue grey | Row b. Low = motor on | |
+| V13 | 10 kohm resistor | Column 12 row a to bottom + rail (3.3 V) | | Keeps the motor off while the STM32 resets | |
+| V14 | M0, M1 (columns 13, 14) | No wire | | Pulled to 0 inside the driver | |
+| V15 | M2 (column 15) | Bottom + rail (3.3 V) | Yellow | Row a. With M0 = M1 = 0: 1/16 step, 3200 steps per turn | |
+| V16 | RST (column 16) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver running | |
+| V17 | SLP (column 17) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver awake | |
+| V18 | STEP (column 18) | Nucleo D6 · PE9 (CN10 pin 4) | Grey | Row c | |
+| V19 | DIR (column 19) | Nucleo D7 · PF13 (CN10 pin 2) | Brown | Row d | |
+| V20 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | | |
+| V21 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | | |
+| V22 | Top − rail | Bottom − rail, column 1 | Black | Joins both GND rails | |
+
+Current limit: the DRV8825 gives a current of 2 x Vref. Measure Vref between the potentiometer and GND with 12 V on, and set it to **about 0.5 V (1 A)**. Without a multimeter: turn the potentiometer to the lowest current (usually fully anticlockwise), run the motor, then turn it up in small steps until the motor turns without skipping, and stop there.
+
+Differences from the TMC2209 wiring of section 6:
+
+1. No UART wire: PD5 is not used and USART2 is not needed in CubeMX.
+2. Microsteps are set by wires (M0, M1, M2), not in software.
+3. No stall detection: the scale is the only jam check.
+4. Nucleo pin numbers (CN10 pin 2, 4, 5, 12 and CN8 pin 7) come from the user manual UM1974: check them on the board before plugging.
 
 ## 7. Load cell and HX711
 
