@@ -1,13 +1,13 @@
 # Circuits by part
 
-Wiring pictures of the feeder, one part at a time, then the full circuit. Each part has its own picture and its own page, named after the part. Every picture matches a wire table in [04_wiring_list.md](../04_wiring_list.md).
+Wiring pictures of the feeder, one part at a time, then the full circuit. Each part has its own folder, named after the part, with everything about it inside. Every picture matches a wire table in [04_wiring_list.md](../04_wiring_list.md).
 
 ## Parts
 
-| # | Part | Page | Picture | Wire table | Status |
+| # | Part | Folder | Picture | Wire table | Status |
 |---|---|---|---|---|---|
-| 1 | Stepper motor and DRV8825 driver | [01_stepper_motor_drv8825.md](01_stepper_motor_drv8825.md) | [svg](01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option) | Done |
-| 2 | Load cell and HX711 | [02_load_cell_hx711.md](02_load_cell_hx711.md) | [svg](02_load_cell_hx711.svg) | [Section 7](../04_wiring_list.md#7-load-cell-and-hx711) | Done |
+| 1 | Stepper motor and DRV8825 driver | [01_stepper_motor_drv8825/](01_stepper_motor_drv8825/README.md) | [svg](01_stepper_motor_drv8825/01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option) | Done |
+| 2 | Load cell and HX711 | [02_load_cell_hx711/](02_load_cell_hx711/README.md) | [svg](02_load_cell_hx711/02_load_cell_hx711.svg) | [Section 7](../04_wiring_list.md#7-load-cell-and-hx711) | Done |
 | 3 | Ultrasonic sensor (HC-SR04) | | | Section 8 | Next |
 | 4 | I2C bus: DS3231 clock and VL53L0X | | | Section 9 | |
 | 5 | microSD card | | | Section 10 | |
@@ -25,10 +25,27 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 3. **Breadboard:** columns 1 to 30, rows a to j. The 5 holes of one column on the same side of the middle gap are connected together. Each rail row is connected along its length; on some breadboards the rail is cut in the middle (a break in the red and blue lines): bridge it with a short wire if so.
 4. **Nucleo pins** are named three ways: board label (D6), STM32 pin (PE9) and header pin number (CN10 pin 4). Pin numbers come from the Nucleo user manual UM1974: check them on the board before plugging.
 
-## Editing a picture
-
-Each picture is drawn by a Python script in [scripts/](scripts/). To change a picture, edit its script and run it from this folder:
+## Folder layout
 
 ```
-python3 scripts/make_01_stepper_motor_drv8825.py 01_stepper_motor_drv8825.svg
+circuits_by_part/
+  README.md                         this index
+  shared/common.py                  drawing pieces shared by every circuit (Nucleo, breadboard, wires)
+  01_stepper_motor_drv8825/
+    README.md                       the page: picture, how it works, wiring order, first test
+    01_stepper_motor_drv8825.svg    the picture
+    make_01_stepper_motor_drv8825.py   the script that draws the picture
+  02_load_cell_hx711/
+    (same three files)
+```
+
+Every new circuit gets its own folder with the same three files.
+
+## Editing a picture
+
+To change a picture, edit the script in the part folder and run it from that folder:
+
+```
+cd 01_stepper_motor_drv8825
+python3 make_01_stepper_motor_drv8825.py 01_stepper_motor_drv8825.svg
 ```

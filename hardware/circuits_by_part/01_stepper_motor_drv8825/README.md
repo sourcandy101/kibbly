@@ -6,7 +6,7 @@
 
 **Parts:** NUCLEO-F439ZI, NEMA 17 motor, DRV8825, 12 V adapter, DC jack, 1000 uF capacitor, 10 kohm resistor, breadboard, jumper wires, USB cable.
 
-**Wire table:** wires V1 to V22 in [04_wiring_list.md, section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option).
+**Wire table:** wires V1 to V22 in [04_wiring_list.md, section 6B](../../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option).
 
 ## How the parts talk
 

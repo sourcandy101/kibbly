@@ -195,7 +195,7 @@ How to find the coil pairs: with the motor unplugged, measure the resistance bet
 
 ## 6B. DRV8825 driver and stepper motor (local option)
 
-Use this section instead of section 6 when the driver is a DRV8825 (sold locally) and not a TMC2209. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825.md).
+Use this section instead of section 6 when the driver is a DRV8825 (sold locally) and not a TMC2209. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
 
 Breadboard layout: the DRV8825 straddles the middle gap in **columns 12 to 19**, turned so that **VMOT is top left (column 12, row f) and EN is bottom left (column 12, row e)**. Top half: power and motor. Bottom half: control. **Top + rail = 12 V, bottom + rail = 3.3 V.**
 
@@ -246,7 +246,7 @@ Differences from the TMC2209 wiring of section 6:
 
 ## 7. Load cell and HX711
 
-Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 22 to 25** of the bottom half; the board hangs over the bottom edge.
+Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 22 to 25** of the bottom half; the board hangs over the bottom edge.
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|

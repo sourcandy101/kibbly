@@ -6,7 +6,7 @@
 
 **Parts:** NUCLEO-F439ZI, 5 kg load cell (owned), HX711 board, breadboard, jumper wires, USB cable, a known weight or a kitchen scale for calibration.
 
-**Wire table:** wires H1 to H12 in [04_wiring_list.md, section 7](../04_wiring_list.md#7-load-cell-and-hx711).
+**Wire table:** wires H1 to H12 in [04_wiring_list.md, section 7](../../04_wiring_list.md#7-load-cell-and-hx711).
 
 ## How the parts talk
 

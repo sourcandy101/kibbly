@@ -1,8 +1,8 @@
-"""Draw hardware/circuits_by_part/02_load_cell_hx711.svg (Fritzing style)."""
+"""Draw hardware/circuits_by_part/02_load_cell_hx711/02_load_cell_hx711.svg (Fritzing style)."""
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "shared"))
 from common import (BLACK, BROWN, CN8, CN10, GREEN, GREY, RED, ROW, WHITE, YELLOW,  # noqa: E402
                     Drawing, X)
 
