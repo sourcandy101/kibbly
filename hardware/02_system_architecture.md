@@ -173,7 +173,6 @@ One message per line, readable as text, so we can watch and type them in a seria
 ```mermaid
 flowchart TB
     AD["12 V 3 A wall adapter"]
-    PROT["3 A fuse and<br/>reverse polarity protection"]
     BUS12["12 V bus"]
     BK["XL4015 buck converter<br/>set to 5.0 V"]
     BUS5["5 V bus"]
@@ -186,7 +185,7 @@ flowchart TB
     AMP["MAX98357A VIN<br/>0.8 A peak"]
     S3["HX711, ultrasonic, VL53L1X,<br/>DS3231, microSD, TMC2209 VIO<br/>about 0.15 A"]
 
-    AD --> PROT --> BUS12
+    AD --> BUS12
     BUS12 --> DRV
     BUS12 --> BK --> BUS5
     BUS5 --> NU

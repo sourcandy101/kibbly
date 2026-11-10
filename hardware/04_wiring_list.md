@@ -86,7 +86,7 @@ Only the pins this project uses. Header names follow UM1974: **CN7, CN8, CN9, CN
 ```mermaid
 flowchart LR
     AD["12 V adapter"] --> J["Barrel jack"]
-    J -->|"+ red"| F["3 A fuse"] --> D["Reverse polarity<br/>protection"] --> B12["12 V bus"]
+    J -->|"+ red"| B12["12 V bus"]
     J -->|"minus black"| G["GND bus"]
     B12 --> XIN["XL4015 IN+"]
     G --> XGN["XL4015 IN minus"]
@@ -100,22 +100,20 @@ flowchart LR
 
 | # | From | To | Colour | Measure before connecting | Checked |
 |---|---|---|---|---|---|
-| P1 | Barrel jack centre (+) | Fuse holder input | Red | 12 V between jack + and jack GND | |
-| P2 | Fuse holder output | Reverse polarity protection input | Red | | |
-| P3 | Reverse polarity protection output | **12 V bus** (screw terminal or Wago) | Red | 11.5 to 12.5 V | |
-| P4 | Barrel jack outer (GND) | **GND bus** | Black | 0 ohm between jack outer and GND bus | |
-| P5 | 12 V bus | XL4015 `IN+` | Red | | |
-| P6 | GND bus | XL4015 `IN-` | Black | | |
-| P7 | XL4015 `OUT+` | **5 V bus** | Orange | **Turn the XL4015 screw until OUT reads 5.0 V with nothing connected** | |
-| P8 | XL4015 `OUT-` | GND bus | Black | | |
-| P9 | 5 V bus | Nucleo `E5V` (CN11) | Orange | 5.0 V; power jumper JP3 set to E5V (check UM1974) | |
-| P10 | GND bus | Nucleo `GND` (CN11) | Black | | |
-| P11 | Nucleo `3V3` (CN8) | **3.3 V bus** (breadboard rail) | Yellow | 3.3 V with the Nucleo powered | |
-| P12 | Nucleo `GND` (CN8) | Breadboard GND rail | Black | | |
+| P1 | Barrel jack centre (+) | **12 V bus** (screw terminal or Wago) | Red | 11.5 to 12.5 V between jack + and jack GND | |
+| P2 | Barrel jack outer (GND) | **GND bus** | Black | 0 ohm between jack outer and GND bus | |
+| P3 | 12 V bus | XL4015 `IN+` | Red | | |
+| P4 | GND bus | XL4015 `IN-` | Black | | |
+| P5 | XL4015 `OUT+` | **5 V bus** | Orange | **Turn the XL4015 screw until OUT reads 5.0 V with nothing connected** | |
+| P6 | XL4015 `OUT-` | GND bus | Black | | |
+| P7 | 5 V bus | Nucleo `E5V` (CN11) | Orange | 5.0 V; power jumper JP3 set to E5V (check UM1974) | |
+| P8 | GND bus | Nucleo `GND` (CN11) | Black | | |
+| P9 | Nucleo `3V3` (CN8) | **3.3 V bus** (breadboard rail) | Yellow | 3.3 V with the Nucleo powered | |
+| P10 | Nucleo `GND` (CN8) | Breadboard GND rail | Black | | |
 
-Reverse polarity protection: a Schottky diode (SS54 or 1N5822) in series is the simplest; it drops about 0.4 V, which the 12 V parts accept. A P channel MOSFET has no drop but needs more parts.
+No fuse or reverse polarity protection is fitted. Before the first plug in, check that the adapter label shows the centre pin as +, and never let the 12 V bus touch GND or a board pin.
 
-During development, power the Nucleo from USB and leave P9 unplugged. Connect P9 only when the whole feeder runs from the adapter.
+During development, power the Nucleo from USB and leave P7 unplugged. Connect P7 only when the whole feeder runs from the adapter.
 
 ## 5. ESP32S3 camera board
 
@@ -308,10 +306,10 @@ For the Adafruit MAX98357A breakout.
 
 | Rail | Connected parts | Wires on the rail |
 |---|---|---|
-| 12 V | TMC2209 VM, XL4015 IN+ | P3, P5, M1 |
-| 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V | P7, P9, E1, A1, S1 |
-| 3.3 V | TMC2209 VIO, HX711, ultrasonic, VL53L1X, DS3231, EN pull up | P11, M4, M9, H6, H7, U1, I3, I9 |
-| GND | Every part | P4, P6, P8, P10, P12, E2, M2, M5, M11, M12, M13, H8, H11, U4, I4, I10, S2, A2, B2, L3 |
+| 12 V | TMC2209 VM, XL4015 IN+ | P1, P3, M1 |
+| 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V | P5, P7, E1, A1, S1 |
+| 3.3 V | TMC2209 VIO, HX711, ultrasonic, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, H7, U1, I3, I9 |
+| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H8, H11, U4, I4, I10, S2, A2, B2, L3 |
 
 ## 14. STM32CubeMX settings
 
