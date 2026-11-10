@@ -48,11 +48,12 @@ t(sx + 80, 190, "never to GND", 11, "#c62828", weight="bold")
 d.wire(f"M{cx - 14},209 C{cx - 14},150 {sx - 120},{sy - 13} {sx - 70},{sy - 13}", RED, [], width=3)
 d.wire(f"M{cx + 14},209 C{cx + 14},182 {sx - 120},{sy + 15} {sx - 70},{sy + 15}", BLACK, [], width=3)
 
-# 5 V and GND straight from the top rails (columns 23 and 24, just right of the board)
-d.wire(f"M{X(20)},{ROW['i']} L{X(23) - 12},{ROW['i']} C{X(23) - 4},{ROW['i']} {X(23)},{ROW['i'] - 6} {X(23)},{ROW['i'] - 16} "
-       f"L{X(23)},{ROW['top-']}", BLACK, [(X(20), ROW['i']), (X(23), ROW['top-'])])
-d.wire(f"M{X(21)},{ROW['h']} L{X(24) - 12},{ROW['h']} C{X(24) - 4},{ROW['h']} {X(24)},{ROW['h'] - 6} {X(24)},{ROW['h'] - 16} "
-       f"L{X(24)},{ROW['top+']}", ORANGE, [(X(21), ROW['h']), (X(24), ROW['top+'])])
+# 5 V and GND straight from the top rails (columns 22 and 23, just right of the board;
+# top + column 24 belongs to the HC-SR04 VCC wire)
+d.wire(f"M{X(20)},{ROW['i']} L{X(22) - 12},{ROW['i']} C{X(22) - 4},{ROW['i']} {X(22)},{ROW['i'] - 6} {X(22)},{ROW['i'] - 16} "
+       f"L{X(22)},{ROW['top-']}", BLACK, [(X(20), ROW['i']), (X(22), ROW['top-'])])
+d.wire(f"M{X(21)},{ROW['h']} L{X(23) - 12},{ROW['h']} C{X(23) - 4},{ROW['h']} {X(23)},{ROW['h'] - 6} {X(23)},{ROW['h'] - 16} "
+       f"L{X(23)},{ROW['top+']}", ORANGE, [(X(21), ROW['h']), (X(23), ROW['top+'])])
 
 # I2S wires: BCLK and DIN over the top of the Nucleo, LRC from the right header
 x, y = CN8(6)

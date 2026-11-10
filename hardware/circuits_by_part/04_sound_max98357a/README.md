@@ -36,7 +36,7 @@ Both speaker wires go **only to the amplifier's screw terminal** (+ and −). Bo
 
 The 7 pins plug into **row j, columns 15 to 21** (LRC, BCLK, DIN, GAIN, SD, GND, Vin) and the board stands over the top edge with the speaker terminal at the top. Check the order printed on your board.
 
-Vin and GND go straight to the top rails (5 V and GND) with two short wires, at columns 24 and 23 just right of the board.
+Vin and GND go straight to the top rails (5 V and GND) with two short wires, at columns 23 and 22 just right of the board.
 
 | Pin left empty | Why |
 |---|---|

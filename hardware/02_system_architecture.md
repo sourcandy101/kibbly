@@ -2,6 +2,8 @@
 
 How the parts from [step 1](01_hardware_list.md) fit together: which board does what, how they talk, how power flows, which pin each part uses, and how a meal runs from start to end.
 
+**Updated on 10 November 2026** to the parts the team has or buys locally ([step 1](01_hardware_list.md)): ESP32-CAM camera board, DRV8825 motor driver, HC-SR04 ultrasonic sensor on 5 V, VL53L0X tank sensor. Every part is also drawn on the breadboard, hole by hole, in [circuits_by_part](circuits_by_part/README.md).
+
 ## Contents
 
 | # | Section | What it shows |
@@ -34,16 +36,16 @@ flowchart TB
     end
 
     subgraph FEEDER["Feeder (Youssef and Hedi)"]
-        ESP["ESP32S3 camera board<br/>eyes and internet link"]
+        ESP["ESP32-CAM<br/>eyes and internet link"]
         STM["NUCLEO-F439ZI<br/>brain, real time control"]
         ESP <-->|"UART 115200"| STM
     end
 
     subgraph PARTS["Parts on the STM32"]
-        MOT["Dispenser<br/>TMC2209, NEMA 17, auger"]
+        MOT["Dispenser<br/>DRV8825, NEMA 17, auger"]
         SCALE["Scale<br/>load cell, HX711"]
-        PRES["Presence<br/>ultrasonic sensor"]
-        TANK["Tank level<br/>VL53L1X"]
+        PRES["Presence<br/>HC-SR04 ultrasonic"]
+        TANK["Tank level<br/>VL53L0X"]
         CLK["Clock<br/>DS3231"]
         SD["Storage<br/>microSD"]
         SND["Sound<br/>MAX98357A, speaker"]
@@ -92,28 +94,27 @@ flowchart LR
         STM["STM32F439ZI<br/>3.3 V logic"]
     end
 
-    ESP["ESP32S3 camera board"]
-    DRV["TMC2209 driver"]
+    ESP["ESP32-CAM<br/>IO15 TX, IO14 RX"]
+    DRV["DRV8825 driver"]
     MOT["NEMA 17 stepper<br/>and auger"]
     HX["HX711"]
     LC["5 kg load cell<br/>under the bowl"]
-    US["Ultrasonic sensor<br/>3.3 V version"]
-    TOF["VL53L1X<br/>I2C 0x29"]
+    US["HC-SR04<br/>on 5 V"]
+    TOF["VL53L0X<br/>I2C 0x29"]
     RTC["DS3231<br/>I2C 0x68"]
-    SDC["microSD breakout"]
+    SDC["microSD module"]
     AMP["MAX98357A"]
-    SPK["4 ohm 3 W speaker"]
+    SPK["4 or 8 ohm, 3 W speaker"]
     BTN["Push button"]
     LED["Status LED"]
 
-    STM <-->|"USART6<br/>PC6 TX, PC7 RX"| ESP
+    STM <-->|"USART6<br/>PC6 TX through 1 kohm<br/>PC7 RX"| ESP
     STM -->|"TIM1 PE9 STEP<br/>PF13 DIR, PF15 EN"| DRV
-    STM <-->|"USART2 single wire<br/>PD5 PDN_UART"| DRV
     DRV -->|"4 coil wires"| MOT
     LC -->|"4 wires E+ E- A+ A-"| HX
     HX -->|"PF14 DOUT<br/>PE13 SCK"| STM
     STM -->|"PD14 TRIG"| US
-    US -->|"TIM4 PD15 ECHO"| STM
+    US -->|"TIM4 PD15 ECHO<br/>through the 1 kohm and 2 kohm divider"| STM
     STM <-->|"I2C1 PB8 SCL, PB9 SDA"| TOF
     STM <-->|"I2C1 PB8 SCL, PB9 SDA"| RTC
     STM <-->|"SPI1 PA5 SCK, PA6 MISO<br/>PB5 MOSI, PE11 CS"| SDC
@@ -129,21 +130,21 @@ flowchart LR
 |---|---|---|---|
 | Feeder to cloud | ESP32 and Firebase | WiFi, HTTPS | |
 | Recognition | ESP32 and AI server | WiFi, HTTP: JPEG photo in, dog id and confidence out | Answer within about 1 s |
-| Boards | STM32 and ESP32 | UART, 3.3 V, text lines ending with a newline | 115200 baud, 8N1 |
-| Motor driver settings | STM32 and TMC2209 | Single wire UART (current, microsteps, stall detection) | 115200 baud |
-| Motor movement | STM32 and TMC2209 | STEP pulses from a timer, DIR and EN levels | 1/16 microsteps, 3200 steps per auger turn |
+| Boards | STM32 and ESP32-CAM | UART, 3.3 V, text lines ending with a newline | 115200 baud, 8N1 |
+| Motor driver settings | DRV8825 | Microsteps set by wires (M2 to 3.3 V, M0 and M1 open); current set with the potentiometer | 1/16 step, about 1 A |
+| Motor movement | STM32 and DRV8825 | STEP pulses from a timer, DIR and EN levels | 1/16 microsteps, 3200 steps per auger turn |
 | Scale | STM32 and HX711 | 2 wire serial (clock and data) | 10 readings per second, gain 128 |
-| Presence | STM32 and ultrasonic | TRIG pulse of 10 us, ECHO pulse timed by TIM4 | One reading every 100 ms |
-| Sensors and clock | STM32, VL53L1X, DS3231 | I2C1 bus | 400 kHz |
+| Presence | STM32 and HC-SR04 | TRIG pulse of 10 us, ECHO pulse (through the divider) timed by TIM4 | One reading every 100 ms; distance in cm = pulse in us ÷ 58 |
+| Sensors and clock | STM32, VL53L0X, DS3231 | I2C1 bus | 400 kHz |
 | Storage | STM32 and microSD | SPI1 with FatFs | Up to 12 MHz |
-| Sound | STM32 and MAX98357A | I2S3 with DMA | WAV, 16 kHz, 16 bit, mono |
+| Sound | STM32 and MAX98357A | I2S3 with DMA | WAV, 16 kHz, 16 bit, mono; demo clips kept in STM32 flash, SD card later |
 | Debug | STM32 and computer | ST-LINK virtual serial port (USART3, PD8, PD9) | 115200 baud |
 
 ### I2C addresses
 
 | Device | Address | Note |
 |---|---|---|
-| VL53L1X | 0x29 | Fixed at power on |
+| VL53L0X | 0x29 | Fixed at power on |
 | DS3231 | 0x68 | Real time clock |
 | AT24C32 EEPROM on the DS3231 module | 0x57 | Present on most modules, not used |
 
@@ -172,18 +173,19 @@ One message per line, readable as text, so we can watch and type them in a seria
 
 ```mermaid
 flowchart TB
-    AD["12 V 3 A wall adapter"]
-    BUS12["12 V bus"]
+    AD["12 V wall adapter<br/>2 A, 3 A better"]
+    BUS12["12 V<br/>breadboard column 5 only"]
     BK["XL4015 buck converter<br/>set to 5.0 V"]
-    BUS5["5 V bus"]
+    BUS5["5 V<br/>top + rail"]
     LDO["Nucleo 3.3 V regulator<br/>500 mA max"]
-    BUS3["3.3 V bus"]
+    BUS3["3.3 V<br/>bottom + rail"]
 
-    DRV["TMC2209 VM and motor<br/>0.8 A peak"]
+    DRV["DRV8825 VMOT and motor<br/>0.8 A peak"]
     NU["NUCLEO-F439ZI E5V<br/>0.2 A"]
-    ESP["ESP32S3 5V pin<br/>0.5 A peak"]
-    AMP["MAX98357A VIN<br/>0.8 A peak"]
-    S3["HX711, ultrasonic, VL53L1X,<br/>DS3231, microSD, TMC2209 VIO<br/>about 0.15 A"]
+    ESP["ESP32-CAM 5V pin<br/>0.5 A peak"]
+    AMP["MAX98357A Vin<br/>0.8 A peak"]
+    S5["HC-SR04, microSD module<br/>about 0.1 A"]
+    S3["HX711, VL53L0X, DS3231,<br/>DRV8825 control pins<br/>about 0.05 A"]
 
     AD --> BUS12
     BUS12 --> DRV
@@ -191,23 +193,25 @@ flowchart TB
     BUS5 --> NU
     BUS5 --> ESP
     BUS5 --> AMP
+    BUS5 --> S5
     NU --> LDO --> BUS3 --> S3
 ```
 
 | Rail | Source | Loads | Peak current | Margin |
 |---|---|---|---|---|
-| 12 V | Adapter, 3 A | Motor driver, buck converter | About 1.6 A | Adapter gives 3 A |
-| 5 V | XL4015, 5 A | Nucleo, ESP32, amplifier | About 1.5 A | Buck gives 5 A |
-| 3.3 V | Nucleo regulator, 500 mA | Sensors, SD card, driver logic, STM32 | About 0.25 A | Half of the limit |
+| 12 V | Adapter, 2 A (3 A better) | Motor driver, buck converter | About 1.6 A | Enough with 2 A, more margin with 3 A |
+| 5 V | XL4015, 5 A | Nucleo, ESP32-CAM, amplifier, HC-SR04, microSD module | About 1.6 A | Buck gives 5 A |
+| 3.3 V | Nucleo regulator, 500 mA | HX711, VL53L0X, DS3231, driver control pins, STM32 | About 0.2 A | Under half of the limit |
 
 Rules:
 
-1. **All grounds are connected together**: adapter, buck, Nucleo, ESP32, driver, amplifier. Without a common ground, UART and sensors give wrong values.
+1. **All grounds are connected together**: adapter, buck, Nucleo, ESP32-CAM, driver, amplifier. Without a common ground, UART and sensors give wrong values.
 2. **Set the buck to 5.0 V with the multimeter before connecting anything** to it. A new XL4015 can come set to any voltage.
-3. A 1000 uF capacitor and a 100 nF capacitor sit at the TMC2209 12 V input, and another pair at the ESP32 5 V pin.
-4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the TMC2209).
-5. During development the Nucleo runs from USB. When it runs from the 5 V bus, set the power jumper to E5V (see the Nucleo user manual UM1974) and do not rely on USB power at the same time.
+3. A 1000 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
+4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the driver).
+5. During development the Nucleo runs from USB. When it runs from the 5 V bus, set the power jumper to E5V (see the Nucleo user manual UM1974) and do not rely on USB power at the same time. For the tests on USB, the Nucleo 5V pin feeds the top + rail (wire R1); R1 comes out when the XL4015 feeds the rail, never both at once.
 6. On most DS3231 modules a charging circuit is fitted for a rechargeable LIR2032 cell. With a normal CR2032, remove the charging resistor or diode on the module.
+7. **On the breadboard** the top + rail is 5 V, the bottom + rail is 3.3 V and both − rails are GND. 12 V is on no rail: only in column 5, the driver VMOT column. Column map in [circuits_by_part](circuits_by_part/README.md#board-and-column-map).
 
 ## 6. Pin plan
 
@@ -215,54 +219,66 @@ Pins chosen to avoid the ones already used on the board by Ethernet (PA1, PA2, P
 
 ### NUCLEO-F439ZI
 
-| # | Part | Signal | STM32 pin | Header label | Peripheral | Direction |
+Header pin numbers follow the user manual UM1974: check each one on the board before plugging.
+
+| # | Part | Signal | STM32 pin | Board label and header pin | Peripheral | Direction |
 |---|---|---|---|---|---|---|
-| 1 | TMC2209 | STEP | PE9 | D6 | TIM1 channel 1, pulse output | Out |
-| 2 | TMC2209 | DIR | PF13 | D7 | GPIO | Out |
-| 3 | TMC2209 | EN (low enables the motor) | PF15 | D2 | GPIO | Out |
-| 4 | TMC2209 | PDN_UART | PD5 | CN9 | USART2 TX, single wire mode, through 1 kohm | In and out |
-| 5 | HX711 | DOUT | PF14 | D4 | GPIO | In |
-| 6 | HX711 | SCK | PE13 | D3 | GPIO | Out |
-| 7 | Ultrasonic | TRIG | PD14 | D10 | GPIO | Out |
-| 8 | Ultrasonic | ECHO | PD15 | D9 | TIM4 channel 4, input capture | In |
-| 9 | VL53L1X and DS3231 | SCL | PB8 | D15 | I2C1 | Out |
-| 10 | VL53L1X and DS3231 | SDA | PB9 | D14 | I2C1 | In and out |
-| 11 | microSD | SCK | PA5 | D13 | SPI1 | Out |
-| 12 | microSD | MISO | PA6 | D12 | SPI1 | In |
-| 13 | microSD | MOSI | PB5 | CN7 | SPI1 (PA7 avoided, used by Ethernet) | Out |
-| 14 | microSD | CS | PE11 | D5 | GPIO | Out |
-| 15 | MAX98357A | BCLK | PC10 | CN8 | I2S3 CK | Out |
-| 16 | MAX98357A | DIN | PC12 | CN8 | I2S3 SD | Out |
-| 17 | MAX98357A | LRC | PA4 | CN7 | I2S3 WS | Out |
-| 18 | ESP32 | STM32 TX to ESP32 RX | PC6 | CN7 | USART6 TX | Out |
-| 19 | ESP32 | STM32 RX from ESP32 TX | PC7 | CN7 | USART6 RX | In |
-| 20 | Button | Input | PF12 | D8 | GPIO with interrupt, internal pull up | In |
-| 21 | Status LED | Output | PG14 | D1 | GPIO, through 330 ohm | Out |
+| 1 | DRV8825 | STEP | PE9 | D6 · CN10 pin 4 | TIM1 channel 1, pulse output | Out |
+| 2 | DRV8825 | DIR | PF13 | D7 · CN10 pin 2 | GPIO | Out |
+| 3 | DRV8825 | EN (low turns the motor on) | PF15 | D2 · CN10 pin 12 | GPIO, plus 10 kohm to 3.3 V so the motor stays off during a reset | Out |
+| 4 | HX711 | DOUT | PF14 | D4 · CN10 pin 8 | GPIO | In |
+| 5 | HX711 | SCK | PE13 | D3 · CN10 pin 10 | GPIO | Out |
+| 6 | HC-SR04 | TRIG | PD14 | D10 · CN7 pin 16 | GPIO | Out |
+| 7 | HC-SR04 | ECHO, through the divider | PD15 | D9 · CN7 pin 18 | TIM4 channel 4, input capture | In |
+| 8 | VL53L0X and DS3231 | SCL | PB8 | D15 · CN7 pin 2 | I2C1 | Out |
+| 9 | VL53L0X and DS3231 | SDA | PB9 | D14 · CN7 pin 4 | I2C1 | In and out |
+| 10 | microSD | SCK | PA5 | D13 · CN7 pin 10 | SPI1 | Out |
+| 11 | microSD | MISO | PA6 | D12 · CN7 pin 12 | SPI1 | In |
+| 12 | microSD | MOSI | PB5 | D22 · CN7 pin 13 | SPI1 (PA7 avoided, used by Ethernet) | Out |
+| 13 | microSD | CS | PE11 | D5 · CN10 pin 6 | GPIO | Out |
+| 14 | MAX98357A | BCLK | PC10 | D45 · CN8 pin 6 | I2S3 CK | Out |
+| 15 | MAX98357A | DIN | PC12 | D47 · CN8 pin 10 | I2S3 SD | Out |
+| 16 | MAX98357A | LRC | PA4 | D24 · CN7 pin 17 | I2S3 WS | Out |
+| 17 | ESP32-CAM | STM32 TX to ESP32-CAM RX (IO14), through 1 kohm | PC6 | D16 · CN7 pin 1 | USART6 TX | Out |
+| 18 | ESP32-CAM | STM32 RX from ESP32-CAM TX (IO15) | PC7 | D21 · CN7 pin 11 | USART6 RX | In |
+| 19 | Button | Input | PF12 | D8 · CN7 pin 20 | GPIO with interrupt, internal pull up | In |
+| 20 | Status LED | Output | PG14 | D1 · CN10 pin 14 | GPIO, through 330 ohm | Out |
+
+| Power pin | Header pin | Use |
+|---|---|---|
+| 5V | CN8 pin 9 | Feeds the top + rail during the tests on USB (wire R1) |
+| 3V3 | CN8 pin 7 | Feeds the bottom + rail (wire R2) |
+| GND | CN10 pin 5 | Bottom − rail (wire R3) |
 
 Built in parts kept for debugging: LD1 green (PB0), LD2 blue (PB7), LD3 red (PB14), user button (PC13), ST-LINK serial port (PD8, PD9) for printing logs to the computer.
 
-### ESP32S3 (XIAO Sense)
+### ESP32-CAM
 
-| Signal | XIAO pin | Connects to |
+| Signal | ESP32-CAM pin | Connects to |
 |---|---|---|
-| UART TX | D6 (GPIO43) | STM32 PC7 |
-| UART RX | D7 (GPIO44) | STM32 PC6 |
-| 5V | 5V | 5 V bus |
-| GND | GND | Common ground |
+| UART TX | IO15 | STM32 PC7 |
+| UART RX | IO14 | STM32 PC6, through 1 kohm |
+| 5V | 5V | 5 V top + rail, with a 1000 uF capacitor next to the wires |
+| GND | GND, next to 5V | Common ground |
+| Loading programs | U0T, U0R, IO0 | Left free; used with the ESP32 DevKit V1 |
 
-The camera is built into the Sense board. USB C stays free for flashing and logs.
+The OV2640 camera is on the board. Its microSD slot stays empty, because a card would share IO14 and IO15 with the link. The ESP32-CAM has no USB port, so programs are loaded through the ESP32 DevKit V1 (see the programming note in [step 1](01_hardware_list.md)). Wiring: [circuit 5](circuits_by_part/05_esp32_cam_link/README.md).
 
-### TMC2209 module
+### DRV8825 module
 
 | Driver pin | Connects to |
 |---|---|
-| VM | 12 V bus, with 1000 uF and 100 nF capacitors |
-| GND (motor side and logic side) | Common ground |
-| VIO | 3.3 V bus |
-| STEP, DIR, EN | STM32 PE9, PF13, PF15 |
-| PDN_UART | STM32 PD5 through 1 kohm |
-| MS1, MS2 | GND (driver address 0) |
-| A1, A2, B1, B2 | Motor coils (check the pairs with the multimeter) |
+| VMOT | 12 V (breadboard column 5), with a 1000 uF capacitor |
+| GND (both pins) | Common ground |
+| STEP, DIR, EN | STM32 PE9, PF13, PF15; EN also through 10 kohm to 3.3 V |
+| M0, M1 | Not connected (pulled low inside the driver) |
+| M2, RST, SLP | 3.3 V: 1/16 step, driver running and awake |
+| FLT | Not connected |
+| A1, A2, B1, B2 | Motor coils (find the two pairs first) |
+
+Current limit: the motor current is 2 x Vref; set Vref to about 0.5 V for 1 A. Wiring: [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
+
+If the ISS group lends a TMC2209, it uses the same STEP, DIR and EN pins and adds one wire: PDN_UART to STM32 PD5 (D53, CN9) through 1 kohm, for settings and stall detection (USART2 single wire). Wiring in section 6 of the [wiring list](04_wiring_list.md#6-tmc2209-driver-and-stepper-motor).
 
 ## 7. One meal in time order
 
@@ -274,13 +290,13 @@ sequenceDiagram
     participant RTC as DS3231 clock
     participant STM as STM32
     participant DOG as Dog at the bowl
-    participant ESP as ESP32S3
+    participant ESP as ESP32-CAM
     participant AI as AI server
     participant FB as Firebase
 
     RTC->>STM: It is 18.00
     STM->>STM: Schedule says Biscuit, 280 g, called first
-    STM->>DOG: Plays biscuit.wav from the SD card
+    STM->>DOG: Plays the call of Biscuit (STM32 flash for the demo, SD card later)
     DOG->>STM: Ultrasonic reads under 40 cm
     STM->>ESP: PHOTO
     ESP->>AI: POST /recognize with a JPEG
@@ -378,15 +394,15 @@ flowchart TD
     DOG -->|"No"| FIN
 ```
 
-Second jam check: the TMC2209 stall detection (StallGuard) flags a blocked motor even before the scale reading.
+With the DRV8825 the scale is the only jam check, which is enough for the demo. If a TMC2209 is lent, its stall detection (StallGuard) adds a second check that flags a blocked motor even before the scale reading.
 
 ## 11. Failure handling
 
 | Failure | How the feeder notices | What it does | Alert sent |
 |---|---|---|---|
-| Jam | 3 bursts in a row without weight gain, or TMC2209 stall flag | Turns back to free the auger, then stops the motor | `jam` |
-| Low tank | VL53L1X distance above the low threshold | Keeps serving | `low_tank` |
-| Empty tank | VL53L1X distance at the bottom, or bursts without weight | No meal | `empty_tank` (urgent) |
+| Jam | 3 bursts in a row without weight gain (plus the stall flag if a TMC2209 is used) | Turns back to free the auger, then stops the motor | `jam` |
+| Low tank | VL53L0X distance above the low threshold | Keeps serving | `low_tank` |
+| Empty tank | VL53L0X distance at the bottom, or bursts without weight | No meal | `empty_tank` (urgent) |
 | WiFi or AI server down | `DOG,error` or no answer within 5 s | Serves meals in the owner's order without recognition; saves logs on the SD card | `offline`, sent when WiFi is back |
 | Power cut | At boot, last meal time on the SD card is older than a scheduled meal | Does not serve missed meals automatically; lists them | `power_cut` with the number of missed meals |
 | SD card missing or broken | FatFs mount fails at boot | Uses the last schedule kept in STM32 flash and plays a built in chime instead of voice clips | `offline` style alert with the reason |
@@ -407,7 +423,7 @@ flowchart LR
         STORE[("Storage:<br/>voice clips")]
     end
 
-    ESP["ESP32S3"]
+    ESP["ESP32-CAM"]
     STM["STM32 and SD card"]
 
     DOGS -->|"names, call order"| ESP
@@ -461,3 +477,6 @@ flowchart TD
 | 7 | Values from the spec | 80% confidence, 5 g bursts, calls at 0, 5 and 10 minutes, alert at 15, unknown dog 20 g twice a day | Team |
 | 8 | Jam rule | 3 bursts in a row with less than 2 g gain | Hedi |
 | 9 | Missed meals after a power cut | Not served automatically, the owner decides in the app | Team |
+| 10 | Motor driver | DRV8825 for the demo (sold locally); TMC2209 only if the ISS group lends one | Hedi and the ISS group |
+| 11 | Camera board | ESP32-CAM (owned), programs loaded through the ESP32 DevKit V1 | Hedi |
+| 12 | Demo sound | 2 or 3 short clips kept in STM32 flash; the microSD card comes after the demo | Hedi |

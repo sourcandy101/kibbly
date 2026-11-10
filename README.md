@@ -31,7 +31,7 @@ Out of scope for the prototype: water level, live talk, video history, final enc
 Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 
 - **Main board:** NUCLEO-F439ZI (STM32F439ZI): schedule, motor, scale, sensors, speaker, SD card, button.
-- **Camera + Wi-Fi:** ESP32 camera board (XIAO ESP32S3 Sense recommended, see [hardware/01_hardware_list.md](hardware/01_hardware_list.md)).
+- **Camera + Wi-Fi:** ESP32-CAM camera board, programs loaded through an ESP32 DevKit V1 (see [hardware/01_hardware_list.md](hardware/01_hardware_list.md)).
 - **AI server (Python):** dog recognition + generative AI.
 - **Data:** Firebase. **App:** web app (PWA).
 - **Sensors:** bowl load cell, food tank level, ultrasonic presence sensor.
@@ -49,9 +49,9 @@ Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 | Step | What | Status |
 |---|---|---|
 | 1 | List of hardware | In progress |
-| 2 | System architecture | Done (decisions to confirm) |
+| 2 | System architecture | Updated to the real parts (decisions to confirm) |
 | 3 | Wiring and testing each component alone | Not started |
-| 4 | Wiring list for every component | Written, to update after the inventory |
+| 4 | Wiring list for every component | Written; circuit pictures 1 to 5 of 11 done |
 | 5 | Code for the ESP32 and the STM32 | Not started |
 | 6 | Wiring and testing 2 or more components together | Not started |
 | 7 | Final system | Not started |
@@ -77,7 +77,7 @@ docs/       planning, meeting notes, course deliverables
 | Week | Milestone |
 |---|---|
 | 1 | Scope frozen, STM32 part chosen, parts ordered, generative AI direction chosen |
-| 2–3 | Each subsystem works alone (dispense, weigh, recognize, notify) |
+| 2 and 3 | Each subsystem works alone (dispense, weigh, recognize, notify) |
 | 4 | First integration: recognize → dispense |
 | 5 | Chime + app notifications, bug fixing |
 | 6 | Demo rehearsal + backup video |

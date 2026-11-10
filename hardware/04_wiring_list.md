@@ -13,12 +13,12 @@ Every wire of the feeder, part by part: from which pin, to which pin, which colo
 | 3 | [Nucleo header map](#3-nucleo-header-map) |
 | 4 | [Power](#4-power) |
 | 4B | [Breadboard rails and power entries](#4b-breadboard-rails-and-power-entries) |
-| 5 | [ESP32S3 camera board](#5-esp32s3-camera-board) |
+| 5 | [ESP32-CAM camera board](#5-esp32-cam-camera-board) |
 | 6 | [TMC2209 driver and stepper motor](#6-tmc2209-driver-and-stepper-motor) |
-| 6B | [DRV8825 driver and stepper motor (local option)](#6b-drv8825-driver-and-stepper-motor-local-option) |
+| 6B | [DRV8825 driver and stepper motor (demo driver)](#6b-drv8825-driver-and-stepper-motor-demo-driver) |
 | 7 | [Load cell and HX711](#7-load-cell-and-hx711) |
 | 8 | [Ultrasonic sensor](#8-ultrasonic-sensor) |
-| 9 | [I2C bus: VL53L1X and DS3231](#9-i2c-bus-vl53l1x-and-ds3231) |
+| 9 | [I2C bus: VL53L0X and DS3231](#9-i2c-bus-vl53l0x-and-ds3231) |
 | 10 | [microSD card](#10-microsd-card) |
 | 11 | [MAX98357A and speaker](#11-max98357a-and-speaker) |
 | 12 | [Button and LED](#12-button-and-led) |
@@ -45,7 +45,7 @@ Same colours on every part, so a wrong wire is visible at a glance.
 | Black | GND |
 | Blue | I2C SDA |
 | White | I2C SCL |
-| Green | UART (TX and RX) |
+| Green | UART: green from the ESP32-CAM TX, light green from the STM32 TX |
 | Purple | SPI and I2S |
 | Grey or brown | Other signals (STEP, DIR, EN, TRIG, ECHO, button, LED) |
 
@@ -57,10 +57,10 @@ Only the pins this project uses. Header names follow UM1974: **CN7, CN8, CN9, CN
 
 | STM32 pin | Header and label | Used for |
 |---|---|---|
-| PE9 | CN10, D6 | TMC2209 STEP |
-| PF13 | CN10, D7 | TMC2209 DIR |
-| PF15 | CN10, D2 | TMC2209 EN |
-| PD5 | CN9, D53 | TMC2209 PDN_UART |
+| PE9 | CN10, D6 | Driver STEP |
+| PF13 | CN10, D7 | Driver DIR |
+| PF15 | CN10, D2 | Driver EN |
+| PD5 | CN9, D53 | TMC2209 PDN_UART (only if a TMC2209 is lent; not used with the DRV8825) |
 | PF14 | CN10, D4 | HX711 DOUT |
 | PE13 | CN10, D3 | HX711 SCK |
 | PD14 | CN7, D10 | Ultrasonic TRIG |
@@ -97,7 +97,7 @@ flowchart LR
     B5 --> ESP5["ESP32 5V"]
     B5 --> AMP5["MAX98357A Vin"]
     B5 --> SD5["microSD 5V"]
-    B12 --> VM["TMC2209 VM"]
+    B12 --> VM["Driver VMOT (column 5)"]
 ```
 
 Breadboard version: section 4B (rails) and circuit 7 (power), which will update this table: the 5 V bus becomes the top + rail and the 12 V bus becomes column 5.
@@ -121,7 +121,7 @@ During development, power the Nucleo from USB and leave P7 unplugged. Connect P7
 
 ## 4B. Breadboard rails and power entries
 
-Used by every circuit of [circuits_by_part](circuits_by_part/README.md). One 830 point breadboard (63 columns); every part fits in columns 1 to 49, so a 60 column board works too.
+Used by every circuit of [circuits_by_part](circuits_by_part/README.md). One 830 point breadboard (63 columns); every part fits in columns 1 to 49, so a 60 column board works too. Each rail hole takes one wire: section 13 lists the rail column of every wire.
 
 | Rail | Use |
 |---|---|
@@ -131,7 +131,7 @@ Used by every circuit of [circuits_by_part](circuits_by_part/README.md). One 830
 | Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
 | 12 V | **On no rail.** Only in column 5, top half (the driver VMOT column), framed in red in the pictures |
 
-If the rails of your board are cut in the middle (a break in the red and blue lines), bridge each of the 4 rails across the cut with a short wire of the same colour.
+Checked on the team's board (10 November 2026): 830 points, 63 columns, and the rails run along the whole length, so no bridge wires are needed. On another board whose rails are cut in the middle (a break in the red and blue lines), bridge each of the 4 rails across the cut with a short wire of the same colour.
 
 | # | From | To | Colour | Note | Checked |
 |---|---|---|---|---|---|
@@ -140,29 +140,33 @@ If the rails of your board are cut in the middle (a break in the red and blue li
 | R3 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | | |
 | R4 | Top − rail | Bottom − rail, column 1 | Black | Joins both GND rails | |
 
-## 5. ESP32S3 camera board
+## 5. ESP32-CAM camera board
 
-XIAO ESP32S3 Sense.
+Drawn in [circuit 5](circuits_by_part/05_esp32_cam_link/README.md). The ESP32-CAM sits **outside the board**, camera facing the bowl, joined by 4 female to male wires that all come from the same pin row (5V, GND, IO12, IO13, IO15, IO14, IO2, IO4). Match the wires by the printed names: from the other side of the board the row reads in the opposite order.
 
-| # | XIAO pin | To | Colour | Measure or note | Checked |
+| # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| E1 | `5V` | 5 V bus | Orange | 5.0 V | |
-| E2 | `GND` | GND bus | Black | | |
-| E3 | `D6` (GPIO43, TX) | STM32 PC7 (CN7, D21) | Green | TX goes to RX | |
-| E4 | `D7` (GPIO44, RX) | STM32 PC6 (CN7, D16) | Green | RX comes from TX | |
-| E5 | 1000 uF and 100 nF capacitors | Between `5V` and `GND`, as close to the XIAO as possible | | Long leg (+) of the 1000 uF on 5V | |
+| E1 | ESP32-CAM `5V` | Top + rail (5 V), column 37 | Orange | Not the 3V3 or VCC pin: on 3.3 V the board restarts when WiFi starts | |
+| E2 | ESP32-CAM `GND` (next to 5V) | Top − rail (GND), column 36 | Black | | |
+| E3 | ESP32-CAM `IO15` (TX in code) | Column 33, row j | Green | | |
+| E4 | ESP32-CAM `IO14` (RX in code) | Column 32, row j | Light green | | |
+| E5 | 1000 uF capacitor | Column 38: long leg (+) in the top + rail, short leg in the top − rail | | Stripe side is the short leg. Stops restarts on WiFi current peaks | |
+| E6 | 1 kohm resistor | Column 29, row i, to column 32, row i, lying flat | | Bands brown, black, red. Protects both pins | |
+| E7 | Column 33 (row g) | Nucleo D21 · PC7 (CN7 pin 11) | Green | ESP32-CAM TX to STM32 RX | |
+| E8 | Column 29 (row h) | Nucleo D16 · PC6 (CN7 pin 1) | Light green | STM32 TX to ESP32-CAM RX, through E6 | |
+| E9 | ESP32-CAM `U0T`, `U0R`, `IO0` | Not connected | | They load programs with the DevKit (circuit 6) | |
 
-Fallback, if the AI Thinker ESP32-CAM is used instead:
+Also needed: R1, R3 and R4 from section 4B.
 
-| # | ESP32-CAM pin | To | Note |
-|---|---|---|---|
-| E1 | `5V` | 5 V bus | Not the 3.3 V pin; the board browns out on 3.3 V |
-| E2 | `GND` | GND bus | |
-| E3 | `IO15` (UART2 TX in code) | STM32 PC7 | IO15 and IO14 are free when the onboard SD card is not used |
-| E4 | `IO14` (UART2 RX in code) | STM32 PC6 | |
-| E5 | 1000 uF and 100 nF capacitors | Between 5V and GND | Needed: this board resets on WiFi peaks without them |
+1. IO15 and IO14 are free because the ESP32-CAM microSD slot is not used: **keep that slot empty**.
+2. U0T and U0R stay free for loading programs; IO12 must stay low at start up or the board does not boot.
+3. The 100 nF capacitor of the first plan is left out: the ESP32-CAM already has small capacitors next to its chips, and the 1000 uF gives the big reserve it lacks.
+
+If the XIAO ESP32S3 Sense is ever used instead: `5V` and `GND` as E1 and E2, `D6` (GPIO43, TX) in place of IO15 and `D7` (GPIO44, RX) in place of IO14; everything else stays the same.
 
 ## 6. TMC2209 driver and stepper motor
+
+**Only if the ISS group lends a TMC2209.** The demo uses the DRV8825 of [section 6B](#6b-drv8825-driver-and-stepper-motor-demo-driver), drawn in circuit 1.
 
 Pin names below are for the BigTreeTech and FYSETC modules. Some modules have separate `RX` and `TX` pins that are both the same `PDN_UART` line; use one of them.
 
@@ -217,9 +221,9 @@ How to find the coil pairs: with the motor unplugged, measure the resistance bet
 
 **Never plug or unplug the motor while the driver has 12 V.** This destroys the TMC2209.
 
-## 6B. DRV8825 driver and stepper motor (local option)
+## 6B. DRV8825 driver and stepper motor (demo driver)
 
-Use this section instead of section 6 when the driver is a DRV8825 (sold locally) and not a TMC2209. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
+The driver for the demo: a DRV8825, sold locally. Section 6 is kept for a TMC2209, if the ISS group lends one. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
 
 Breadboard layout: the DRV8825 straddles the middle gap in **columns 5 to 12**, turned so that **VMOT is top left (column 5, row f) and EN is bottom left (column 5, row e)**. Top half: power and motor. Bottom half: control. **12 V lives only in column 5, top half**; the rails are 5 V (top) and 3.3 V (bottom), see section 4B.
 
@@ -311,7 +315,7 @@ Also needed: R1, R3 and R4 from section 4B.
 
 The divider gives 5 V × 2 ÷ 3 = 3.3 V on PD15. Never connect Echo straight to the Nucleo.
 
-## 9. I2C bus: VL53L1X and DS3231
+## 9. I2C bus: VL53L0X and DS3231
 
 Both parts share the same two wires. Most modules already have pull up resistors on SDA and SCL, so none are added.
 
@@ -319,8 +323,8 @@ Both parts share the same two wires. Most modules already have pull up resistors
 flowchart LR
     PB9["STM32 PB9 SDA"] --- SDA(("SDA bus"))
     PB8["STM32 PB8 SCL"] --- SCL(("SCL bus"))
-    SDA --- TS["VL53L1X SDA"]
-    SCL --- TC["VL53L1X SCL"]
+    SDA --- TS["VL53L0X SDA"]
+    SCL --- TC["VL53L0X SCL"]
     SDA --- RS["DS3231 SDA"]
     SCL --- RC["DS3231 SCL"]
 ```
@@ -329,12 +333,12 @@ flowchart LR
 |---|---|---|---|---|---|
 | I1 | STM32 PB9 (CN7, D14) | SDA rail on the breadboard | Blue | | |
 | I2 | STM32 PB8 (CN7, D15) | SCL rail on the breadboard | White | | |
-| I3 | VL53L1X `VIN` | 3.3 V bus | Yellow | | |
-| I4 | VL53L1X `GND` | GND rail | Black | | |
-| I5 | VL53L1X `SDA` | SDA rail | Blue | | |
-| I6 | VL53L1X `SCL` | SCL rail | White | | |
-| I7 | VL53L1X `XSHUT` | Not connected | | Pulled up on the module; sensor always on | |
-| I8 | VL53L1X `GPIO1` | Not connected | | Interrupt not used | |
+| I3 | VL53L0X `VIN` | 3.3 V bus | Yellow | | |
+| I4 | VL53L0X `GND` | GND rail | Black | | |
+| I5 | VL53L0X `SDA` | SDA rail | Blue | | |
+| I6 | VL53L0X `SCL` | SCL rail | White | | |
+| I7 | VL53L0X `XSHUT` | Not connected | | Pulled up on the module; sensor always on | |
+| I8 | VL53L0X `GPIO1` | Not connected | | Interrupt not used | |
 | I9 | DS3231 `VCC` | 3.3 V bus | Yellow | | |
 | I10 | DS3231 `GND` | GND rail | Black | | |
 | I11 | DS3231 `SDA` | SDA rail | Blue | | |
@@ -367,8 +371,8 @@ Drawn in [circuit 4](circuits_by_part/04_sound_max98357a/README.md). The 7 pins 
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| A1 | `Vin` (column 21) | Top + rail (5 V), column 24 | Orange | From row h | |
-| A2 | `GND` (column 20) | Top − rail (GND), column 23 | Black | From row i | |
+| A1 | `Vin` (column 21) | Top + rail (5 V), column 23 | Orange | From row h | |
+| A2 | `GND` (column 20) | Top − rail (GND), column 22 | Black | From row i | |
 | A3 | `BCLK` (column 16) | Nucleo PC10 · D45 (CN8 pin 6) | Purple | Row i | |
 | A4 | `DIN` (column 17) | Nucleo PC12 · D47 (CN8 pin 10) | Dark purple | Row h | |
 | A5 | `LRC` (column 15) | Nucleo PA4 · D24 (CN7 pin 17) | Light purple | Row g | |
@@ -392,15 +396,15 @@ Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume lo
 
 ## 13. Totals per rail
 
-For the breadboard plan of section 4B. Circuits not drawn yet (ESP32-CAM, power, clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
+For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (power, clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
 
-| Rail or point | Wires |
+| Rail or point | Wires (rail column) |
 |---|---|
-| Top + (5 V) | R1 (tests on USB), U1, A1 |
-| Top − (GND) | R4, V2, V3 (short leg), V5, U4, A2 |
-| Bottom + (3.3 V) | R2, V13, V15, V16, V17, H6 |
-| Bottom − (GND) | R3, R4, H7, U6 |
-| Column 5, top half (12 V) | V1, V3 (long leg), driver VMOT |
+| Top + (5 V) | R1 (2, tests on USB), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
+| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), A2 (22), U4 (27), E2 (36), E5 short leg (38) |
+| Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20) |
+| Bottom − (GND) | R4 (1), R3 (3), H7 (14), U6 (26) |
+| Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
 
 ## 14. STM32CubeMX settings
 
@@ -422,7 +426,7 @@ Settings for each pin when creating the project in STM32CubeIDE.
 | PE9 | TIM1_CH1, PWM Generation CH1 | None | | Frequency set in code; one pulse per microstep |
 | PF13 | GPIO_Output | None | Low | |
 | PF15 | GPIO_Output | None | **High** (motor off at start) | |
-| PD5 | USART2_TX, Single Wire (Half Duplex) | Pull up | | 115200 baud, 8N1 |
+| PD5 | Only with a TMC2209: USART2_TX, Single Wire (Half Duplex) | Pull up | | 115200 baud, 8N1; not set with the DRV8825 |
 | PF14 | GPIO_Input | None | | |
 | PE13 | GPIO_Output | None | **Low** (high for 60 us puts the HX711 to sleep) | |
 | PD14 | GPIO_Output | None | Low | |
@@ -456,8 +460,8 @@ Go through it every time something new is wired.
 | 5 | Buck output is 5.0 V **before** it is connected to any board | Measure with only the adapter connected |
 | 6 | No 12 V or 5 V wire on any STM32 signal pin | Follow every red and orange wire with your finger |
 | 7 | Every part has its GND connected | Count the black wires against section 13 |
-| 8 | TX goes to RX on every UART | E3, E4 |
-| 9 | Motor coils in pairs, motor connected before power | M14, M15 |
-| 10 | Capacitor polarity: long leg on + | E5, M3 |
+| 8 | TX goes to RX on every UART | Section 5: IO15 to PC7 (E3, E7), PC6 through 1 kohm to IO14 (E8, E6, E4) |
+| 9 | Motor coils in pairs, motor connected before power | V7 to V10 (section 6B) |
+| 10 | Capacitor polarity: long leg on + | E5, V3 |
 | 11 | After power on: touch the regulators and the driver | Warm is normal, too hot to hold means power off now |
 | 12 | After power on: 12 V, 5 V and 3.3 V measured on the rails | Within 5% |

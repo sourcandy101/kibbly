@@ -17,7 +17,7 @@ The parts list in [step 1](01_hardware_list.md) and the architecture in [step 2]
 | 3 | Compare the real list with [01_hardware_list.md](01_hardware_list.md): what matches, what differs, what is missing | Youssef with Claude | |
 | 4 | Decide the changes: keep, replace or buy each differing or missing part | Youssef and Hedi | |
 | 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | |
-| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | |
+| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | Done on 10 November 2026 for the parts known so far; check again after the ISS group answers |
 | 7 | Start coding the boards (step 3 component tests, then step 5) | Youssef and Hedi | |
 
 What to record for each part:
@@ -48,7 +48,7 @@ The feeder keeps working without internet: it follows the schedule saved on the 
 | Board | Job |
 |---|---|
 | **NUCLEO-F439ZI (STM32)** | Real time control: clock and schedule, motor, scale, sensors, speaker, SD card, button and LED |
-| **ESP32 camera board** (XIAO ESP32S3 Sense, see step 1) | Camera and WiFi: photos to the AI server, reading and writing the database, passing orders to the STM32 |
+| **ESP32 camera board** (ESP32-CAM, see step 1) | Camera and WiFi: photos to the AI server, reading and writing the database, passing orders to the STM32 |
 
 The two boards talk to each other over a serial cable (UART).
 
@@ -73,9 +73,9 @@ We build the hardware in 7 steps, in order. Each step has its own file or folder
 | Step | What | Where | Status |
 |---|---|---|---|
 | 1 | List of hardware | [01_hardware_list.md](01_hardware_list.md) | In progress |
-| 2 | System architecture | [02_system_architecture.md](02_system_architecture.md) | Done (decisions to confirm) |
+| 2 | System architecture | [02_system_architecture.md](02_system_architecture.md) | Updated to the real parts on 10 November 2026 (decisions to confirm) |
 | 3 | Wiring and testing each component alone | [03_component_tests/](03_component_tests/) | Not started |
-| 4 | Wiring list for every component, with circuit pictures part by part | [04_wiring_list.md](04_wiring_list.md), [circuits_by_part/](circuits_by_part/README.md) | Written, to update after the inventory; circuits 1 to 4 of 11 done |
+| 4 | Wiring list for every component, with circuit pictures part by part | [04_wiring_list.md](04_wiring_list.md), [circuits_by_part/](circuits_by_part/README.md) | Written and updated to the real parts; circuits 1 to 5 of 11 done |
 | 5 | Code for the ESP32 and the STM32 | [`firmware/`](../firmware/) | Not started |
 | 6 | Wiring and testing 2 or more components together | `06_integration/` | Not started |
 | 7 | Final system | `07_final_system.md` | Not started |

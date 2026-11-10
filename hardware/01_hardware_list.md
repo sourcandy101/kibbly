@@ -43,7 +43,7 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | 7 | <img src="https://2btrading.tn/1882-large_default/hx711-module-load-cell-amplifier.jpg" width="90"> | **HX711 board** | Sensor | 1 | 7 | Reads the load cell | [2B Trading](https://2btrading.tn/accueil/1884-hx711-module-load-cell-amplifier.html), [Little Son](https://little-son.tn/accueil/521-capteur-de-pesage-hx711.html) | No |
 | 13 | <img src="https://souilah-electronique.tn/656-large_default/module-sd.jpg" width="90"> | **MicroSD card module (SPI)** and an 8 to 32 GB card from a known brand | Sound and storage | 1 | 7, plus about 20 for the card | Voice clips, schedule copy, offline meal logs | [Souilah](https://souilah-electronique.tn/modules-et-capteurs/396-module-sd.html), [Celectronix](https://www.celectronix.com/modules-kits/7382-waveshare-micro-sd-storage-board-copie-.html) | No |
 | 10 | <img src="https://little-son.tn/687-large_default/module-rtc-ds3231-i2c-at24c32-pour-arduino.jpg" width="90"> | **DS3231 RTC module** with a CR2032 coin cell | Sensor | 1 | 8, plus about 3 for the coin cell | Keeps the real time during a power cut | [Little Son](https://little-son.tn/accueil/454-module-rtc-ds3231-i2c-at24c32-pour-arduino.html), [Souilah](https://souilah-electronique.tn/modules-et-capteurs/78-module-rtc-ds3231-.html) | No |
-| 4B | <img src="https://little-son.tn/852-large_default/module-driver-moteur-pas-a-pas-drv8825-.jpg" width="90"> | **DRV8825 driver** (local fallback): same size and pins for STEP, DIR, EN; louder, no stall detection | Dispenser | 1 | 8.5 | Same job, if no TMC2209 | [Little Son](https://little-son.tn/accueil/559-module-driver-moteur-pas-a-pas-drv8825-.html) |  |
+| 4B | <img src="https://little-son.tn/852-large_default/module-driver-moteur-pas-a-pas-drv8825-.jpg" width="90"> | **DRV8825 driver** (the driver for the demo): same size and pins for STEP, DIR, EN; louder, no stall detection | Dispenser | 1 | 8.5 | Drives the stepper from the STM32 | [Little Son](https://little-son.tn/accueil/559-module-driver-moteur-pas-a-pas-drv8825-.html) |  |
 | 16 | <img src="https://little-son.tn/2577-large_default/alimentation-12v-2a.jpg" width="90"> | **12 V wall adapter**, at least 2 A (3 A better) | Power | 1 | 12 | Powers the whole feeder | [Little Son (12 V 2 A)](https://little-son.tn/accueil/1319-alimentation-12v-2a.html) | See with Hedi's ISS Group |
 | 19 | <img src="https://little-son.tn/512-large_default/module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.jpg" width="90"> | **XL4015 buck converter**, set to 5.0 V (5 A) | Power | 1 | 12 | 5 V for the Nucleo, the ESP32, the amplifier and the SD card | [Little Son](https://little-son.tn/accueil/345-module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.html), [TET Electronics](https://tet-electronics.com/product/module-xl4015-convertisseur-abaisseur-de-tension-dc-dc-5a-75w-e3ee5b2e) | No |
 | 11 | <img src="https://little-son.tn/2637-large_default/module-max98357a-i2s-amplificateur-audio.jpg" width="90"> | **MAX98357A I2S amplifier** | Sound and storage | 1 | 14 (9.9 at 2B Trading) | Plays the voice clips, clean digital sound | [Little Son](https://little-son.tn/accueil/1651-module-max98357a-i2s-amplificateur-audio.html), [2B Trading](https://2btrading.tn/accueil/9068-module-max98357a-i2s-audio-amplifier.html) | No |
@@ -58,7 +58,7 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | 14 |  | **Push button**, momentary, 12 mm, panel mount | Button and LED | 1 | about 2 (estimate) | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Ask any electronics shop for "bouton poussoir 12 mm" | No |
 | 12 |  | **Speaker, 4 or 8 ohm, 2 to 3 W**, about 40 to 50 mm | Sound and storage | 1 | about 8 (estimate) | The dog's call or a chime | No online listing found: ask any electronics shop for "haut parleur 4 ohm 3 W", or reuse one from old computer speakers | No |
 | 5 |  | **Auger**, 3D printed in PETG, with a 5 mm shaft coupler | Dispenser | 1 | about 15 (estimate) | Pushes about 5 g of kibble per burst | 3D print (school fab lab or a print shop) |  |
-| 4 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Trinamic_TMC2209_stepper_motor_controller_board.jpg/250px-Trinamic_TMC2209_stepper_motor_controller_board.jpg" width="90"> | **TMC2209 driver** (first choice): silent, stall detection, current set in software | Dispenser | 1 | about 20 to 40 imported (estimate) | Drives the stepper from the STM32 | **Not found in Tunisian shops.** Borrow from the ISS group, or order abroad | See with Hedi's ISS Group |
+| 4 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Trinamic_TMC2209_stepper_motor_controller_board.jpg/250px-Trinamic_TMC2209_stepper_motor_controller_board.jpg" width="90"> | **TMC2209 driver** (only if the ISS group lends one): silent, stall detection, current set in software | Dispenser | 1 | about 20 to 40 imported (estimate) | Drives the stepper from the STM32 | **Not found in Tunisian shops.** Borrow from the ISS group, or order abroad | See with Hedi's ISS Group |
 
 ## D. Extra parts, not used in the prototype
 
@@ -84,7 +84,7 @@ Programming note: the ESP32-CAM has no USB port and we have no USB board for it.
 
 If this is unreliable, the ESP32-CAM-MB USB board costs about 9 TND at [Little Son](https://little-son.tn/accueil/1410-module-shield-de-programmation-televersement-pour-esp32-cam.html).
 
-Driver note: with the DRV8825 the scale is the only jam check, which is enough for the demo. The wiring changes slightly (no UART wire, three microstep pins); we update it after the inventory.
+Driver note: with the DRV8825 the scale is the only jam check, which is enough for the demo. Its wiring (no UART wire, three microstep pins) is in section 6B of the [wiring list](04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) and in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
 
 Sensor notes:
 
@@ -171,7 +171,7 @@ Tip: ordering most parts from one shop (Little Son) saves delivery costs and tim
 | Item | Spec | Chosen here | Reason |
 |---|---|---|---|
 | Camera board | AI Thinker ESP32-CAM | ESP32-CAM with USB board (XIAO ESP32S3 Sense only if imported) | XIAO not sold in Tunisia |
-| Dispenser | Open | Auger, NEMA 17, TMC2209 (DRV8825 as local fallback) | Precise bursts and jam detection |
+| Dispenser | Open | Auger, NEMA 17, DRV8825 (TMC2209 if the ISS group lends one) | Precise bursts and jam detection |
 | Tank level | Open | VL53L0X | Sold locally; enough range for the tank |
 | Audio | STM32 DAC and analog amplifier | MAX98357A over I2S | Clean sound next to a motor |
 | Clock | STM32 internal RTC | DS3231 module | Keeps the time through power cuts |
