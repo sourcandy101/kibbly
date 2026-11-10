@@ -8,8 +8,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 |---|---|---|---|---|---|
 | 1 | Stepper motor and DRV8825 driver | [01_stepper_motor_drv8825/](01_stepper_motor_drv8825/README.md) | [svg](01_stepper_motor_drv8825/01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-local-option) | Done |
 | 2 | Load cell and HX711 | [02_load_cell_hx711/](02_load_cell_hx711/README.md) | [svg](02_load_cell_hx711/02_load_cell_hx711.svg) | [Section 7](../04_wiring_list.md#7-load-cell-and-hx711) | Done |
-| 3 | Ultrasonic sensor (HC-SR04) | | | Section 8 | Next |
-| 4 | I2C bus: DS3231 clock and VL53L0X | | | Section 9 | |
+| 3 | Ultrasonic sensor (HC-SR04) | [03_ultrasonic_hc_sr04/](03_ultrasonic_hc_sr04/README.md) | [svg](03_ultrasonic_hc_sr04/03_ultrasonic_hc_sr04.svg) | [Section 8](../04_wiring_list.md#8-ultrasonic-sensor) | Done |
+| 4 | I2C bus: DS3231 clock and VL53L0X | | | Section 9 | Next |
 | 5 | microSD card | | | Section 10 | |
 | 6 | MAX98357A amplifier and speaker | | | Section 11 | |
 | 7 | Button and status LED | | | Section 12 | |

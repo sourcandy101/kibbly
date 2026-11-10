@@ -125,7 +125,10 @@ class Drawing:
             else:
                 self.text(128, y + 4, label, 10, col[1], weight="bold")
 
-    def breadboard(self, top=("12 V", "GND"), bottom=("GND", "3.3 V"), top_used=True, bottom_used=True):
+    def breadboard(self, top=("12 V", "GND"), bottom=("GND", "3.3 V"), top_used=True, bottom_used=True, used=None):
+        """used: optional (top +, top −, bottom −, bottom +) flags; unused rail labels are grey."""
+        if used is None:
+            used = (top_used, top_used, bottom_used, bottom_used)
         a, t = self.add, self.text
         a('<rect x="474" y="262" width="632" height="388" rx="8" fill="#f1f1f1" stroke="#c8c8c8" stroke-width="2"/>')
         a('<rect x="480" y="448" width="620" height="16" fill="#dadada"/>')
@@ -144,10 +147,10 @@ class Drawing:
             t(X(c), 344, str(c), 9, "#9a9a9a", "middle")
             t(X(c), 577, str(c), 9, "#9a9a9a", "middle")
         grey = "#b0b0b0"
-        t(1114, 297, top[0], 13, "#c62828" if top_used else grey, weight="bold")
-        t(1114, 317, top[1], 13, "#222" if top_used else grey, weight="bold")
-        t(1114, 605, bottom[0], 13, "#222" if bottom_used else grey, weight="bold")
-        t(1114, 625, bottom[1], 13, "#b8860b" if bottom_used else grey, weight="bold")
+        t(1114, 297, top[0], 13, "#c62828" if used[0] else grey, weight="bold")
+        t(1114, 317, top[1], 13, "#222" if used[1] else grey, weight="bold")
+        t(1114, 605, bottom[0], 13, "#222" if used[2] else grey, weight="bold")
+        t(1114, 625, bottom[1], 13, "#b8860b" if used[3] else grey, weight="bold")
 
     def notes_box(self, x, y, w, h):
         self.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#fafafa" stroke="#dddddd"/>')

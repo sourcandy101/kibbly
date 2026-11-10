@@ -271,16 +271,19 @@ Mounting: the arrow on the bar must point down, one end fixed to the base, the o
 
 ## 8. Ultrasonic sensor
 
-For the 3.3 V version (RCWL-1601 or HC-SR04P).
+Drawn in [circuit 3](circuits_by_part/03_ultrasonic_hc_sr04/README.md). Standard 5 V HC-SR04 (the 3.3 V versions are not sold locally), so **Echo goes through a voltage divider**. The 4 pins plug into **row j, columns 22 to 25** of the top half (VCC, Trig, Echo, Gnd).
 
-| # | Sensor pin | To | Colour | Measure or note | Checked |
+| # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| U1 | `VCC` | 3.3 V bus | Yellow | 3.3 V | |
-| U2 | `Trig` | STM32 PD14 (CN7, D10) | Grey | | |
-| U3 | `Echo` | STM32 PD15 (CN7, D9) | Grey | Must be 3.3 V high, not 5 V | |
-| U4 | `GND` | GND rail | Black | | |
+| U1 | Sensor `VCC` (column 22) | Nucleo 5V (CN8 pin 9) | Orange | Row i. 5 V straight from the Nucleo for the test; from the 5 V supply in the full circuit | |
+| U2 | Sensor `Trig` (column 23) | Nucleo D10 · PD14 (CN7 pin 16) | Grey | Row h. No resistor needed | |
+| U3 | 1 kohm resistor | Column 24 top half (Echo, row f) to column 24 bottom half (row e), across the middle gap | | Bands brown, black, red | |
+| U4 | 2 kohm resistor | Column 24 bottom half (row a) to bottom − rail (GND) | | Bands red, black, red | |
+| U5 | Column 24 bottom half (middle of the divider) | Nucleo D9 · PD15 (CN7 pin 18) | Brown | Row c. Must read 3.3 V high, never 5 V | |
+| U6 | Sensor `Gnd` (column 25) | Bottom − rail (GND), column 26 | Black | From row i | |
+| U7 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | Same wire as V21 and H11 when circuits 1 or 2 are wired | |
 
-If a standard 5 V HC-SR04 is used instead: `VCC` to 5 V, and `Echo` through a divider (1 kohm from Echo to PD15, 2 kohm from PD15 to GND) so the STM32 sees 3.3 V.
+The divider gives 5 V × 2 ÷ 3 = 3.3 V on PD15. Never connect Echo straight to the Nucleo.
 
 ## 9. I2C bus: VL53L1X and DS3231
 
@@ -364,9 +367,9 @@ For the Adafruit MAX98357A breakout.
 | Rail | Connected parts | Wires on the rail |
 |---|---|---|
 | 12 V | TMC2209 VM, XL4015 IN+ | P1, P3, M1 |
-| 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V | P5, P7, E1, A1, S1 |
-| 3.3 V | TMC2209 VIO, HX711, ultrasonic, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, U1, I3, I9 |
-| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, I4, I10, S2, A2, B2, L3 |
+| 5 V | Nucleo E5V, ESP32 5V, MAX98357A Vin, microSD 5V, ultrasonic | P5, P7, E1, A1, S1, U1 |
+| 3.3 V | TMC2209 VIO, HX711, VL53L1X, DS3231, EN pull up | P9, M4, M9, H6, I3, I9 |
+| GND | Every part | P2, P4, P6, P8, P10, E2, M2, M5, M11, M12, M13, H7, U4, U6, I4, I10, S2, A2, B2, L3 |
 
 ## 14. STM32CubeMX settings
 
