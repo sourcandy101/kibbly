@@ -5,8 +5,8 @@ Every part the prototype needs, sorted in groups:
 | Group | Meaning | Parts |
 |---|---|---|
 | [A. Owned](#a-owned) | The team already has it | 8 |
-| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 15 |
-| [C. No link in Tunisia](#c-no-link-in-tunisia) | Not owned yet; no Tunisian online seller found (ask a shop, make it, or import). Cheapest first | 9 |
+| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 13 |
+| [C. No link in Tunisia](#c-no-link-in-tunisia) | Not owned yet; no Tunisian online seller found (ask a shop, make it, or import). Cheapest first | 5 |
 | [D. Extra parts](#d-extra-parts-not-used-in-the-prototype) | Owned, but not used in the prototype | 2 |
 
 **How to use this list**
@@ -37,7 +37,6 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | # | Picture | Part | Category | Qty | Price (TND) | Job | Buy in Tunisia | Have it |
 |---|---|---|---|---|---|---|---|---|
 | 21 | <img src="https://little-son.tn/2593-large_default/resistance-1kohm-14w.jpg" width="90"> | **Resistors**: 330 ohm, 1 kohm, 2 kohm, 10 kohm | Power | 2 of each | 0.05 each | LED, ultrasonic divider, driver UART, motor enable | [Little Son 1 kohm](https://little-son.tn/accueil/1796-resistance-1kohm-14w.html), [Little Son 2 kohm](https://little-son.tn/accueil/1797-resistance-2kohm-14w.html); the others in the same shop |  |
-| 18 | <img src="https://little-son.tn/721-large_default/porte-fusible-5x20mm-avec-couvercle-noir.jpg" width="90"> | **Fuse holder 5 x 20 mm with a 3 A fuse** | Power | 1 | 0.55, plus about 1 for the fuse | Protection against shorts | [Little Son (fuse holder)](https://little-son.tn/accueil/480-porte-fusible-5x20mm-avec-couvercle-noir.html); ask for a 3 A 5 x 20 mm fuse in the same order | No |
 | 20 | <img src="https://little-son.tn/1218-large_default/kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.jpg" width="90"> | **Capacitors**: 1000 uF 25 V electrolytic (or two 470 uF in parallel) and 100 nF ceramic | Power | 2 of each | about 1 each when bought singly (kits 25 each) | Next to the ESP32 and the motor driver | [Little Son (electrolytic kit, up to 470 uF)](https://little-son.tn/accueil/739-kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.html), [Little Son (ceramic kit, includes 100 nF)](https://little-son.tn/accueil/741-kit-condensateurs-ceramiques-300-pieces-10-valeurs-2pf-01uf.html) | See with Hedi |
 | 17 | <img src="https://little-son.tn/2200-large_default/module-adaptateur-courant-dc-fiche-jack-pour-arduino.jpg" width="90"> | **DC barrel jack with screw terminals** | Power | 1 | 4 | Adapter input | [Little Son](https://little-son.tn/accueil/1456-module-adaptateur-courant-dc-fiche-jack-pour-arduino.html) | See with Hedi's ISS Group |
 | 8 | <img src="https://little-son.tn/413-large_default/module-capteur-ultrason-hc-sr04.jpg" width="90"> | **HC-SR04 ultrasonic sensor** with a 1 kohm and a 2 kohm resistor | Sensor | 1 | 4.8 | Detects an animal in front of the bowl | [Little Son](https://little-son.tn/accueil/294-module-capteur-ultrason-hc-sr04.html) | No |
@@ -49,7 +48,6 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | 19 | <img src="https://little-son.tn/512-large_default/module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.jpg" width="90"> | **XL4015 buck converter**, set to 5.0 V (5 A) | Power | 1 | 12 | 5 V for the Nucleo, the ESP32, the amplifier and the SD card | [Little Son](https://little-son.tn/accueil/345-module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.html), [TET Electronics](https://tet-electronics.com/product/module-xl4015-convertisseur-abaisseur-de-tension-dc-dc-5a-75w-e3ee5b2e) | No |
 | 11 | <img src="https://little-son.tn/2637-large_default/module-max98357a-i2s-amplificateur-audio.jpg" width="90"> | **MAX98357A I2S amplifier** | Sound and storage | 1 | 14 (9.9 at 2B Trading) | Plays the voice clips, clean digital sound | [Little Son](https://little-son.tn/accueil/1651-module-max98357a-i2s-amplificateur-audio.html), [2B Trading](https://2btrading.tn/accueil/9068-module-max98357a-i2s-audio-amplifier.html) | No |
 | 9 | <img src="https://little-son.tn/1739-large_default/gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.jpg" width="90"> | **VL53L0X time of flight sensor** (GY-530 board) | Sensor | 1 | 20 (19.5 at 2B Trading) | Food level in the tank, from the lid | [Little Son](https://little-son.tn/accueil/1121-gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.html), [2B Trading](https://2btrading.tn/arduino/2218-module-capteur-de-distance-de-portee-laser-vl53l0x-v2.html) | No |
-| 27 | <img src="https://little-son.tn/1644-large_default/multimetre-numerique-dt9205a-.jpg" width="90"> | **Multimeter** | Tool | 1 | 26.1 | Check every voltage before connecting a board | [Little Son](https://little-son.tn/accueil/1050-multimetre-numerique-dt9205a-.html) |  |
 | 3 | <img src="https://little-son.tn/2229-large_default/moteur-nema-17-pas-a-pas-17hs4401s.jpg" width="90"> | **NEMA 17 stepper motor** (17HS4401 or similar, 42 x 40 mm, about 0.4 Nm, 1.5 A) | Dispenser | 1 | 35 (29.9 at Celectronix) | Turns the auger | [Little Son](https://little-son.tn/accueil/1481-moteur-nema-17-pas-a-pas-17hs4401s.html), [Didactico](https://didactico.tn/produit/moteur-pas-a-pas-nema-17/), [Celectronix](https://www.celectronix.com/moteur-pas-pas/3986-moteur-pas-a-pas-nema-17-17hs4401.html) | See with Hedi's ISS Group |
 
 ## C. No link in Tunisia
@@ -57,14 +55,10 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | # | Picture | Part | Category | Qty | Price (TND) | Job | Buy in Tunisia | Have it |
 |---|---|---|---|---|---|---|---|---|
 | 28 |  | Known weights or a kitchen scale | Tool | 1 | 0 | Calibrate the load cell | Home |  |
-| 18B |  | **3 A Schottky diode** (1N5822 or SS54) | Power | 1 | about 1 (estimate) | Protection against a reversed adapter | No online listing found: ask any electronics shop. The 1N4007 sold online is only 1 A, too weak | No |
 | 14 |  | **Push button**, momentary, 12 mm, panel mount | Button and LED | 1 | about 2 (estimate) | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Ask any electronics shop for "bouton poussoir 12 mm" | No |
 | 12 |  | **Speaker, 4 or 8 ohm, 2 to 3 W**, about 40 to 50 mm | Sound and storage | 1 | about 8 (estimate) | The dog's call or a chime | No online listing found: ask any electronics shop for "haut parleur 4 ohm 3 W", or reuse one from old computer speakers | No |
-| 23 |  | Stainless steel bowl | Mechanical | 1 | about 10 (estimate) | Sits on the load cell | Pet shop or household shop |  |
 | 5 |  | **Auger**, 3D printed in PETG, with a 5 mm shaft coupler | Dispenser | 1 | about 15 (estimate) | Pushes about 5 g of kibble per burst | 3D print (school fab lab or a print shop) |  |
-| 22 |  | Food tank for 1 kg of kibble (about 2.5 L) | Mechanical | 1 | about 15 (estimate) | Holds the food | Household shop, or 3D print |  |
 | 4 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Trinamic_TMC2209_stepper_motor_controller_board.jpg/250px-Trinamic_TMC2209_stepper_motor_controller_board.jpg" width="90"> | **TMC2209 driver** (first choice): silent, stall detection, current set in software | Dispenser | 1 | about 20 to 40 imported (estimate) | Drives the stepper from the STM32 | **Not found in Tunisian shops.** Borrow from the ISS group, or order abroad | See with Hedi's ISS Group |
-| 24 |  | Body and mounts (3D printed or laser cut) | Mechanical | 1 | about 40 (estimate) | Holds everything | School fab lab |  |
 
 ## D. Extra parts, not used in the prototype
 
@@ -123,11 +117,10 @@ Prices in Tunisian dinars (TND) from the shop pages on 9 November 2026, mostly L
 | Sensors | 5 kg load cell with HX711 29.9, HC-SR04 4.8, VL53L0X 20, DS3231 8, coin cell about 3 | about 65.7 |
 | Sound and storage | MAX98357A 14, speaker about 8, microSD module 7, card about 20 | about 49 |
 | Button, LED, resistors | Button about 2, LED about 0.5, resistors about 1 | about 3.5 |
-| Power | Adapter 12, DC jack 4, fuse holder 0.55, fuse and diode about 2, XL4015 12, capacitors bought singly about 3 | about 33.6 |
-| **Electronics total** | | **about 420** |
-| Mechanical | Tank and bowl about 25, printed body and mounts about 40 | about 65 |
-| Tools | 2 breadboards 10.6, 3 packs of jumper wires 36, multimeter 26.1 | 72.7 |
-| **Total from scratch** | | **about 560** |
+| Power | Adapter 12, DC jack 4, XL4015 12, capacitors bought singly about 3 | about 31 |
+| **Electronics total** | | **about 418** |
+| Tools | 2 breadboards 10.6, 3 packs of jumper wires 36 | 46.6 |
+| **Total from scratch** | | **about 464** |
 
 ### Still to buy
 
@@ -143,24 +136,21 @@ Based on the **Have it** column (10 November 2026): the team already has the NUC
 | Speaker | about 8 |
 | microSD module and card | about 27 |
 | Push button | about 2 |
-| Fuse, fuse holder, diode | about 2.5 |
 | XL4015 | 12 |
-| **Total** | **about 110** |
+| **Total** | **about 108** |
 
 | Case | Extra | New total (TND) |
 |---|---|---|
-| The ISS group cannot lend the motor, driver, adapter, jack and capacitors | NEMA 17 35, DRV8825 8.5, adapter 12, DC jack 4, capacitors about 3 | **about 173** |
-| Mechanical parts | Tank, bowl, printed body and auger | about 80 more |
-| Multimeter, if nobody on the team has one | DT9205A | 26.1 more |
+| The ISS group cannot lend the motor, driver, adapter, jack and capacitors | NEMA 17 35, DRV8825 8.5, adapter 12, DC jack 4, capacitors about 3 | **about 171** |
+| Auger | Printed in PETG | about 15 more |
 
 ### Ways to save
 
 1. Buy capacitors singly (about 1 TND each) instead of the two kits (25 TND each).
 2. Buy the MAX98357A at 2B Trading (9.9) instead of Little Son (14).
 3. Buy the NEMA 17 at Celectronix (29.9) instead of Little Son (35).
-4. Borrow a multimeter at school.
-5. Flash the ESP32-CAM with the ESP32 DevKit V1 instead of buying the USB board (9 TND).
-6. Keep the DRV8825 (8.5) for the demo instead of importing a TMC2209 (about 20 to 40 with shipping, and weeks of waiting).
+4. Flash the ESP32-CAM with the ESP32 DevKit V1 instead of buying the USB board (9 TND).
+5. Keep the DRV8825 (8.5) for the demo instead of importing a TMC2209 (about 20 to 40 with shipping, and weeks of waiting).
 
 ## Shops
 
