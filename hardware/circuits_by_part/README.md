@@ -14,8 +14,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | [06_esp32_cam_flashing/](06_esp32_cam_flashing/README.md) | [svg](06_esp32_cam_flashing/06_esp32_cam_flashing.svg) | [Section 5B](../04_wiring_list.md#5b-flashing-the-esp32-cam-with-the-devkit) | Done |
 | 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | [07_power/](07_power/README.md) | [svg](07_power/07_power.svg) | [Section 4](../04_wiring_list.md#4-power) | Done |
 | 8 | I2C bus: DS3231 clock and VL53L0X tank sensor | [08_i2c_clock_tank/](08_i2c_clock_tank/README.md) | [svg](08_i2c_clock_tank/08_i2c_clock_tank.svg) | [Section 9](../04_wiring_list.md#9-i2c-bus-vl53l0x-and-ds3231) | Done |
-| 9 | microSD card (after the demo essentials) | | | Section 10 | Next |
-| 10 | Button and status LED (after the demo essentials) | | | Section 12 | |
+| 9 | microSD card (after the demo essentials) | [09_microsd_card/](09_microsd_card/README.md) | [svg](09_microsd_card/09_microsd_card.svg) | [Section 10](../04_wiring_list.md#10-microsd-card) | Done |
+| 10 | Button and status LED (after the demo essentials) | | | Section 12 | Next |
 | 11 | Full circuit | | | All sections | |
 
 Order: the parts the demo needs come first (1 to 7), then the parts that can wait (8 to 10), then the full circuit.
@@ -30,7 +30,7 @@ Checked on the team's board (10 November 2026): 830 points, 63 columns, and the 
 
 | Rail | Use |
 |---|---|
-| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD), from the XL4015 (circuit 7); before circuit 7, from the Nucleo 5V pin (wire R1) |
+| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD module), from the XL4015 (circuit 7); before circuit 7, from the Nucleo 5V pin (wire R1) |
 | Top − and bottom − | GND (joined by wire R4 in column 1) |
 | Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
 | 12 V | **On no rail**: only column 5, top half (the driver VMOT column). Mark it with red tape |
@@ -46,8 +46,8 @@ Each rail hole takes one wire. The rail column of every wire is listed in [04_wi
 | 15 to 21 | 4: sound amplifier | 2: HX711 (columns 15 to 18) |
 | 24 to 27 | 3: HC-SR04 wires | 3: voltage divider (column 26) |
 | 29 to 34 | 5: ESP32-CAM link (its 5 V, GND and capacitor on the top rails, columns 36 to 38) | 8: I2C bus: clock (DS3231) in row a, column 31 = SCL, column 32 = SDA; the tank sensor joins these columns |
-| 36 to 42 | 9: microSD | Free (spare) |
-| 44 to 49 | | 10: button and LED |
+| 36 to 41 | Free (the top rails at columns 36 to 39 hold the ESP32-CAM 5 V, GND and capacitor) | Free (spare) |
+| 42 to 49 | 9: microSD in columns 42 to 47; its board covers the top rail holes of columns 40 to 49 | 10: button and LED (44 to 49) |
 
 Parts that must face outside (HC-SR04, ESP32-CAM camera, tank sensor, speaker, load cell, motor) sit off the board and reach their zone with jumper wires.
 

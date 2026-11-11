@@ -47,7 +47,7 @@ Same colours on every part, so a wrong wire is visible at a glance.
 | Blue | I2C SDA |
 | White | I2C SCL |
 | Green | UART: green from the ESP32-CAM TX, light green from the STM32 TX |
-| Purple | SPI and I2S |
+| Purple | SPI and I2S (shades of purple; pink for the SD card CS) |
 | Grey or brown | Other signals (STEP, DIR, EN, TRIG, ECHO, button, LED) |
 
 Wire size: 22 AWG or thicker for 12 V, 5 V, GND and motor coils. Standard jumper wires for signals.
@@ -372,19 +372,20 @@ If no part answers and both lines read 0 V, a module has no pull up resistors: a
 
 ## 10. microSD card
 
-For the Adafruit microSD breakout (or any breakout with its own 3.3 V regulator).
+Drawn in [circuit 9](circuits_by_part/09_microsd_card/README.md). A 6 pin SPI module with its own 3.3 V regulator. Its pins plug into **row j, columns 42 to 47** (CS, SCK, MOSI, MISO, VCC, GND), with the card slot over the top edge; the board covers the top rail holes of columns 40 to 49. Check the pin order printed on your module.
 
-| # | Breakout pin | To | Colour | Measure or note | Checked |
+| # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| S1 | `5V` | 5 V bus | Orange | The breakout makes its own 3.3 V, which spares the Nucleo regulator | |
-| S2 | `GND` | GND rail | Black | | |
-| S3 | `CLK` | STM32 PA5 (CN7, D13) | Purple | | |
-| S4 | `DO` (MISO) | STM32 PA6 (CN7, D12) | Purple | | |
-| S5 | `DI` (MOSI) | STM32 PB5 (CN7, D22) | Purple | | |
-| S6 | `CS` | STM32 PE11 (CN10, D5) | Purple | | |
-| S7 | `CD` (card detect) | Not connected | | | |
+| S1 | Module `VCC` (column 46) | Top + rail (5 V), column 52 | Orange | From row h. The module makes the 3.3 V of the card itself | |
+| S2 | Module `GND` (column 47) | Top − rail (GND), column 51 | Black | From row i | |
+| S3 | Module `SCK` (column 43) | Nucleo D13 · PA5 (CN7 pin 10) | Purple | Row g | |
+| S4 | Module `MISO` (column 45) | Nucleo D12 · PA6 (CN7 pin 12) | Light purple | Row i | |
+| S5 | Module `MOSI` (column 44) | Nucleo D22 · PB5 (CN7 pin 13) | Dark purple | Row h | |
+| S6 | Module `CS` (column 42) | Nucleo D5 · PE11 (CN10 pin 6) | Pink | Row f | |
 
-Card: format as FAT32 on the computer before first use.
+Also needed: R3 and R4 from section 4B, and the 5 V on the top + rail (R1 for a test on USB alone, or the XL4015 of section 4).
+
+Card: 8 to 32 GB from a known brand, formatted as FAT32 on the computer before first use. Insert or remove it only with the power off.
 
 ## 11. MAX98357A and speaker
 
@@ -417,12 +418,12 @@ Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume lo
 
 ## 13. Totals per rail
 
-For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (microSD, button and LED) add their wires when they are drawn.
+For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). The button and LED (circuit 10) add their wires when they are drawn. The microSD board covers the top rail holes of columns 40 to 49: keep them free.
 
 | Rail or point | Wires (rail column) |
 |---|---|
-| Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
-| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder) |
+| Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38), S1 (52) |
+| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder), S2 (51) |
 | Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20), I3 (24), I9 (36) |
 | Bottom − (GND) | R4 (1), R3 (3), H7 (14), I4 (25), U6 (26), I10 (35) |
 | Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
@@ -454,7 +455,7 @@ Settings for each pin when creating the project in STM32CubeIDE.
 | PD15 | TIM4_CH4, Input Capture | None | | Both edges; timer clock 1 MHz (1 tick = 1 us) |
 | PB8 | I2C1_SCL | (set by CubeMX) | | Fast mode, 400 kHz |
 | PB9 | I2C1_SDA | (set by CubeMX) | | |
-| PA5 | SPI1_SCK | None | | Full duplex master; prescaler 256 at start (about 350 kHz), then 8 (about 11 MHz) |
+| PA5 | SPI1_SCK | None | | Full duplex master, mode 0; prescaler 256 at start (about 350 kHz), then 8 (about 11 MHz); 16 or 32 if jumper wires give read errors |
 | PA6 | SPI1_MISO | Pull up | | |
 | PB5 | SPI1_MOSI | None | | |
 | PE11 | GPIO_Output | None | **High** (card not selected) | |

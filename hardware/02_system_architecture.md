@@ -136,7 +136,7 @@ flowchart LR
 | Scale | STM32 and HX711 | 2 wire serial (clock and data) | 10 readings per second, gain 128 |
 | Presence | STM32 and HC-SR04 | TRIG pulse of 10 us, ECHO pulse (through the divider) timed by TIM4 | One reading every 100 ms; distance in cm = pulse in us ÷ 58 |
 | Sensors and clock | STM32, VL53L0X, DS3231 | I2C1 bus | 400 kHz |
-| Storage | STM32 and microSD | SPI1 with FatFs | Up to 12 MHz |
+| Storage | STM32 and microSD module | SPI1 mode 0 with FatFs, card in FAT32 | About 350 kHz at start, then about 11 MHz (lower if jumper wires give errors); wiring in [circuit 9](circuits_by_part/09_microsd_card/README.md) |
 | Sound | STM32 and MAX98357A | I2S3 with DMA | WAV, 16 kHz, 16 bit, mono; demo clips kept in STM32 flash, SD card later |
 | Debug | STM32 and computer | ST-LINK virtual serial port (USART3, PD8, PD9) | 115200 baud |
 

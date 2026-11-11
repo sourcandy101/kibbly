@@ -21,6 +21,7 @@ WHITE = ("#f5f5f5", "#8a8a8a")
 PURPLE = ("#8e24aa", "#4a148c")
 DARKPURPLE = ("#5e35b1", "#311b92")
 LIGHTPURPLE = ("#ce93d8", "#7b1fa2")
+PINK = ("#ec407a", "#ad1457")
 
 # breadboard geometry: 830 point board, columns 1 to 63, and named rows
 COLS = 63
@@ -29,7 +30,7 @@ RIGHT = 500 + (COLS - 1) * 20  # x of column 63
 # column map of the whole feeder on one board (every part fits in columns 1 to 49)
 ZONES = [(1, 3, "power", (1, 7)), (5, 12, "1 motor driver", (1,)), (15, 21, "4 sound · 2 HX711", (2, 4)),
          (24, 27, "3 HC-SR04", (3,)), (29, 34, "5 ESP32-CAM · 8 I2C bus", (5, 8)),
-         (36, 42, "9 microSD", (9,)), (44, 49, "10 button, LED", (10,))]
+         (42, 49, "9 microSD · 10 button, LED", (9, 10))]
 ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 436,
        "e": 476, "d": 496, "c": 516, "b": 536, "a": 556, "bot-": 600, "bot+": 620}
 
