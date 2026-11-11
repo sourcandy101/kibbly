@@ -336,12 +336,12 @@ The divider gives 5 V × 2 ÷ 3 = 3.3 V on PD15. Never connect Echo straight to 
 
 ## 9. I2C bus: VL53L0X and DS3231
 
-Both parts share the same two wires. Most modules already have pull up resistors on SDA and SCL, so none are added.
+Drawn in [circuit 8](circuits_by_part/08_i2c_clock_tank/README.md). Both parts share the same two wires: on the breadboard **column 31 (bottom half) is the SCL bus and column 32 the SDA bus**, and every SCL or SDA wire goes into one of them. The DS3231 board (ZS-042) plugs into row a, columns 29 to 34 (32K, SQW, SCL, SDA, VCC, GND), over the bottom edge; the VL53L0X sits in the tank lid, joined by 4 female to male wires. The clock board has pull up resistors on SDA and SCL, so none are added.
 
 ```mermaid
 flowchart LR
-    PB9["STM32 PB9 SDA"] --- SDA(("SDA bus"))
-    PB8["STM32 PB8 SCL"] --- SCL(("SCL bus"))
+    PB9["STM32 PB9 SDA"] --- SDA(("SDA bus<br/>column 32"))
+    PB8["STM32 PB8 SCL"] --- SCL(("SCL bus<br/>column 31"))
     SDA --- TS["VL53L0X SDA"]
     SCL --- TC["VL53L0X SCL"]
     SDA --- RS["DS3231 SDA"]
@@ -350,23 +350,25 @@ flowchart LR
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| I1 | STM32 PB9 (CN7, D14) | SDA rail on the breadboard | Blue | | |
-| I2 | STM32 PB8 (CN7, D15) | SCL rail on the breadboard | White | | |
-| I3 | VL53L0X `VIN` | 3.3 V bus | Yellow | | |
-| I4 | VL53L0X `GND` | GND rail | Black | | |
-| I5 | VL53L0X `SDA` | SDA rail | Blue | | |
-| I6 | VL53L0X `SCL` | SCL rail | White | | |
+| I1 | Nucleo D15 · PB8 (CN7 pin 2) | Column 31, row d (SCL bus) | White | | |
+| I2 | Nucleo D14 · PB9 (CN7 pin 4) | Column 32, row e (SDA bus) | Blue | | |
+| I3 | VL53L0X `VIN` | Bottom + rail (3.3 V), column 24 | Yellow | | |
+| I4 | VL53L0X `GND` | Bottom − rail (GND), column 25 | Black | | |
+| I5 | VL53L0X `SDA` | Column 32, row b | Blue | | |
+| I6 | VL53L0X `SCL` | Column 31, row c | White | | |
 | I7 | VL53L0X `XSHUT` | Not connected | | Pulled up on the module; sensor always on | |
 | I8 | VL53L0X `GPIO1` | Not connected | | Interrupt not used | |
-| I9 | DS3231 `VCC` | 3.3 V bus | Yellow | | |
-| I10 | DS3231 `GND` | GND rail | Black | | |
-| I11 | DS3231 `SDA` | SDA rail | Blue | | |
-| I12 | DS3231 `SCL` | SCL rail | White | | |
-| I13 | DS3231 `SQW`, `32K` | Not connected | | Not used | |
-| I14 | CR2032 coin cell | DS3231 holder | | On the common ZS-042 module, **remove the charging diode or its 200 ohm resistor** first | |
+| I9 | DS3231 `VCC` (column 33) | Bottom + rail (3.3 V), column 36 | Yellow | From row c | |
+| I10 | DS3231 `GND` (column 34) | Bottom − rail (GND), column 35 | Black | From row b | |
+| I11 | DS3231 `SDA` | Column 32, row a | | Its own pin, in the SDA bus column; no wire | |
+| I12 | DS3231 `SCL` | Column 31, row a | | Its own pin, in the SCL bus column; no wire | |
+| I13 | DS3231 `SQW`, `32K` (columns 30, 29) | Not connected | | Not used | |
+| I14 | CR2032 coin cell | DS3231 holder | | Safe as it is at 3.3 V; remove the 200 ohm charging resistor (marked 201) only if the board ever runs on 5 V | |
 | I15 | Pull up check | | | With power on and nothing talking: SDA and SCL both read 3.3 V | |
 
-If a module has no pull up resistors and both lines read 0 V, add 4.7 kohm from SDA to 3.3 V and from SCL to 3.3 V.
+Also needed: R2 and R3 from section 4B. VL53L0X: peel off the protective film on its window before testing.
+
+If no part answers and both lines read 0 V, a module has no pull up resistors: add 4.7 kohm from SDA to 3.3 V and from SCL to 3.3 V.
 
 ## 10. microSD card
 
@@ -415,14 +417,14 @@ Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume lo
 
 ## 13. Totals per rail
 
-For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
+For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (microSD, button and LED) add their wires when they are drawn.
 
 | Rail or point | Wires (rail column) |
 |---|---|
 | Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
 | Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder) |
-| Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20) |
-| Bottom − (GND) | R4 (1), R3 (3), H7 (14), U6 (26) |
+| Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20), I3 (24), I9 (36) |
+| Bottom − (GND) | R4 (1), R3 (3), H7 (14), I4 (25), U6 (26), I10 (35) |
 | Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
 
 ## 14. STM32CubeMX settings

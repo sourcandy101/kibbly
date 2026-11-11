@@ -28,8 +28,8 @@ RIGHT = 500 + (COLS - 1) * 20  # x of column 63
 
 # column map of the whole feeder on one board (every part fits in columns 1 to 49)
 ZONES = [(1, 3, "power", (1, 7)), (5, 12, "1 motor driver", (1,)), (15, 21, "4 sound · 2 HX711", (2, 4)),
-         (24, 27, "3 HC-SR04", (3,)), (29, 34, "5 ESP32-CAM · 8 clock", (5, 8)),
-         (36, 42, "9 microSD · 8 tank", (8, 9)), (44, 49, "10 button, LED", (10,))]
+         (24, 27, "3 HC-SR04", (3,)), (29, 34, "5 ESP32-CAM · 8 I2C bus", (5, 8)),
+         (36, 42, "9 microSD", (9,)), (44, 49, "10 button, LED", (10,))]
 ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 436,
        "e": 476, "d": 496, "c": 516, "b": 536, "a": 556, "bot-": 600, "bot+": 620}
 

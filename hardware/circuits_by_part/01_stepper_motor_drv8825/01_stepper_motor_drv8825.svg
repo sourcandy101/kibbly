@@ -1376,9 +1376,9 @@
 <rect x="951" y="676" width="78" height="22" rx="4" fill="#f3f3f3" stroke="#d6d6d6" stroke-width="1"/>
 <text x="990.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">3 HC-SR04</text>
 <rect x="1051" y="676" width="118" height="22" rx="4" fill="#f3f3f3" stroke="#d6d6d6" stroke-width="1"/>
-<text x="1110.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">5 ESP32-CAM · 8 clock</text>
+<text x="1110.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">5 ESP32-CAM · 8 I2C bus</text>
 <rect x="1191" y="676" width="138" height="22" rx="4" fill="#f3f3f3" stroke="#d6d6d6" stroke-width="1"/>
-<text x="1260.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">9 microSD · 8 tank</text>
+<text x="1260.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">9 microSD</text>
 <rect x="1351" y="676" width="118" height="22" rx="4" fill="#f3f3f3" stroke="#d6d6d6" stroke-width="1"/>
 <text x="1410.0" y="691" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#9a9a9a" text-anchor="middle" font-weight="normal">10 button, LED</text>
 <rect x="640" y="712" width="1220" height="230" rx="10" fill="#fafafa" stroke="#dddddd"/>

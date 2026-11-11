@@ -148,6 +148,8 @@ flowchart LR
 | DS3231 | 0x68 | Real time clock |
 | AT24C32 EEPROM on the DS3231 module | 0x57 | Present on most modules, not used |
 
+On the breadboard both parts share column 31 (SCL) and column 32 (SDA), bottom half: [circuit 8](circuits_by_part/08_i2c_clock_tank/README.md).
+
 ### UART messages between the boards
 
 One message per line, readable as text, so we can watch and type them in a serial monitor while testing. Every message gets `OK` or `ERR` back, so a lost message is noticed and sent again. Final format is fixed in step 5.
@@ -239,7 +241,7 @@ Rules:
 3. A 1000 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
 4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the driver).
 5. During tests the Nucleo runs from the laptop USB (power jumper JP3 on U5V). When the feeder runs alone, wire P6 joins the top + rail to E5V and JP3 goes to E5V (see the Nucleo user manual UM1974); the USB is then plugged in only after the adapter. Before circuit 7 the Nucleo 5V pin fed the top + rail for the tests (wire R1); from circuit 7 on the XL4015 feeds it and R1 is out for good, so two 5 V sources never meet.
-6. On most DS3231 modules a charging circuit is fitted for a rechargeable LIR2032 cell. With a normal CR2032, remove the charging resistor or diode on the module.
+6. Most DS3231 boards (ZS-042) have a charging circuit meant for a rechargeable LIR2032 cell. At our 3.3 V it cannot charge a normal CR2032, so the board is used as it is; remove its 200 ohm charging resistor (marked 201) only if it ever runs on 5 V.
 7. **On the breadboard** the top + rail is 5 V, the bottom + rail is 3.3 V and both − rails are GND. 12 V is on no rail: only in column 5, the driver VMOT column. Column map in [circuits_by_part](circuits_by_part/README.md#board-and-column-map).
 8. **Two wires in each jack screw**: the driver (column 5) and the XL4015 get separate 12 V wires, and the XL4015 output has its own GND wire to the rails, so no breadboard contact carries much more than 1 A. Wiring: [circuit 7](circuits_by_part/07_power/README.md).
 9. **Set the XL4015 to 5.0 V with a multimeter before its output touches the board**: a new one can give up to 12 V.

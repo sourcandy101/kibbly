@@ -13,8 +13,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 5 | ESP32-CAM link to the STM32 | [05_esp32_cam_link/](05_esp32_cam_link/README.md) | [svg](05_esp32_cam_link/05_esp32_cam_link.svg) | [Section 5](../04_wiring_list.md#5-esp32-cam-camera-board) | Done |
 | 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | [06_esp32_cam_flashing/](06_esp32_cam_flashing/README.md) | [svg](06_esp32_cam_flashing/06_esp32_cam_flashing.svg) | [Section 5B](../04_wiring_list.md#5b-flashing-the-esp32-cam-with-the-devkit) | Done |
 | 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | [07_power/](07_power/README.md) | [svg](07_power/07_power.svg) | [Section 4](../04_wiring_list.md#4-power) | Done |
-| 8 | I2C bus: DS3231 clock and VL53L0X (after the demo essentials) | | | Section 9 | Next |
-| 9 | microSD card (after the demo essentials) | | | Section 10 | |
+| 8 | I2C bus: DS3231 clock and VL53L0X tank sensor | [08_i2c_clock_tank/](08_i2c_clock_tank/README.md) | [svg](08_i2c_clock_tank/08_i2c_clock_tank.svg) | [Section 9](../04_wiring_list.md#9-i2c-bus-vl53l0x-and-ds3231) | Done |
+| 9 | microSD card (after the demo essentials) | | | Section 10 | Next |
 | 10 | Button and status LED (after the demo essentials) | | | Section 12 | |
 | 11 | Full circuit | | | All sections | |
 
@@ -45,8 +45,8 @@ Each rail hole takes one wire. The rail column of every wire is listed in [04_wi
 | 5 to 12 | 1: driver power and motor (12 V in column 5); 7: XL4015 5 V entry on the top rails at columns 12 and 13 | 1: driver control |
 | 15 to 21 | 4: sound amplifier | 2: HX711 (columns 15 to 18) |
 | 24 to 27 | 3: HC-SR04 wires | 3: voltage divider (column 26) |
-| 29 to 34 | 5: ESP32-CAM link (its 5 V, GND and capacitor on the top rails, columns 36 to 38) | 8: clock (DS3231) |
-| 36 to 42 | 9: microSD | 8: tank sensor (VL53L0X) |
+| 29 to 34 | 5: ESP32-CAM link (its 5 V, GND and capacitor on the top rails, columns 36 to 38) | 8: I2C bus: clock (DS3231) in row a, column 31 = SCL, column 32 = SDA; the tank sensor joins these columns |
+| 36 to 42 | 9: microSD | Free (spare) |
 | 44 to 49 | | 10: button and LED |
 
 Parts that must face outside (HC-SR04, ESP32-CAM camera, tank sensor, speaker, load cell, motor) sit off the board and reach their zone with jumper wires.
