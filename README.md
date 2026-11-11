@@ -51,7 +51,7 @@ Full details in **[docs/SPEC.md](docs/SPEC.md)**.
 | 1 | List of hardware | In progress |
 | 2 | System architecture | Updated to the real parts (decisions to confirm) |
 | 3 | Wiring and testing each component alone | Not started |
-| 4 | Wiring list for every component | Written; circuit pictures 1 to 10 of 11 done |
+| 4 | Wiring list for every component | Written; all 11 circuit pictures done, including the full circuit |
 | 5 | Code for the ESP32 and the STM32 | Not started |
 | 6 | Wiring and testing 2 or more components together | Not started |
 | 7 | Final system | Not started |

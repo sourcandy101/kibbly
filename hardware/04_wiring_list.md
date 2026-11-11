@@ -1,6 +1,6 @@
 # Step 4: Wiring list
 
-Every wire of the feeder, part by part: from which pin, to which pin, which colour, and what to measure before powering on. Pins follow the plan in [step 2, section 6](02_system_architecture.md#6-pin-plan).
+Every wire of the feeder, part by part: from which pin, to which pin, which colour, and what to measure before powering on. Pins follow the plan in [step 2, section 6](02_system_architecture.md#6-pin-plan). The whole feeder on one breadboard: [circuit 11, full circuit](circuits_by_part/11_full_circuit/README.md).
 
 **Status: written before testing.** Each wire is checked during the component tests of step 3; tick the **Checked** column when a wire is confirmed on the real part, and correct the row if the real module differs.
 

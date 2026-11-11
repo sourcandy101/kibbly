@@ -86,7 +86,7 @@ Why this split: if WiFi, the ESP32 or the AI server fails, the STM32 alone still
 
 ## 3. Connection diagram
 
-Every arrow shows the bus and the STM32 pins it uses. Full pin table in [section 6](#6-pin-plan).
+Every arrow shows the bus and the STM32 pins it uses. Full pin table in [section 6](#6-pin-plan); every part on the breadboard in [circuit 11, full circuit](circuits_by_part/11_full_circuit/README.md).
 
 ```mermaid
 flowchart LR

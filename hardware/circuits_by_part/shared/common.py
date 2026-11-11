@@ -184,11 +184,11 @@ class Drawing:
                 t(lx, y, "(not used)", 10, grey)
 
     def zones(self, circuit, y=676):
-        """Column map strip under the board; the zones of this circuit are highlighted."""
+        """Column map strip under the board; the zones of this circuit are highlighted ("all": every zone)."""
         a, t = self.add, self.text
         t(480, y - 6, "Column map of the whole feeder:", 10, "#777", weight="bold")
         for c1, c2, label, circuits in ZONES:
-            on = circuit in circuits
+            on = circuit == "all" or circuit in circuits
             x1, x2 = X(c1) - 9, X(c2) + 9
             a(f'<rect x="{x1}" y="{y}" width="{x2 - x1}" height="22" rx="4" fill="{"#ffe0b2" if on else "#f3f3f3"}" '
               f'stroke="{"#ef6c00" if on else "#d6d6d6"}" stroke-width="{1.5 if on else 1}"/>')
