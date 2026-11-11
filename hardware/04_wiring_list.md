@@ -86,39 +86,41 @@ Only the pins this project uses. Header names follow UM1974: **CN7, CN8, CN9, CN
 
 ## 4. Power
 
+Drawn in [circuit 7](circuits_by_part/07_power/README.md). One 12 V adapter feeds everything: 12 V for the driver in column 5, the XL4015 makes the 5 V of the top + rail, the Nucleo makes the 3.3 V of the bottom + rail.
+
 ```mermaid
 flowchart LR
-    AD["12 V adapter"] --> J["Barrel jack"]
-    J -->|"+ red"| B12["12 V bus"]
-    J -->|"minus black"| G["GND bus"]
-    B12 --> XIN["XL4015 IN+"]
-    G --> XGN["XL4015 IN minus"]
-    XOUT["XL4015 OUT+"] --> B5["5 V bus"]
-    B5 --> E5V["Nucleo E5V"]
-    B5 --> ESP5["ESP32 5V"]
-    B5 --> AMP5["MAX98357A Vin"]
-    B5 --> SD5["microSD 5V"]
-    B12 --> VM["Driver VMOT (column 5)"]
+    AD["12 V adapter"] --> J["DC jack<br/>two wires in each screw"]
+    J -->|"V1 red"| C5["Column 5<br/>driver VMOT"]
+    J -->|"P2 red"| XIN["XL4015 IN+"]
+    J -->|"V2 black"| G["GND rails"]
+    J -->|"P3 black"| XGN["XL4015 IN−"]
+    XOUT["XL4015 OUT+"] -->|"P4 orange"| B5["Top + rail, 5 V"]
+    XOG["XL4015 OUT−"] -->|"P5 black"| G
+    B5 -.->|"P6, feeder alone"| E5V["Nucleo E5V"]
+    N3["Nucleo 3V3"] -->|"R2 yellow"| B3["Bottom + rail, 3.3 V"]
 ```
 
-Breadboard version: section 4B (rails) and circuit 7 (power), which will update this table: the 5 V bus becomes the top + rail and the 12 V bus becomes column 5.
-
-| # | From | To | Colour | Measure before connecting | Checked |
+| # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| P1 | Barrel jack centre (+) | **12 V bus** (screw terminal or Wago) | Red | 11.5 to 12.5 V between jack + and jack GND | |
-| P2 | Barrel jack outer (GND) | **GND bus** | Black | 0 ohm between jack outer and GND bus | |
-| P3 | 12 V bus | XL4015 `IN+` | Red | | |
-| P4 | GND bus | XL4015 `IN-` | Black | | |
-| P5 | XL4015 `OUT+` | **5 V bus** | Orange | **Turn the XL4015 screw until OUT reads 5.0 V with nothing connected** | |
-| P6 | XL4015 `OUT-` | GND bus | Black | | |
-| P7 | 5 V bus | Nucleo `E5V` (CN11) | Orange | 5.0 V; power jumper JP3 set to E5V (check UM1974) | |
-| P8 | GND bus | Nucleo `GND` (CN11) | Black | | |
-| P9 | Nucleo `3V3` (CN8) | **3.3 V bus** (breadboard rail) | Yellow | 3.3 V with the Nucleo powered | |
-| P10 | Nucleo `GND` (CN8) | Breadboard GND rail | Black | | |
+| P1 | 12 V adapter | DC jack | | Centre pin + on the adapter label; plug in last | |
+| P2 | DC jack `+` screw | XL4015 `IN+` | Red | Same screw as V1; twist the two wire ends together | |
+| P3 | DC jack `−` screw | XL4015 `IN−` | Black | Same screw as V2 | |
+| P4 | XL4015 `OUT+` | Top + rail (5 V), column 13 | Orange | **Only after OUT reads 5.0 V** (4.95 to 5.10 V) with nothing connected | |
+| P5 | XL4015 `OUT−` | Top − rail (GND), column 12 | Black | | |
+| P6 | Top + rail (5 V), column 2 | Nucleo `E5V` (CN11 pin 6) | Orange | Feeder alone only, with the power jumper JP3 on E5V; same hole as R1, which is out | |
 
-No fuse or reverse polarity protection is fitted. Before the first plug in, check that the adapter label shows the centre pin as +, and never let the 12 V bus touch GND or a board pin.
+Also: V1 to V3 from section 6B (12 V to column 5 and its capacitor), R2 to R4 from section 4B. **R1 is removed for good**: the XL4015 now feeds the top + rail, and two 5 V sources must never meet.
 
-During development, power the Nucleo from USB and leave P7 unplugged. Connect P7 only when the whole feeder runs from the adapter.
+Why two wires in each jack screw: a breadboard contact is made for about 1 A. Taking the XL4015 input at the jack, and not from column 5, keeps the motor current (0.8 A) and the XL4015 current (about 0.8 A) on separate contacts.
+
+| | Tests (laptop next to the feeder) | Feeder alone |
+|---|---|---|
+| Nucleo power | USB, JP3 on U5V | P6 and JP3 on E5V |
+| Power on | USB, then the adapter | Adapter; USB only after it, for logs |
+| Power off | Adapter, then the USB | USB, then the adapter |
+
+No fuse or reverse polarity protection is fitted. Before the first plug in, check that the adapter label shows the centre pin as +, and never let the 12 V touch a rail or a board pin.
 
 ## 4B. Breadboard rails and power entries
 
@@ -136,7 +138,7 @@ Checked on the team's board (10 November 2026): 830 points, 63 columns, and the 
 
 | # | From | To | Colour | Note | Checked |
 |---|---|---|---|---|---|
-| R1 | Nucleo 5V (CN8 pin 9) | Top + rail (5 V), column 2 | Orange | Tests on USB only. Replaced by the 5 V supply in circuit 7; never both at once | |
+| R1 | Nucleo 5V (CN8 pin 9) | Top + rail (5 V), column 2 | Orange | Tests before circuit 7 only. Removed for good in circuit 7, where the XL4015 feeds the rail | |
 | R2 | Nucleo 3V3 (CN8 pin 7) | Bottom + rail (3.3 V), column 2 | Yellow | | |
 | R3 | Nucleo GND (CN10 pin 5) | Bottom − rail (GND), column 3 | Black | | |
 | R4 | Top − rail | Bottom − rail, column 1 | Black | Joins both GND rails | |
@@ -413,12 +415,12 @@ Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume lo
 
 ## 13. Totals per rail
 
-For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (power, clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
+For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Circuits not drawn yet (clock, tank sensor, microSD, button and LED) add their wires when they are drawn.
 
 | Rail or point | Wires (rail column) |
 |---|---|
-| Top + (5 V) | R1 (2, tests on USB), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
-| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder) |
+| Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38) |
+| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder) |
 | Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20) |
 | Bottom − (GND) | R4 (1), R3 (3), H7 (14), U6 (26) |
 | Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
@@ -483,3 +485,4 @@ Go through it every time something new is wired.
 | 11 | After power on: touch the regulators and the driver | Warm is normal, too hot to hold means power off now |
 | 12 | After power on: 12 V, 5 V and 3.3 V measured on the rails | Within 5% |
 | 13 | Loading a program into the ESP32-CAM: DevKit EN on GND, and never the DevKit VIN and the feeder 5 V on the ESP32-CAM at once | Section 5B |
+| 14 | R1 out once the XL4015 feeds the top + rail | Section 4 |

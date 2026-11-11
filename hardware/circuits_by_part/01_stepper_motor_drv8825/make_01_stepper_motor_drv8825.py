@@ -16,8 +16,7 @@ d.nucleo([(CN10(2), "D7 · PF13 (pin 2)", BROWN, "left"), (CN10(4), "D6 · PE9 (
 d.breadboard(used=(False, True, True, True))
 
 # 12 V column: column 5, top half (framed in red)
-a(f'<rect x="{X(5) - 11}" y="{ROW["j"] - 12}" width="22" height="{ROW["f"] - ROW["j"] + 22}" rx="4" '
-  f'fill="#ffcdd2" fill-opacity="0.55" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4 3"/>')
+d.twelve_volt_column()
 
 # DRV8825 turned so that VMOT is top left and EN bottom left (columns 5 to 12)
 a(f'<rect x="{X(5) - 12}" y="424" width="{X(12) - X(5) + 24}" height="64" rx="3" fill="#4a1f7a" stroke="#2e1250" stroke-width="2"/>')
@@ -42,34 +41,9 @@ for y in (ROW["a"], ROW["bot+"]):
     a(f'<circle cx="{X(5)}" cy="{y}" r="3.5" fill="#757575"/>')
 t(X(5) + 11, 588, "10 kΩ", 10, "#6d5a2a", "start", "bold")
 
-# 1000 uF capacitor: long leg (+) in column 5 row j (12 V), short leg in the top − rail, column 4
-a(f'<line x1="582" y1="248" x2="{X(5)}" y2="{ROW["j"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-a(f'<line x1="566" y1="248" x2="{X(4)}" y2="{ROW["top-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-a('<rect x="560" y="206" width="28" height="44" rx="6" fill="#1f2f74"/>')
-a('<rect x="560" y="206" width="9" height="44" rx="3" fill="#9fb0e8"/>')
-for y in (216, 228, 240):
-    a(f'<line x1="562" y1="{y}" x2="567" y2="{y}" stroke="#1f2f74" stroke-width="2"/>')
-a('<ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>')
-for x, y in ((X(5), ROW["j"]), (X(4), ROW["top-"])):
-    a(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#757575"/>')
-t(466, 222, "1000 µF capacitor", 12, "#1f2f74", "end", "bold")
-t(466, 237, "long leg (+): column 5 →", 10, "#1f2f74", "end")
-
-# DC jack module and adapter
-a('<rect x="352" y="128" width="100" height="50" rx="8" fill="#263238"/>')
-t(402, 151, "12 V 2 A", 13, "#fff", "middle", "bold")
-t(402, 167, "adapter", 11, "#cfd8dc", "middle")
-t(402, 195, "plug in last", 11, "#c62828", "middle", "bold")
-a('<path d="M452,153 C462,153 462,155 470,155" fill="none" stroke="#111" stroke-width="6"/>')
-a('<rect x="470" y="124" width="114" height="62" rx="4" fill="#1565c0"/>')
-a('<rect x="470" y="138" width="40" height="34" rx="4" fill="#212121"/>')
-a('<circle cx="490" cy="155" r="7" fill="#555"/>')
-a('<rect x="520" y="142" width="58" height="40" rx="3" fill="#2e7d32"/>')
-for x in (534, 564):
-    a(f'<circle cx="{x}" cy="161" r="8" fill="#bdbdbd" stroke="#757575"/>')
-    a(f'<line x1="{x - 5}" y1="161" x2="{x + 5}" y2="161" stroke="#616161" stroke-width="2"/>')
-t(534, 138, "−", 12, "#fff", "middle", "bold")
-t(564, 138, "+", 12, "#fff", "middle", "bold")
+# 1000 uF capacitor (long leg in column 5), adapter and DC jack module
+d.driver_capacitor()
+d.dc_jack()
 t(527, 116, "DC jack", 12, "#1565c0", "middle", "bold")
 
 # NEMA 17 motor above its columns, connector pins over columns 7 to 10

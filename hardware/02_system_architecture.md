@@ -208,15 +208,17 @@ flowchart TB
     BUS3["3.3 V<br/>bottom + rail"]
 
     DRV["DRV8825 VMOT and motor<br/>0.8 A peak"]
-    NU["NUCLEO-F439ZI E5V<br/>0.2 A"]
+    NU["NUCLEO-F439ZI<br/>E5V when alone, USB in tests<br/>0.2 A"]
     ESP["ESP32-CAM 5V pin<br/>0.5 A peak"]
     AMP["MAX98357A Vin<br/>0.8 A peak"]
     S5["HC-SR04, microSD module<br/>about 0.1 A"]
     S3["HX711, VL53L0X, DS3231,<br/>DRV8825 control pins<br/>about 0.05 A"]
 
-    AD --> BUS12
+    JACK["DC jack<br/>two wires in each screw"]
+    AD --> JACK
+    JACK --> BUS12
     BUS12 --> DRV
-    BUS12 --> BK --> BUS5
+    JACK --> BK --> BUS5
     BUS5 --> NU
     BUS5 --> ESP
     BUS5 --> AMP
@@ -236,9 +238,11 @@ Rules:
 2. **Set the buck to 5.0 V with the multimeter before connecting anything** to it. A new XL4015 can come set to any voltage.
 3. A 1000 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
 4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the driver).
-5. During development the Nucleo runs from USB. When it runs from the 5 V bus, set the power jumper to E5V (see the Nucleo user manual UM1974) and do not rely on USB power at the same time. For the tests on USB, the Nucleo 5V pin feeds the top + rail (wire R1); R1 comes out when the XL4015 feeds the rail, never both at once.
+5. During tests the Nucleo runs from the laptop USB (power jumper JP3 on U5V). When the feeder runs alone, wire P6 joins the top + rail to E5V and JP3 goes to E5V (see the Nucleo user manual UM1974); the USB is then plugged in only after the adapter. Before circuit 7 the Nucleo 5V pin fed the top + rail for the tests (wire R1); from circuit 7 on the XL4015 feeds it and R1 is out for good, so two 5 V sources never meet.
 6. On most DS3231 modules a charging circuit is fitted for a rechargeable LIR2032 cell. With a normal CR2032, remove the charging resistor or diode on the module.
 7. **On the breadboard** the top + rail is 5 V, the bottom + rail is 3.3 V and both − rails are GND. 12 V is on no rail: only in column 5, the driver VMOT column. Column map in [circuits_by_part](circuits_by_part/README.md#board-and-column-map).
+8. **Two wires in each jack screw**: the driver (column 5) and the XL4015 get separate 12 V wires, and the XL4015 output has its own GND wire to the rails, so no breadboard contact carries much more than 1 A. Wiring: [circuit 7](circuits_by_part/07_power/README.md).
+9. **Set the XL4015 to 5.0 V with a multimeter before its output touches the board**: a new one can give up to 12 V.
 
 ## 6. Pin plan
 
@@ -507,3 +511,4 @@ flowchart TD
 | 10 | Motor driver | DRV8825 for the demo (sold locally); TMC2209 only if the ISS group lends one | Hedi and the ISS group |
 | 11 | Camera board | ESP32-CAM (owned), programs loaded through the ESP32 DevKit V1 | Hedi |
 | 12 | Demo sound | 2 or 3 short clips kept in STM32 flash; the microSD card comes after the demo | Hedi |
+| 13 | Multimeter | Borrow one from the lab or the ISS group to set the XL4015 (circuit 7); it is not on the parts list | Hedi |

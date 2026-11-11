@@ -12,8 +12,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 4 | Sound: MAX98357A amplifier and speaker | [04_sound_max98357a/](04_sound_max98357a/README.md) | [svg](04_sound_max98357a/04_sound_max98357a.svg) | [Section 11](../04_wiring_list.md#11-max98357a-and-speaker) | Done |
 | 5 | ESP32-CAM link to the STM32 | [05_esp32_cam_link/](05_esp32_cam_link/README.md) | [svg](05_esp32_cam_link/05_esp32_cam_link.svg) | [Section 5](../04_wiring_list.md#5-esp32-cam-camera-board) | Done |
 | 6 | Flashing the ESP32-CAM with the ESP32 DevKit V1 | [06_esp32_cam_flashing/](06_esp32_cam_flashing/README.md) | [svg](06_esp32_cam_flashing/06_esp32_cam_flashing.svg) | [Section 5B](../04_wiring_list.md#5b-flashing-the-esp32-cam-with-the-devkit) | Done |
-| 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | | | Section 4 | Next |
-| 8 | I2C bus: DS3231 clock and VL53L0X (after the demo essentials) | | | Section 9 | |
+| 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | [07_power/](07_power/README.md) | [svg](07_power/07_power.svg) | [Section 4](../04_wiring_list.md#4-power) | Done |
+| 8 | I2C bus: DS3231 clock and VL53L0X (after the demo essentials) | | | Section 9 | Next |
 | 9 | microSD card (after the demo essentials) | | | Section 10 | |
 | 10 | Button and status LED (after the demo essentials) | | | Section 12 | |
 | 11 | Full circuit | | | All sections | |
@@ -30,7 +30,7 @@ Checked on the team's board (10 November 2026): 830 points, 63 columns, and the 
 
 | Rail | Use |
 |---|---|
-| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD) |
+| Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD), from the XL4015 (circuit 7); before circuit 7, from the Nucleo 5V pin (wire R1) |
 | Top − and bottom − | GND (joined by wire R4 in column 1) |
 | Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
 | 12 V | **On no rail**: only column 5, top half (the driver VMOT column). Mark it with red tape |
@@ -41,8 +41,8 @@ Each rail hole takes one wire. The rail column of every wire is listed in [04_wi
 
 | Columns | Top half | Bottom half |
 |---|---|---|
-| 1 to 3 | Power entries: rails R1 to R4, DC jack GND | Power entries |
-| 5 to 12 | 1: driver power and motor (12 V in column 5) | 1: driver control |
+| 1 to 3 | Power entries: R1 (before circuit 7) or P6, R2 to R4, DC jack GND | Power entries |
+| 5 to 12 | 1: driver power and motor (12 V in column 5); 7: XL4015 5 V entry on the top rails at columns 12 and 13 | 1: driver control |
 | 15 to 21 | 4: sound amplifier | 2: HX711 (columns 15 to 18) |
 | 24 to 27 | 3: HC-SR04 wires | 3: voltage divider (column 26) |
 | 29 to 34 | 5: ESP32-CAM link (its 5 V, GND and capacitor on the top rails, columns 36 to 38) | 8: clock (DS3231) |

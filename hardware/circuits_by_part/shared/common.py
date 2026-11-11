@@ -27,7 +27,7 @@ COLS = 63
 RIGHT = 500 + (COLS - 1) * 20  # x of column 63
 
 # column map of the whole feeder on one board (every part fits in columns 1 to 49)
-ZONES = [(1, 3, "power", (1,)), (5, 12, "1 motor driver", (1,)), (15, 21, "4 sound · 2 HX711", (2, 4)),
+ZONES = [(1, 3, "power", (1, 7)), (5, 12, "1 motor driver", (1,)), (15, 21, "4 sound · 2 HX711", (2, 4)),
          (24, 27, "3 HC-SR04", (3,)), (29, 34, "5 ESP32-CAM · 8 clock", (5, 8)),
          (36, 42, "9 microSD · 8 tank", (8, 9)), (44, 49, "10 button, LED", (10,))]
 ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 436,
@@ -65,6 +65,11 @@ def CN9(p):
     return _pin(100, 116, 430, p)
 
 
+def CN11(p):
+    """Position of morpho connector CN11 pin p (left edge of the Nucleo, pin numbers from UM1974)."""
+    return _pin(58, 72, 292, p)
+
+
 class Drawing:
     def __init__(self, width=1880, height=1020):
         self.w, self.h = width, height
@@ -78,9 +83,11 @@ class Drawing:
         s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         self.add(f'<text x="{x}" y="{y}" {FONT} font-size="{size}" fill="{fill}" text-anchor="{anchor}" font-weight="{weight}">{s}</text>')
 
-    def wire(self, d, col, ends, width=4.5):
-        self.add(f'<path d="{d}" fill="none" stroke="{col[1]}" stroke-width="{width + 3}" stroke-linecap="round" stroke-linejoin="round"/>')
-        self.add(f'<path d="{d}" fill="none" stroke="{col[0]}" stroke-width="{width}" stroke-linecap="round" stroke-linejoin="round"/>')
+    def wire(self, d, col, ends, width=4.5, dash=None):
+        """dash: for example "10 6" for a wire that is only fitted in some setups."""
+        da = f' stroke-dasharray="{dash}"' if dash else ""
+        self.add(f'<path d="{d}" fill="none" stroke="{col[1]}" stroke-width="{width + 3}" stroke-linecap="round" stroke-linejoin="round"{da}/>')
+        self.add(f'<path d="{d}" fill="none" stroke="{col[0]}" stroke-width="{width}" stroke-linecap="round" stroke-linejoin="round"{da}/>')
         for x, y in ends:
             self.add(f'<circle cx="{x}" cy="{y}" r="4.6" fill="{col[1]}" stroke="#ffffff" stroke-width="1.2"/>')
 
@@ -244,6 +251,46 @@ class Drawing:
             t(x, y0 + 21, name, 6.5, "#fff" if key in used_top else "#9e9e9e", "middle", "bold")
             top[key] = (x, y0 - 12)
         return bottom, top
+
+    def dc_jack(self):
+        """12 V adapter and DC jack module above columns 1 to 4. Screw terminals: − at x 534, + at x 564,
+        wires leave from y 186 (bottom) or y 142 (top)."""
+        a, t = self.add, self.text
+        a('<rect x="352" y="128" width="100" height="50" rx="8" fill="#263238"/>')
+        t(402, 151, "12 V 2 A", 13, "#fff", "middle", "bold")
+        t(402, 167, "adapter", 11, "#cfd8dc", "middle")
+        t(402, 195, "plug in last", 11, "#c62828", "middle", "bold")
+        a('<path d="M452,153 C462,153 462,155 470,155" fill="none" stroke="#111" stroke-width="6"/>')
+        a('<rect x="470" y="124" width="114" height="62" rx="4" fill="#1565c0"/>')
+        a('<rect x="470" y="138" width="40" height="34" rx="4" fill="#212121"/>')
+        a('<circle cx="490" cy="155" r="7" fill="#555"/>')
+        a('<rect x="520" y="142" width="58" height="40" rx="3" fill="#2e7d32"/>')
+        for x in (534, 564):
+            a(f'<circle cx="{x}" cy="161" r="8" fill="#bdbdbd" stroke="#757575"/>')
+            a(f'<line x1="{x - 5}" y1="161" x2="{x + 5}" y2="161" stroke="#616161" stroke-width="2"/>')
+        t(534, 138, "−", 12, "#fff", "middle", "bold")
+        t(564, 138, "+", 12, "#fff", "middle", "bold")
+
+    def driver_capacitor(self, labels=True):
+        """1000 uF capacitor of the driver: long leg (+) in column 5 row j (12 V), short leg in the top − rail, column 4."""
+        a, t = self.add, self.text
+        a(f'<line x1="582" y1="248" x2="{X(5)}" y2="{ROW["j"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
+        a(f'<line x1="566" y1="248" x2="{X(4)}" y2="{ROW["top-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
+        a('<rect x="560" y="206" width="28" height="44" rx="6" fill="#1f2f74"/>')
+        a('<rect x="560" y="206" width="9" height="44" rx="3" fill="#9fb0e8"/>')
+        for y in (216, 228, 240):
+            a(f'<line x1="562" y1="{y}" x2="567" y2="{y}" stroke="#1f2f74" stroke-width="2"/>')
+        a('<ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>')
+        for x, y in ((X(5), ROW["j"]), (X(4), ROW["top-"])):
+            a(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#757575"/>')
+        if labels:
+            t(466, 222, "1000 µF capacitor", 12, "#1f2f74", "end", "bold")
+            t(466, 237, "long leg (+): column 5 →", 10, "#1f2f74", "end")
+
+    def twelve_volt_column(self):
+        """Red frame around column 5, top half: the only place with 12 V."""
+        self.add(f'<rect x="{X(5) - 11}" y="{ROW["j"] - 12}" width="22" height="{ROW["f"] - ROW["j"] + 22}" rx="4" '
+                 f'fill="#ffcdd2" fill-opacity="0.55" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4 3"/>')
 
     def notes_box(self, x, y, w, h):
         self.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#fafafa" stroke="#dddddd"/>')
