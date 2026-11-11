@@ -491,6 +491,8 @@ flowchart TD
     N -->|"Other"| IGN["Ignored"]
 ```
 
+Wiring: [circuit 10](circuits_by_part/10_button_led/README.md). The button uses the STM32 internal pull up and a 100 nF capacitor against bounce; the LED has a 330 ohm resistor.
+
 | LED | Meaning |
 |---|---|
 | Solid | Connected to WiFi |

@@ -15,8 +15,8 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 | 7 | Power: 12 V, XL4015 to 5 V, 3.3 V | [07_power/](07_power/README.md) | [svg](07_power/07_power.svg) | [Section 4](../04_wiring_list.md#4-power) | Done |
 | 8 | I2C bus: DS3231 clock and VL53L0X tank sensor | [08_i2c_clock_tank/](08_i2c_clock_tank/README.md) | [svg](08_i2c_clock_tank/08_i2c_clock_tank.svg) | [Section 9](../04_wiring_list.md#9-i2c-bus-vl53l0x-and-ds3231) | Done |
 | 9 | microSD card (after the demo essentials) | [09_microsd_card/](09_microsd_card/README.md) | [svg](09_microsd_card/09_microsd_card.svg) | [Section 10](../04_wiring_list.md#10-microsd-card) | Done |
-| 10 | Button and status LED (after the demo essentials) | | | Section 12 | Next |
-| 11 | Full circuit | | | All sections | |
+| 10 | Button and status LED | [10_button_led/](10_button_led/README.md) | [svg](10_button_led/10_button_led.svg) | [Section 12](../04_wiring_list.md#12-button-and-led) | Done |
+| 11 | Full circuit | | | All sections | Next |
 
 Order: the parts the demo needs come first (1 to 7), then the parts that can wait (8 to 10), then the full circuit.
 

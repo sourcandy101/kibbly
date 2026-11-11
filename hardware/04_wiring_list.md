@@ -407,25 +407,30 @@ Also needed: R1, R3 and R4 from section 4B. On USB power (R1) keep the volume lo
 
 ## 12. Button and LED
 
+Drawn in [circuit 10](circuits_by_part/10_button_led/README.md). Bottom half, columns 44 to 49; the button (12 mm, panel mount) sits on the feeder body with 2 soldered wires. No 3.3 V wire is needed: the button uses the STM32 internal pull up and the LED is driven by a pin.
+
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
-| B1 | Button leg 1 | STM32 PF12 (CN7, D8) | Grey | Internal pull up in the STM32 | |
-| B2 | Button leg 2 | GND rail | Black | Pressed = 0 V on PF12 | |
-| B3 | 100 nF capacitor | Between PF12 and GND | | Optional, reduces bounce | |
-| L1 | STM32 PG14 (CN10, D1) | 330 ohm resistor | Grey | | |
-| L2 | 330 ohm resistor | LED long leg (anode) | | | |
-| L3 | LED short leg (cathode) | GND rail | Black | | |
+| B1 | Button terminal 1 | Column 49, row c | Grey | No polarity: either terminal | |
+| B2 | Button terminal 2 | Bottom − rail (GND), column 52 | Black | Pressed = 0 V on PF12 | |
+| B3 | 100 nF capacitor (marked 104) | Column 49 row a to the bottom − rail, column 49 | | Smooths the bounce, so one press counts once | |
+| B4 | Column 49, row e | Nucleo D8 · PF12 (CN7 pin 20) | Grey | Internal pull up in the STM32: free = 3.3 V | |
+| L1 | Column 44, row d | Nucleo D1 · PG14 (CN10 pin 14) | Brown | High = LED on | |
+| L2 | 330 ohm resistor | Column 44 row c to column 47 row c, lying flat | | Bands orange, orange, brown | |
+| L3 | LED | Long leg (+) in column 47 row a, short leg in the bottom − rail, column 47 | | Short leg = flat side of the rim; about 4 mA | |
+
+Also needed: R3 from section 4B. Button not bought yet: touching the B1 and B2 wire ends together is a press.
 
 ## 13. Totals per rail
 
-For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). The button and LED (circuit 10) add their wires when they are drawn. The microSD board covers the top rail holes of columns 40 to 49: keep them free.
+For the breadboard plan of section 4B. Each rail hole takes one wire, so every wire below has its own rail column (in brackets). Every circuit is drawn. The microSD board covers the top rail holes of columns 40 to 49: keep them free.
 
 | Rail or point | Wires (rail column) |
 |---|---|
 | Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38), S1 (52) |
 | Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder), S2 (51) |
 | Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20), I3 (24), I9 (36) |
-| Bottom − (GND) | R4 (1), R3 (3), H7 (14), I4 (25), U6 (26), I10 (35) |
+| Bottom − (GND) | R4 (1), R3 (3), H7 (14), I4 (25), U6 (26), I10 (35), L3 short leg (47), B3 (49), B2 (52) |
 | Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
 
 ## 14. STM32CubeMX settings
