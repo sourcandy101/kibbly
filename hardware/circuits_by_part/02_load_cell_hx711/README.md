@@ -42,6 +42,19 @@ The 4 thin wires come from the bar and go **only to the HX711**, on its 6 pin si
 3. If the weight reads negative when you press, swap A+ and A−.
 4. The wires are thin and break easily: solder them to the HX711 pins, or use a small screw terminal. Do not pull on them.
 
+## The 5 kg load cell
+
+The team's cell is a **5 kg bar** (rating confirmed on 14 November 2026).
+
+| Question | Answer |
+|---|---|
+| What sits on the bar | Plate and bowl (about 300 to 600 g) and one meal (up to about 300 g): under 1 kg |
+| Is 5 kg enough | Yes, with a wide margin |
+| Is it fine enough | Yes: with the HX711 it sees well under 1 g, so each 5 g burst shows clearly |
+| What can break it | More than about 1.2 to 1.5 times its rating (6 to 7.5 kg) bends the bar for good. A dog putting a paw or its head on the bowl can push that much |
+
+**Add an overload stop:** a screw under the free end of the plate, turned up until it almost touches. Set it with about 5 kg on the plate (a 5 L bottle of water weighs 5 kg): the plate must not touch the screw at 5 kg, but must land on it soon after. Then a heavy push rests on the screw instead of bending the bar.
+
 ## The HX711 on the breadboard
 
 The 4 pin side (GND, DT, SCK, VCC) plugs into **row a, columns 15 to 18**, and the board hangs over the bottom edge of the breadboard. Check the order printed on your board: if it is different, keep the same wires but follow the labels.
@@ -59,7 +72,7 @@ The bar measures weight by bending a tiny amount, so it must be mounted like a d
 1. One end screwed to the base, with a spacer under it.
 2. The other end holds the bowl plate, with a spacer between the bar and the plate.
 3. The arrow on the bar points down (in the direction of the weight).
-4. Nothing else touches the plate: no wire, no wall, no screw.
+4. Nothing else touches the plate: no wire, no wall, no screw (except the overload stop, which only touches above 5 kg).
 
 For the first test, the bar can lie on the table with a weight pressing its free end by hand: the number must change.
 

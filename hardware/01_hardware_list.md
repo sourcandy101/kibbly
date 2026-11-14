@@ -25,7 +25,7 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 |---|---|---|---|---|---|---|---|---|
 | 1 | <img src="https://little-son.tn/2066-large_default/carte-de-developpement-nucleo-144-stm32f439zit6.jpg" width="90"> | **NUCLEO-F439ZI** (Nucleo 144 board, STM32F439ZIT6) | Board | 1 | 165 | Main controller: schedule, motor, scale, sensors, sound, SD card, button | [Little Son](https://little-son.tn/accueil/1348-carte-de-developpement-nucleo-144-stm32f439zit6.html) | Yes |
 | 2 | <img src="https://little-son.tn/1166-large_default/esp32-cam-carte-de-developpement-esp32-cp2102-camera-ov2640-avec-port-usb-.jpg" width="90"> | **ESP32-CAM** with OV2640 camera and a microSD slot (the slot is not used) | Board | 1 | 45 (or 35 plus 9 for the USB board) | Camera and WiFi; link to the AI server and Firebase | [Little Son (with USB board)](https://little-son.tn/accueil/603-esp32-cam-carte-de-developpement-esp32-cp2102-camera-ov2640-avec-port-usb-.html), [SELI (USB C version)](https://seli.tn/product/esp32-cam-ov2640-type-c/), or [ESP32-CAM alone](https://little-son.tn/accueil/242-esp32-cam-carte-de-dev-wifi-bluetooth-avec-module-camera-ov2640.html) plus [USB board](https://little-son.tn/accueil/1410-module-shield-de-programmation-televersement-pour-esp32-cam.html) | Yes, without the USB board: flashed with the ESP32 DevKit V1 |
-| 6 | <img src="https://www.celectronix.com/17008-product_main_2x/capteur-de-force-poids-5kg-czl635-5-avec-module-hx711-convertisseur-a-d-24-bit.jpg" width="90"> | **Load cell, bar type, 5 kg** | Sensor | 1 | 29.9 (with an HX711) | Scale under the bowl | [Celectronix (5 kg cell with HX711)](https://www.celectronix.com/capteurs/3302-capteur-de-force-poids-5kg-czl635-5-avec-module-hx711-convertisseur-a-d-24-bit.html) | Yes |
+| 6 | <img src="https://www.celectronix.com/17008-product_main_2x/capteur-de-force-poids-5kg-czl635-5-avec-module-hx711-convertisseur-a-d-24-bit.jpg" width="90"> | **Load cell, bar type, 5 kg** (the team's own; 5 kg rating confirmed on 14 November 2026) | Sensor | 1 | 29.9 (with an HX711) | Scale under the bowl | [Celectronix (5 kg cell with HX711)](https://www.celectronix.com/capteurs/3302-capteur-de-force-poids-5kg-czl635-5-avec-module-hx711-convertisseur-a-d-24-bit.html) | Yes |
 | 15 | <img src="https://little-son.tn/1241-large_default/kit-100-diode-led-5mm-light-assorti-diy.jpg" width="90"> | **LED and 330 ohm resistor** | Button and LED | 1 | 7.5 for the kit (about 0.5 for one LED) | WiFi status | [Little Son (LED kit)](https://little-son.tn/accueil/762-kit-100-diode-led-5mm-light-assorti-diy.html) | Yes |
 | 25 | <img src="https://little-son.tn/42-large_default/plaque-d-essai-830pts.jpg" width="90"> | **Breadboard 830 points** | Tool | 2 | 5.3 each | Tests in steps 3 and 6 | [Little Son](https://little-son.tn/accueil/37-plaque-d-essai-830pts.html) | Yes |
 | 26 | <img src="https://little-son.tn/2470-large_default/40-fils-de-connexion-jumper-ff-40cm.jpg" width="90"> | **Jumper wires** (female to female, male to male, male to female) | Tool | 40 of each | 12 per pack of 40 | Connections | [Little Son (F/F)](https://little-son.tn/accueil/1691-40-fils-de-connexion-jumper-ff-40cm.html), [Little Son (M/M)](https://little-son.tn/accueil/1530-40-fils-de-connexion-jumper-mm-40cm.html) | Yes |
@@ -92,6 +92,7 @@ Sensor notes:
 
 1. The 3.3 V ultrasonic versions (RCWL-1601, HC-SR04P) are not sold locally. The standard HC-SR04 works at 5 V; its Echo wire goes through the two resistors so the STM32 receives 3.3 V.
 2. The VL53L1X is not sold locally. The VL53L0X reaches 2 m, more than enough for a 1 kg tank, and ST also provides its STM32 driver.
+3. The team's load cell is a **5 kg** bar (confirmed on 14 November 2026). Plate, bowl and one meal weigh under 1 kg, so 5 kg leaves a wide margin, and with the HX711 it still sees well under 1 g, plenty for the 5 g bursts. A dog leaning on the bowl can push more than 5 kg: the mount gets an overload stop (see [circuit 2](circuits_by_part/02_load_cell_hx711/README.md#the-5-kg-load-cell)). The HX711 is still to buy.
 
 Power note: avoid the "alimentation à découpage" metal box supplies; they need 230 V wiring by hand. A closed wall adapter is safer.
 
@@ -126,7 +127,7 @@ Prices in Tunisian dinars (TND) from the shop pages on 9 November 2026, mostly L
 
 ### Still to buy
 
-Based on the **Have it** column (10 November 2026): the team already has the NUCLEO-F439ZI, the ESP32-CAM, the ESP32 DevKit V1, the load cell, the LED, breadboards, jumper wires and USB cables.
+Based on the **Have it** column (10 November 2026): the team already has the NUCLEO-F439ZI, the ESP32-CAM, the ESP32 DevKit V1, the 5 kg load cell, the LED, breadboards, jumper wires and USB cables.
 
 | Part | Price (TND) |
 |---|---|
