@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kibbly AI Architecture</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column like a project page, wide figures and tables scroll inside their own frames. */
+:root {
+  --bg: #F5F7F6;
+  --surface: #FFFFFF;
+  --ink: #16202A;
+  --muted: #56636F;
+  --line: #D6DDE1;
+  --accent: #1D6B74;
+  --accent-soft: #E3F0F1;
+  --warm: #B8741F;
+  --warm-soft: #F7EBDA;
+  --ok: #2E7D4F;
+  --bad: #B23A3A;
+  --code-bg: #EEF2F2;
+  --display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161B; --surface: #182027; --ink: #E5EAEE; --muted: #9BA7B2; --line: #2B3640;
+    --accent: #5DB8C1; --accent-soft: #17323A; --warm: #E2A65A; --warm-soft: #3A2C1A;
+    --ok: #6CC08F; --bad: #E07A7A; --code-bg: #1E2830; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161B; --surface: #182027; --ink: #E5EAEE; --muted: #9BA7B2; --line: #2B3640;
+  --accent: #5DB8C1; --accent-soft: #17323A; --warm: #E2A65A; --warm-soft: #3A2C1A;
+  --ok: #6CC08F; --bad: #E07A7A; --code-bg: #1E2830; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.page { max-width: 980px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+p { margin: 0; max-width: 70ch; }
+a { color: var(--accent); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code, pre { font-family: var(--mono); font-size: 0.86em; }
+:not(pre) > code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
+
+header.hero { padding-block: 48px 28px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.subtitle { font-size: 1.2rem; color: var(--muted); max-width: 60ch; }
+.authors { font-size: 0.95rem; color: var(--muted); }
+.authors strong { color: var(--ink); font-weight: 600; }
+
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 4px 18px; padding-block: 10px; font-size: 0.9rem; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+nav.toc a { color: var(--muted); text-decoration: none; }
+nav.toc a:hover { color: var(--accent); }
+
+section { padding-block: 44px 8px; display: grid; gap: 18px; scroll-margin-top: 56px; }
+section > h2 { display: flex; align-items: baseline; gap: 12px; }
+.sec-tag { font-family: var(--mono); font-size: 0.8rem; color: var(--warm); font-weight: 500; }
+
+.principle { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 14px 18px; display: grid; gap: 4px; }
+.principle strong { font-family: var(--display); font-size: 1.15rem; }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; padding: 12px; }
+.figure svg { display: block; min-width: 860px; width: 100%; height: auto; }
+.caption { font-size: 0.88rem; color: var(--muted); }
+
+svg .group { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 5 4; }
+svg .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.2; }
+svg .box.ai { fill: var(--accent-soft); stroke: var(--accent); }
+svg .box.hw { fill: var(--warm-soft); stroke: var(--warm); }
+svg .g-title { font: 700 14px var(--display); fill: var(--ink); }
+svg .b-title { font: 600 13px var(--body); fill: var(--ink); }
+svg .b-sub { font: 400 11px var(--body); fill: var(--muted); }
+svg .lbl { font: 500 10.5px var(--mono); fill: var(--accent); }
+svg .arrow { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+svg .head { fill: var(--accent); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; font-size: 0.82rem; letter-spacing: 0.02em; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.best td { background: var(--accent-soft); font-weight: 600; }
+.pass { color: var(--ok); font-weight: 600; }
+.fail { color: var(--bad); font-weight: 600; }
+
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: step; }
+ol.steps li { counter-increment: step; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+ol.steps li::before { content: counter(step); font: 700 0.95rem var(--display); width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); color: var(--accent); }
+ol.steps li > div { min-width: 0; }
+.who { display: inline-block; font: 500 0.72rem var(--mono); padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.who.hw { background: var(--warm-soft); color: var(--warm); }
+.who.ai { background: var(--accent-soft); color: var(--accent); }
+.who.app { background: var(--code-bg); color: var(--muted); }
+
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.flow .stage { flex: 1 1 150px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 3px; align-content: start; }
+.flow .stage.code { border-color: var(--warm); }
+.flow .stage.model { border-color: var(--accent); }
+.flow .stage b { font-family: var(--display); font-size: 0.95rem; }
+.flow .stage span { font-size: 0.84rem; color: var(--muted); }
+.flow .kind { font: 500 0.68rem var(--mono); text-transform: uppercase; letter-spacing: 0.06em; }
+.flow .stage.code .kind { color: var(--warm); }
+.flow .stage.model .kind { color: var(--accent); }
+.flow .stage.data .kind { color: var(--muted); }
+.flow .to { align-self: center; color: var(--muted); font-family: var(--mono); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.82rem; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: 0; border: 2px solid; }
+
+details.prompt { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+details.prompt summary { cursor: pointer; padding: 12px 16px; font-family: var(--display); font-weight: 700; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+details.prompt summary .meta { font: 400 0.82rem var(--body); color: var(--muted); }
+details.prompt .inner { padding: 0 16px 14px; display: grid; gap: 10px; min-width: 0; }
+pre { background: var(--code-bg); border-radius: 6px; padding: 12px 14px; margin: 0; overflow-x: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.5; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.two > div { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.note { font-size: 0.88rem; color: var(--muted); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 75ch; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="page">
+<header class="hero">
+  <div class="eyebrow">Prompt Engineering · Architecture overview · BEAR project</div>
+  <h1>Kibbly: an AI dog feeder that knows each dog</h1>
+  <p class="subtitle">How the feeder recognizes each dog from a camera photo, computes safe portions, and turns sensor data into plain language for the owner.</p>
+  <p class="authors"><strong>Zaineb Sassi</strong> (AI and Data Lead), with Youssef Bousnina (embedded and hardware), Hedi Ennaifer (hardware and electrical) and Moetaz El Ouaer (web app and connectivity). Medtech, 16 November 2026. Prototype demo planned for 7 December 2026.</p>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#abstract">Abstract</a><a href="#architecture">Architecture</a><a href="#meal">Meal workflow</a>
+  <a href="#pipelines">AI pipelines</a><a href="#prompts">Prompts</a><a href="#evaluation">Evaluation</a>
+  <a href="#output">Example output</a><a href="#hardware">Hardware</a><a href="#status">Status</a>
+</nav>
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p>Kibbly is a smart feeder for homes with several dogs. It calls each dog by name in the owner's recorded voice, recognizes the dog in front of the bowl from a camera photo, serves that dog its own portion in 5 g bursts, blocks a greedy dog from eating twice, and reports every meal in an app. The AI combines three kinds of models: a vision pipeline that identifies individual dogs, deterministic engines that compute every number and safety decision, and a language model that only writes text from facts the engines computed.</p>
+  <p>The central design lesson came from prompt experiments: a small local language model handles wording, JSON and style rules well, but fails at arithmetic and safety decisions. Moving numbers and rules into code raised the feeding plan test pass rate from 1 of 7 cases to 7 of 7. The same rule shapes the whole architecture.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Key result</th><th class="num">Value</th><th>Setting</th></tr></thead>
+    <tbody>
+      <tr><td>Right dog accepted at the first check</td><td class="num">91.3%</td><td>Simulated feeder camera quality, 3 enrollment photos, 2 photos per check, 302 unseen test dogs</td></tr>
+      <tr><td>Wrong dog fed (one home dog taken for another)</td><td class="num">0.0%</td><td>Same setting, 1,500 simulated homes</td></tr>
+      <tr><td>Close up dog faces found at feeder quality</td><td class="num">0% → 100%</td><td>YOLO alone, then YOLO with a CLIP scene check</td></tr>
+      <tr><td>Feeding plan test cases passed</td><td class="num">1/7 → 7/7</td><td>Prompt only, then rules in code with the model writing notes</td></tr>
+      <tr><td>Recognition time per photo</td><td class="num">0.3 to 0.4 s</td><td>Laptop CPU (Intel i5 8265U), no GPU</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="architecture">
+  <h2><span class="sec-tag">01</span>Architecture overview</h2>
+  <div class="principle"><strong>Models perceive or write. Code decides.</strong><span>Vision models say who is at the bowl and how sure they are. The language model words facts for the owner. Grams, alerts, vet advice and the decision to dispense are always computed by tested code.</span></div>
+  <div class="figure" role="img" aria-label="Architecture diagram: feeder, AI server layers, Firebase, web app and language models">
+  <svg viewBox="0 0 960 500" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+    <!-- Feeder -->
+    <rect class="group" x="16" y="20" width="268" height="460" rx="12"/>
+    <text class="g-title" x="34" y="48">Feeder</text>
+    <rect class="box hw" x="34" y="66" width="232" height="104" rx="8"/>
+    <text class="b-title" x="48" y="90">NUCLEO-F439ZI (STM32)</text>
+    <text class="b-sub" x="48" y="110">The brain: clock, schedule copy,</text>
+    <text class="b-sub" x="48" y="126">motor, scale, presence, sound.</text>
+    <text class="b-sub" x="48" y="142">Decides to dispense from the AI answer.</text>
+    <text class="b-sub" x="48" y="158">Keeps feeding when WiFi is down.</text>
+    <line class="arrow" x1="150" y1="174" x2="150" y2="226" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <text class="lbl" x="160" y="204">UART 115200</text>
+    <rect class="box hw" x="34" y="230" width="232" height="84" rx="8"/>
+    <text class="b-title" x="48" y="254">ESP32-CAM</text>
+    <text class="b-sub" x="48" y="274">Eyes and internet link: takes</text>
+    <text class="b-sub" x="48" y="290">2 photos per check, talks over WiFi.</text>
+    <rect class="box" x="34" y="332" width="232" height="128" rx="8"/>
+    <text class="b-title" x="48" y="356">Parts on the STM32</text>
+    <text class="b-sub" x="48" y="376">Auger, NEMA 17 motor, DRV8825</text>
+    <text class="b-sub" x="48" y="392">Load cell 5 kg with HX711</text>
+    <text class="b-sub" x="48" y="408">HC-SR04 presence, VL53L0X tank</text>
+    <text class="b-sub" x="48" y="424">DS3231 clock, microSD, speaker</text>
+    <text class="b-sub" x="48" y="440">Button and status LED</text>
+
+    <!-- AI server -->
+    <rect class="group" x="352" y="20" width="336" height="460" rx="12"/>
+    <text class="g-title" x="370" y="48">AI server (Python, FastAPI)</text>
+    <rect class="box ai" x="370" y="66" width="300" height="66" rx="8"/>
+    <text class="b-title" x="384" y="90">API gateway</text>
+    <text class="b-sub" x="384" y="110">Checks every document against the</text>
+    <text class="b-sub" x="384" y="124">shared data contract before storing it.</text>
+    <rect class="box ai" x="370" y="142" width="300" height="66" rx="8"/>
+    <text class="b-title" x="384" y="166">Perception (vision models)</text>
+    <text class="b-sub" x="384" y="186">YOLO11n, then CLIP scene check,</text>
+    <text class="b-sub" x="384" y="200">then DINOv2 with a learned layer.</text>
+    <rect class="box hw" x="370" y="218" width="300" height="66" rx="8"/>
+    <text class="b-title" x="384" y="242">Engines (code only, unit tested)</text>
+    <text class="b-sub" x="384" y="262">Nutrition, meal statistics, flags,</text>
+    <text class="b-sub" x="384" y="276">alert rules, dispensing rules.</text>
+    <rect class="box ai" x="370" y="294" width="300" height="66" rx="8"/>
+    <text class="b-title" x="384" y="318">Language</text>
+    <text class="b-sub" x="384" y="338">Prompt templates, output guards,</text>
+    <text class="b-sub" x="384" y="352">template fallback, swappable provider.</text>
+    <rect class="box" x="370" y="370" width="300" height="90" rx="8"/>
+    <text class="b-title" x="384" y="394">Data contract and storage</text>
+    <text class="b-sub" x="384" y="414">8 JSON Schemas shared by the feeder,</text>
+    <text class="b-sub" x="384" y="430">the app and the server. Local files in</text>
+    <text class="b-sub" x="384" y="446">development, Firestore in the demo.</text>
+
+    <!-- Right column -->
+    <rect class="box" x="756" y="66" width="188" height="92" rx="8"/>
+    <text class="b-title" x="770" y="90">Firebase</text>
+    <text class="b-sub" x="770" y="110">Accounts, dog profiles,</text>
+    <text class="b-sub" x="770" y="126">schedules, meals, alerts,</text>
+    <text class="b-sub" x="770" y="142">voice clips, notifications.</text>
+    <rect class="box" x="756" y="210" width="188" height="84" rx="8"/>
+    <text class="b-title" x="770" y="234">Owner web app (PWA)</text>
+    <text class="b-sub" x="770" y="254">Profiles, schedules, calling</text>
+    <text class="b-sub" x="770" y="270">order, reports, alerts.</text>
+    <rect class="box ai" x="756" y="320" width="188" height="110" rx="8"/>
+    <text class="b-title" x="770" y="344">Language models</text>
+    <text class="b-sub" x="770" y="364">gemma3:4b via Ollama</text>
+    <text class="b-sub" x="770" y="380">(local, offline, chosen)</text>
+    <text class="b-sub" x="770" y="400">Claude Haiku (cloud</text>
+    <text class="b-sub" x="770" y="416">candidate, to compare)</text>
+
+    <!-- Arrows -->
+    <path class="arrow" d="M266 272 C 312 272, 318 99, 368 99" marker-end="url(#ah)"/>
+    <text class="lbl" x="292" y="180">HTTP</text>
+    <text class="lbl" x="292" y="194">photos,</text>
+    <text class="lbl" x="292" y="208">meals,</text>
+    <text class="lbl" x="292" y="222">alerts</text>
+    <line class="arrow" x1="690" y1="99" x2="754" y2="99" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <text class="lbl" x="697" y="90">writes</text>
+    <line class="arrow" x1="850" y1="160" x2="850" y2="208" marker-start="url(#ah)" marker-end="url(#ah)"/>
+    <text class="lbl" x="858" y="188">sync</text>
+    <line class="arrow" x1="754" y1="252" x2="690" y2="252" marker-end="url(#ah)"/>
+    <text class="lbl" x="697" y="244">plan,</text>
+    <text class="lbl" x="697" y="270">enroll</text>
+    <line class="arrow" x1="672" y1="327" x2="754" y2="370" marker-end="url(#ah)"/>
+    <text class="lbl" x="694" y="336">facts</text>
+    <line class="arrow" x1="754" y1="402" x2="672" y2="344" marker-end="url(#ah)"/>
+    <text class="lbl" x="700" y="402">text</text>
+  </svg>
+  </div>
+  <div class="legend"><span><i style="border-color: var(--accent); background: var(--accent-soft)"></i>AI model inside</span><span><i style="border-color: var(--warm); background: var(--warm-soft)"></i>Deterministic code or hardware</span><span><i style="border-color: var(--line); background: var(--bg)"></i>Data and services</span></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Layer</th><th>What it does</th><th>Technology</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td>API gateway</td><td>Receives photos, meals and alerts from the feeder, and plan and enrollment requests from the app</td><td>FastAPI, interactive test page at <code>/docs</code></td><td>Thin: check input, call the right layer, store, answer</td></tr>
+      <tr><td>Perception</td><td>Is there a dog? Which enrolled dog, and how sure?</td><td>YOLO11n, CLIP ViT B/32, DINOv2 small with a learned 384 × 384 layer</td><td>Labels what it sees; never decides to serve</td></tr>
+      <tr><td>Engines</td><td>Daily grams, meal statistics, behavior flags, alert and dispensing rules</td><td>Plain Python</td><td>Every number and safety decision lives here</td></tr>
+      <tr><td>Language</td><td>Feeding plan notes, meal reports, explained alerts, later a chat grounded in the dog's own logs</td><td>Provider interface: Ollama (gemma3:4b), Claude Haiku planned</td><td>Writes only from computed facts; output checked; template if a check fails</td></tr>
+      <tr><td>Data contract</td><td>One definition of every object (dog, meal, visit, alert, daily summary)</td><td>JSON Schema, 25 example documents, a checker</td><td>Unknown or invalid fields are refused before storage</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="meal">
+  <h2><span class="sec-tag">02</span>Meal workflow</h2>
+  <p>One meal for a home with two dogs, Biscuit (shy) and Mochi (greedy). The order of the steps is the order of events at the bowl.</p>
+  <ol class="steps">
+    <li><div><b>Call.</b> At meal time the feeder plays the first dog's name in the owner's recorded voice, in the calling order the owner chose.<span class="who hw">STM32</span></div></li>
+    <li><div><b>Presence.</b> The ultrasonic sensor sees an animal and wakes the camera.<span class="who hw">STM32</span></div></li>
+    <li><div><b>Photos.</b> The ESP32-CAM takes 2 photos and sends them to the AI server.<span class="who hw">ESP32</span></div></li>
+    <li><div><b>Recognition.</b> The server finds the dog in the photo, describes it as a vector and compares it with each enrolled dog. Answer: known dog with a confidence, unknown dog, or not a dog.<span class="who ai">AI server</span></div></li>
+    <li><div><b>Decision.</b> A rule turns the answer into an action: serve if it is this meal's dog, block if it is another home dog, a small portion for an unknown dog, nothing for a person or an empty scene.<span class="who ai">engines</span><span class="who hw">STM32</span></div></li>
+    <li><div><b>Serve and weigh.</b> Food comes in 5 g bursts while the recognized dog stays. The load cell checks every burst (no weight gain means a jam) and measures what the dog ate.<span class="who hw">STM32</span></div></li>
+    <li><div><b>Next dog.</b> The feeder calls the next dog and repeats steps 2 to 6. A dog that does not come is called again at 5 and 10 minutes; the owner is told at 15.<span class="who hw">STM32</span></div></li>
+    <li><div><b>Log and insights.</b> The meal and every visit are stored. The engines update the dog's daily summary (grams eaten, change against its usual amount, flags). If a rule raises an alert, the language model words it for the owner.<span class="who ai">AI server</span><span class="who app">app</span></div></li>
+  </ol>
+  <p class="note">If the server or WiFi is down, the feeder keeps the schedule, serves in the owner's order without recognition, stores meals on the microSD card and syncs them later.</p>
+</section>
+
+<section id="pipelines">
+  <h2><span class="sec-tag">03</span>AI pipelines</h2>
+  <div class="legend"><span><i style="border-color: var(--accent)"></i>Model</span><span><i style="border-color: var(--warm)"></i>Code</span><span><i style="border-color: var(--line)"></i>Data</span></div>
+  <h3>Recognition: which dog is at the bowl?</h3>
+  <div class="flow">
+    <div class="stage data"><span class="kind">input</span><b>2 photos</b><span>ESP32-CAM, 640 × 480, often close up and dim</span></div>
+    <div class="to">→</div>
+    <div class="stage model"><span class="kind">model</span><b>Find the dog</b><span>YOLO11n box. If none, CLIP judges the whole photo: dog, cat, person or nothing (threshold 0.89)</span></div>
+    <div class="to">→</div>
+    <div class="stage model"><span class="kind">model</span><b>Describe</b><span>DINOv2 small vector, then a learned layer trained so clean and blurry photos of one dog match</span></div>
+    <div class="to">→</div>
+    <div class="stage code"><span class="kind">code</span><b>Match</b><span>Closest enrolled photo per dog, averaged over the 2 photos. Accept at 0.485 or more with a 0.08 lead</span></div>
+    <div class="to">→</div>
+    <div class="stage code"><span class="kind">code</span><b>Decide</b><span>Serve, block, unknown portion or nothing</span></div>
+  </div>
+  <p class="note">Enrollment needs no training: the server takes frames from the owner's short video, keeps sharp frames with one dog, and stores the most varied ones as references. Adding a dog takes seconds.</p>
+  <h3>Language: from sensor data to a sentence</h3>
+  <div class="flow">
+    <div class="stage data"><span class="kind">input</span><b>Profile or meals</b><span>Validated against the data contract</span></div>
+    <div class="to">→</div>
+    <div class="stage code"><span class="kind">code</span><b>Compute facts</b><span>Grams, averages, change against usual, flags, needs_vet</span></div>
+    <div class="to">→</div>
+    <div class="stage code"><span class="kind">code</span><b>Fill the prompt</b><span>System rules plus the facts as JSON</span></div>
+    <div class="to">→</div>
+    <div class="stage model"><span class="kind">model</span><b>Write</b><span>JSON mode, temperature 0.2, one retry</span></div>
+    <div class="to">→</div>
+    <div class="stage code"><span class="kind">code</span><b>Guard</b><span>Schema, banned medical words, length, vet sentence added when needed; template if a check fails</span></div>
+  </div>
+  <p class="note">The language model never sees raw sensor logs and never decides anything. It reads the daily summary computed by the engines, so it cannot misread a weight or invent a missed meal.</p>
+</section>
+
+<section id="prompts">
+  <h2><span class="sec-tag">04</span>Prompt templates</h2>
+  <p>The prompts as used in the code and the experiments, in the order they were written. Click a prompt to open it.</p>
+
+  <details class="prompt"><summary>1. Feeding plan, v1<span class="meta">The model computes everything. Result: 1 of 7 cases.</span></summary><div class="inner">
+<p class="note">Description: first draft. The model receives a dog profile and must return grams per day split into meals, plus notes and a vet flag.</p>
+<pre>You are the feeding plan assistant of Kibbly, a smart dog feeder for dry kibble.
+Given a dog profile, suggest how many grams of dry kibble the dog should eat per day and split it into meals.
+
+Rules:
+1. Never give a medical diagnosis. Recommend a vet when something is unusual.
+2. Never invent data that is not in the profile.
+3. Every gram value must be a multiple of 5, because the feeder dispenses in bursts of 5 g.
+4. The number of meals must equal meals_per_day.
+5. The sum of meal grams must equal daily_total_grams.
+6. Set vet_advice to true for puppies under 6 months, seniors over 10 years (120 months), or any health concern.
+
+Answer with JSON only, using exactly this schema:
+{"status": "ok", "dog_name": string, "daily_total_grams": integer, "meals": [{"label": string, "grams": integer}], "notes": string, "vet_advice": boolean}</pre>
+<p class="note">Seen failures: meals of 5 g copied from the burst rule, totals far too low, wrong number of meals, vet_advice always true.</p>
+  </div></details>
+
+  <details class="prompt"><summary>2. Feeding plan, v2<span class="meta">Step by step formula and a worked example. Result: still 1 of 7.</span></summary><div class="inner">
+<pre>You are the feeding plan assistant of Kibbly, a smart dog feeder for dry kibble.
+Given a dog profile, compute how many grams of dry kibble the dog eats per day and split it into meals.
+
+Step 1. Daily total = weight_kg multiplied by a rate:
+  adult (age_months 12 or more): low activity 15, medium 20, high 25 grams per kg.
+  puppy (age_months under 12): 40 grams per kg.
+  Round the daily total to the nearest multiple of 5.
+Step 2. Make exactly meals_per_day meals, using these labels:
+  1 meal: Dinner
+  2 meals: Breakfast, Dinner
+  3 meals: Breakfast, Lunch, Dinner
+  4 meals: Breakfast, Lunch, Afternoon, Dinner
+  Divide the daily total evenly. Each meal is a multiple of 5. The meals must add up exactly to daily_total_grams.
+  If it does not divide evenly, put the extra 5 g in the last meal.
+Step 3. vet_advice is true only if age_months is under 6, or age_months is over 120,
+  or the profile mentions a symptom or health concern. Otherwise vet_advice is false.
+Step 4. notes: one or two short sentences describing only the plan.
+  If vet_advice is true, add: "Please check this plan with your vet."
+  Do not guess the dog's sex, age group or health. Never name an illness or its cause.
+  Never use the words diagnosis, disease, infection, parasite or cancer. Never suggest medication.
+
+Example. Profile: weight_kg 10, age_months 30, activity medium, meals_per_day 3.
+Daily total = 10 x 20 = 200. Meals: 65, 65, 70.
+Answer: {"status": "ok", "dog_name": "Max", "daily_total_grams": 200, "meals": [{"label": "Breakfast", "grams": 65}, {"label": "Lunch", "grams": 65}, {"label": "Dinner", "grams": 70}], "notes": "Max gets 200 g of kibble a day in three meals.", "vet_advice": false}
+
+Answer with JSON only, using exactly this schema:
+{"status": "ok", "dog_name": string, "daily_total_grams": integer, "meals": [{"label": string, "grams": integer}], "notes": string, "vet_advice": boolean}</pre>
+<p class="note">Seen failures: the model copied the example (three meals of 65 g for every dog), used the weight as the daily total, and copied vet_advice false from the example. A worked example improved format but not reasoning.</p>
+  </div></details>
+
+  <details class="prompt"><summary>3. Feeding plan, v3 (in use)<span class="meta">Code computes the plan, the model writes the notes. Result: 7 of 7.</span></summary><div class="inner">
+<p class="note">Description: Python computes grams, meals and vet_advice. The model receives the profile and the finished plan and writes one or two sentences. Code then checks the notes for banned words and always appends the vet sentence when vet_advice is true.</p>
+<pre>You are the feeding plan assistant of Kibbly, a smart dog feeder for dry kibble.
+You receive a dog profile and a feeding plan that is already computed. Do not change any number.
+Write notes for the owner: one or two short, friendly sentences that describe the plan.
+Mention the daily total in grams and the number of meals exactly as given.
+Do not guess the dog's sex, age group or health. Never name an illness or its cause.
+Never use the words diagnosis, disease, infection, parasite or cancer. Never suggest medication.
+If the profile contains a question, do not answer it.
+
+Answer with JSON only: {"notes": string}</pre>
+<p class="note">User message: <code>Dog profile: {profile as JSON}</code> followed by <code>Computed plan: {"daily_total_grams": …, "meals": […]}</code>.</p>
+  </div></details>
+
+  <details class="prompt"><summary>4. Meal report<span class="meta">Used to choose the local model. Basis of the meal insights feature.</span></summary><div class="inner">
+<pre>You write meal reports for Kibbly, a smart dog feeder.
+You receive facts computed by the feeder. Use only these facts and copy every number exactly.
+Write 2 or 3 short, friendly sentences for the owner.
+Never name an illness or guess a cause. Never suggest medication.
+If needs_vet is true, end with: "If this continues, please check with your vet."
+Do not guess the dog's sex; use the dog's name.
+Answer with JSON only: {"report": string}</pre>
+<p class="note">User message (facts computed by code):</p>
+<pre>{"dog_name": "Mochi", "meals_planned": 3, "meals_eaten": 3, "grams_served": 135, "grams_eaten": 95,
+ "grams_left": 40, "usual_grams_eaten_7_day_average": 132, "change_vs_usual_percent": -28,
+ "days_in_a_row_below_usual": 2, "attempts_to_eat_twice_blocked": 1, "needs_vet": true}</pre>
+<p class="note">Lessons: the sex guess is fixed with data (the profile now has a <code>sex</code> field) rather than with more prompt rules, and <code>grams_left</code> was misread as food left in the feeder, so the data contract renamed it <code>grams_left_in_bowl</code>.</p>
+  </div></details>
+
+  <details class="prompt"><summary>5. Scene check (CLIP zero shot)<span class="meta">Text prompts that classify a photo without training.</span></summary><div class="inner">
+<p class="note">Description: CLIP compares the photo with every prompt. Probabilities are summed per group; the photo counts as a dog at 0.89 or more. Wording such as "close up" and "dim light" describes the feeder camera's real view.</p>
+<pre>dog:     "a photo of a dog", "a close up photo of a dog's face",
+         "a dog eating from a bowl", "a blurry photo of a dog in dim light"
+cat:     "a photo of a cat", "a close up photo of a cat's face"
+person:  "a photo of a person", "a close up photo of a person's face",
+         "a person's hand", "a person's legs and feet"
+nothing: "a photo of an empty floor", "a photo of an empty room",
+         "an empty bowl on the floor", "a photo of furniture", "a dark blurry photo"</pre>
+  </div></details>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Technique</th><th>Where</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>JSON mode and a fixed output schema</td><td>All language prompts</td><td>Output is parsed by code; invalid output is retried once</td></tr>
+      <tr><td>Low temperature (0.2)</td><td>All language prompts</td><td>Stable wording across runs for the same facts</td></tr>
+      <tr><td>Facts computed before the prompt</td><td>Feeding plan v3, meal report</td><td>The model copies numbers instead of computing them</td></tr>
+      <tr><td>Negative rules (banned words, no sex guess)</td><td>All language prompts</td><td>Medical safety; also checked again in code</td></tr>
+      <tr><td>Template fallback</td><td>Feeding plan v3, alerts</td><td>The owner always gets a correct message, even if the model fails</td></tr>
+      <tr><td>Zero shot prompt groups</td><td>CLIP scene check</td><td>Classification without training data</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="evaluation">
+  <h2><span class="sec-tag">05</span>Evaluation</h2>
+  <h3>Feeding plan prompt versions</h3>
+  <p>gemma3:1b, 7 test cases (normal dogs, puppy, senior, missing weight, tiny dog, owner asking for a diagnosis), 3 runs each, 8 automatic checks per run (schema, meal count, sum, multiples of 5, plausible range, vet advice, no diagnosis words, no model call when data is missing).</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Version</th><th>Design</th><th class="num">Cases passing every run</th><th class="num">Runs passed</th></tr></thead>
+    <tbody>
+      <tr><td>v1</td><td>The model computes everything</td><td class="num">1/7</td><td class="num">3/21</td></tr>
+      <tr><td>v2</td><td>Formula steps and a worked example</td><td class="num">1/7</td><td class="num">3/21</td></tr>
+      <tr class="best"><td>v3</td><td>Code computes, the model writes the notes</td><td class="num">7/7</td><td class="num">21/21</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Critical review after v3: the flat grams per kg rule itself overfeeds large dogs (a 28 kg Labrador gets 560 g where the standard energy formula gives about 370 g), and the 100% score mostly tests code against itself. The rebuild (step 5) replaces the rule with resting energy, a life stage factor and the kibble's kcal per kg, and checks portions against that reference.</p>
+
+  <h3>Choice of the local language model</h3>
+  <p>Meal report prompt (prompt 4), 3 runs per model on the team laptop. Five checks: exact numbers, vet sentence, no sex guess, no diagnosis words, length.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Model</th><th class="num">Time per answer</th><th class="num">Score</th><th>Main failure</th></tr></thead>
+    <tbody>
+      <tr><td>gemma3:1b</td><td class="num">4 s</td><td class="num">3/5</td><td>Wrong facts ("95 grams remaining"), missed the drop and the vet sentence</td></tr>
+      <tr><td>qwen3.5:2b</td><td class="num">10 s</td><td class="num">2/5</td><td>Invented "has not eaten in two days", guessed the sex</td></tr>
+      <tr class="best"><td>gemma3:4b</td><td class="num">12 s</td><td class="num">4/5</td><td>Guessed the sex only (fixed with a profile field)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Dog recognition</h3>
+  <p>DogFaceNet (8,363 photos of 1,393 dogs) split into train, calibration and test dogs with no overlap. 1,500 simulated homes of 2 to 4 dogs per setting, 6 stranger dogs per home. Queries pass through a feeder camera simulation (half resolution, blur, dim light, color cast, strong JPEG compression). Thresholds are chosen on calibration dogs and every number below is measured on test dogs. Targets: right dog at least 90%, strangers and wrong dogs at most 2%.</p>
+  <div class="two">
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Image model (1 photo per check)</th><th class="num">Right dog</th><th class="num">Stranger</th></tr></thead>
+        <tbody>
+          <tr class="best"><td>DINOv2 small + learned layer</td><td class="num">88.6%</td><td class="num">2.2%</td></tr>
+          <tr><td>DINOv2 small, class token</td><td class="num">77.2%</td><td class="num">1.7%</td></tr>
+          <tr><td>DINOv2 small, class token and mean</td><td class="num">72.1%</td><td class="num">1.6%</td></tr>
+          <tr><td>CLIP ViT B/32</td><td class="num">17.9%</td><td class="num">2.0%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">CLIP knows "this is a dog" but not "this is Biscuit". DINOv2 keeps the fine visual detail needed to tell individuals apart.</p>
+    </div>
+    <div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Operating point (2 photos per check)</th><th class="num">Value</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Right dog accepted</td><td class="num">91.3%</td><td class="pass">met</td></tr>
+          <tr><td>Wrong dog accepted</td><td class="num">0.0%</td><td class="pass">met</td></tr>
+          <tr><td>Stranger accepted</td><td class="num">2.1%</td><td class="fail">just above</td></tr>
+          <tr><td>Look alike homes, right dog</td><td class="num">86.6%</td><td>no target</td></tr>
+          <tr><td>Same model without the learned layer</td><td class="num">82.2%</td><td class="fail">missed</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">The learned layer is one 384 × 384 matrix trained in 20 seconds on train dogs only, starting from "change nothing".</p>
+    </div>
+  </div>
+
+  <h3>Dog or not: finding the dog in the photo</h3>
+  <p>Held out images from DogFaceNet (close up faces) and COCO val2017 (whole dogs, cats, people, scenes without animals).</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Image set</th><th class="num">YOLO only</th><th class="num">YOLO, then CLIP check</th><th>Target</th></tr></thead>
+    <tbody>
+      <tr><td>Close up dog faces, clean</td><td class="num">65%</td><td class="num">100%</td><td>at least 95%</td></tr>
+      <tr><td>Close up dog faces, feeder quality</td><td class="num">0%</td><td class="num">100%</td><td>at least 95%</td></tr>
+      <tr><td>People and person heads taken for a dog</td><td class="num">0 to 1%</td><td class="num">0 to 1.2%</td><td>at most 2%</td></tr>
+      <tr><td>Empty scenes at feeder quality taken for a dog</td><td class="num">0%</td><td class="num">3%</td><td>at most 2%</td></tr>
+      <tr><td>Cats taken for a dog</td><td class="num">1 to 3.5%</td><td class="num">6 to 7%</td><td>none yet (cats are a later version)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Limits</h3>
+  <ul class="plain">
+    <li>DogFaceNet photos are clean frontal faces. Real feeder photos show heads from above while eating. Photos of friends' dogs and from the real ESP32-CAM are being collected to confirm the numbers.</li>
+    <li>The learned layer was trained on the same camera simulation it is tested on, so its gain on the real camera may be smaller. It retrains in 20 seconds once real photos exist.</li>
+    <li>For two dogs that look almost identical, an optional colored collar will act as a tiebreaker when appearance is unsure.</li>
+  </ul>
+</section>
+
+<section id="output">
+  <h2><span class="sec-tag">06</span>Example output</h2>
+  <div class="two">
+    <div>
+      <h3>Recognition answer</h3>
+      <p class="note">Shape returned by the recognizer for a check during Biscuit's meal (example values).</p>
+<pre>{
+  "classification": "known_dog",
+  "dog_id": "dog_biscuit",
+  "confidence": 0.71,
+  "margin": 0.19,
+  "detection": {"label": "dog", "source": "scene_check"},
+  "reason": "dog_biscuit 0.71"
+}</pre>
+    </div>
+    <div>
+      <h3>Meal with a blocked visit</h3>
+      <p class="note">From the data contract examples: Mochi pushed into Biscuit's breakfast and was blocked.</p>
+<pre>{
+  "meal_id": "meal_0101", "dog_id": "dog_biscuit",
+  "planned_grams": 185, "status": "completed",
+  "grams_dispensed": 185, "grams_eaten": 170,
+  "visits": [
+    {"dog_id": "dog_biscuit", "confidence": 0.94, "outcome": "served"},
+    {"dog_id": "dog_mochi", "confidence": 0.91, "outcome": "blocked_wrong_dog"},
+    {"dog_id": "dog_biscuit", "confidence": 0.89, "outcome": "served"}
+  ]
+}</pre>
+    </div>
+    <div>
+      <h3>Facts computed by the engines</h3>
+<pre>{
+  "dog_id": "dog_mochi", "date": "2026-11-09",
+  "grams_planned": 135, "grams_eaten": 95,
+  "baseline_grams_eaten": 132,
+  "change_vs_baseline_percent": -28,
+  "flags": [{"code": "eating_drop",
+    "detail": "Ate 28% less than the 7 day average, 2 days in a row below it."}],
+  "needs_vet": true
+}</pre>
+    </div>
+    <div>
+      <h3>Alert written by the language model</h3>
+<pre>{
+  "type": "eating_change", "severity": "warning",
+  "source": "ai_server", "message_source": "llm",
+  "message": "Mochi ate 95 g today, 28% less than her usual 132 g, and has been below her usual amount for 2 days. If this continues, please check with your vet."
+}</pre>
+      <p class="note">Every number in the message comes from the facts. <code>needs_vet</code> was set by a code rule, not by the model.</p>
+    </div>
+  </div>
+</section>
+
+<section id="hardware">
+  <h2><span class="sec-tag">07</span>Hardware modules</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Module</th><th>Job</th><th>Interface</th><th>Power</th></tr></thead>
+    <tbody>
+      <tr><td>NUCLEO-F439ZI (STM32F439ZI, Cortex M4, 180 MHz)</td><td>Real time control of the whole feeder</td><td>USB, all buses</td><td>5 V</td></tr>
+      <tr><td>ESP32-CAM (OV2640 camera)</td><td>Photos and WiFi link</td><td>UART to the STM32, WiFi</td><td>5 V</td></tr>
+      <tr><td>NEMA 17 stepper with DRV8825 driver and auger</td><td>Dispenses 5 g bursts</td><td>STEP, DIR, EN pins</td><td>12 V</td></tr>
+      <tr><td>Load cell 5 kg with HX711</td><td>Weighs the bowl: served, eaten, jam check</td><td>2 wire serial</td><td>3.3 V</td></tr>
+      <tr><td>HC-SR04 ultrasonic sensor</td><td>Detects an animal at the bowl</td><td>Trigger and echo (echo divided to 3.3 V)</td><td>5 V</td></tr>
+      <tr><td>VL53L0X time of flight sensor</td><td>Tank level</td><td>I2C</td><td>3.3 V</td></tr>
+      <tr><td>DS3231 clock with coin cell</td><td>Meal times, survives power cuts</td><td>I2C</td><td>3.3 V</td></tr>
+      <tr><td>MicroSD module</td><td>Voice clips, schedule copy, offline meal logs</td><td>SPI</td><td>5 V</td></tr>
+      <tr><td>MAX98357A amplifier and speaker</td><td>Plays each dog's call</td><td>I2S</td><td>5 V</td></tr>
+      <tr><td>Button and LED</td><td>Pairing, reset, shutdown; WiFi status</td><td>GPIO</td><td>3.3 V</td></tr>
+      <tr><td>12 V adapter and XL4015 buck converter</td><td>Powers everything</td><td>Barrel jack</td><td>12 V in, 5 V out</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="status">
+  <h2><span class="sec-tag">08</span>Status and next steps</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Step</th><th>Topic</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Scope: three AI blocks (recognition, eating analytics, adaptive portions), language as a thin layer</td><td class="pass">done</td></tr>
+      <tr><td>2</td><td>Shared data contract (8 JSON Schemas, 25 examples, checker)</td><td class="pass">done</td></tr>
+      <tr><td>3</td><td>AI server architecture and skeleton (FastAPI, storage, providers, 53 tests)</td><td class="pass">done</td></tr>
+      <tr><td>4</td><td>Dog recognition</td><td class="pass">done on public data</td></tr>
+      <tr><td>5</td><td>Nutrition engine: energy based portions from the kibble's kcal per kg</td><td>next</td></tr>
+      <tr><td>6</td><td>Meal insights: reports and explained alerts; gemma3:4b compared with Claude Haiku on the same tests</td><td>planned</td></tr>
+      <tr><td>7</td><td>Server API for the ESP32-CAM and the app, Firestore storage</td><td>planned</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Open points</h3>
+  <ul class="plain">
+    <li>Feeder to cloud link: the AI design routes all feeder traffic through the AI server; the current hardware document also shows the ESP32 writing to Firebase directly. The team will settle one path.</li>
+    <li>Real photos: friends' dogs and the real ESP32-CAM, then a retrained learned layer.</li>
+    <li>Camera position: far enough to see the whole head, not only the muzzle.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Data: DogFaceNet (Mougeot et al., CC BY 4.0); COCO val2017 (annotations CC BY 4.0).</span>
+  <span>Models: YOLO11n (Ultralytics, AGPL 3.0, prototype only), DINOv2 small (Meta, Apache 2.0), CLIP ViT B/32 (OpenAI, MIT), gemma3 (Google, Gemma terms).</span>
+  <span>Team Kibbly, BEAR project (Business, Embedded, AI, Research).</span>
+</footer>
+</div>
+
+</html>
