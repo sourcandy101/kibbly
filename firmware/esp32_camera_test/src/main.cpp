@@ -121,6 +121,9 @@ void setup() {
 
   WiFi.mode(WIFI_STA);
   WiFi.setSleep(false);
+  // Networks with many access points (campus, events): scan every channel and join the strongest
+  WiFi.setScanMethod(WIFI_ALL_CHANNEL_SCAN);
+  WiFi.setSortMethod(WIFI_CONNECT_AP_BY_SIGNAL);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.printf("Joining WiFi \"%s\"", WIFI_SSID);
   unsigned long start = millis();
@@ -128,7 +131,12 @@ void setup() {
     delay(500);
     Serial.print(".");
     if (millis() - start > 20000) {
-      Serial.println("\nWiFi failed. Check the name and password in secrets.h, and that the hotspot is 2.4 GHz.");
+      wl_status_t status = WiFi.status();
+      Serial.printf("\nWiFi failed (status %d: %s).\n", status,
+                    status == WL_NO_SSID_AVAIL ? "network name not found, check the name and that it is 2.4 GHz"
+                    : status == WL_CONNECT_FAILED ? "wrong password"
+                    : "no answer, move closer to the router");
+      Serial.println("Check the name and password in secrets.h.");
       return;
     }
   }

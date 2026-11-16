@@ -28,6 +28,14 @@ At least 3 usable photos are needed; 10 to 15 varied ones are better (front, bot
 
 ## 3. Live test
 
+Guided (recommended): the script says which dog to show, waits for Enter before each group, marks every check RIGHT or WRONG and prints the score. `unknown` means a dog that was never enrolled. `--wait` sets the seconds between checks of a group (2 by default).
+
+```
+.venv\Scripts\python.exe tools\live_test.py --ip 192.168.43.120 --meal-dog biscuit --plan biscuit:4,mochi:4,unknown:4
+```
+
+Free run (no instructions, runs until Ctrl+C):
+
 ```
 .venv\Scripts\python.exe tools\live_test.py --ip 192.168.43.120 --meal-dog biscuit
 ```
