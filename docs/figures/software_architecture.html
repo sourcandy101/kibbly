@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Kibbly AI software architecture</title>
+<style>
+  html, body { margin: 0; background: #FFFFFF; }
+  svg { display: block; }
+  .frame { fill: none; stroke: #9AA5AE; stroke-width: 1.5; stroke-dasharray: 6 5; }
+  .lane { fill: #FAFBFB; stroke: #C9D1D6; stroke-width: 1.2; }
+  .model { fill: #E3F0F1; stroke: #1D6B74; stroke-width: 1.6; }
+  .code { fill: #F7EBDA; stroke: #B8741F; stroke-width: 1.6; }
+  .data { fill: #FFFFFF; stroke: #8C98A2; stroke-width: 1.4; }
+  .note { fill: #F3F5F6; stroke: #C9D1D6; stroke-width: 1.2; }
+  .eval { fill: #FFFFFF; stroke: #B8741F; stroke-width: 1.6; stroke-dasharray: 7 5; }
+  text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; fill: #16202A; }
+  .title { font-size: 26px; font-weight: 700; }
+  .subtitle { font-size: 15px; fill: #56636F; }
+  .frame-title { font-size: 17px; font-weight: 700; }
+  .lane-title { font-size: 14px; font-weight: 700; fill: #1D6B74; letter-spacing: 0.02em; }
+  .lane-title.code-t { fill: #A0621A; }
+  .b { font-size: 15px; font-weight: 700; }
+  .s { font-size: 12.5px; fill: #3E4A55; }
+  .lbl { font-size: 11.5px; font-weight: 600; fill: #1D6B74; }
+  .lbl.warm { fill: #A0621A; }
+  .arrow { stroke: #1D6B74; stroke-width: 1.8; fill: none; }
+  .arrow.warm { stroke: #B8741F; stroke-dasharray: 6 4; }
+  .head { fill: #1D6B74; }
+  .head.warm { fill: #B8741F; }
+  .rule { font-size: 15px; font-weight: 700; fill: #1D6B74; }
+</style>
+<svg width="1600" height="1010" viewBox="0 0 1600 1010" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="head" d="M0 0 L10 5 L0 10 z"/></marker>
+    <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="head warm" d="M0 0 L10 5 L0 10 z"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1600" height="1010" fill="#FFFFFF"/>
+
+  <text class="title" x="30" y="44">Kibbly AI: software architecture</text>
+  <text class="subtitle" x="470" y="44">Smart dog feeder that recognizes each dog, computes its portion and reports every meal</text>
+
+  <!-- Inputs -->
+  <text class="frame-title" x="30" y="86">Inputs</text>
+  <rect class="data" x="30" y="100" width="220" height="104" rx="10"/>
+  <text class="b" x="46" y="126">Owner web app (PWA)</text>
+  <text class="s" x="46" y="148">dog profile and weight,</text>
+  <text class="s" x="46" y="166">photos and short video,</text>
+  <text class="s" x="46" y="184">feeding plan request</text>
+  <rect class="data" x="30" y="232" width="220" height="104" rx="10"/>
+  <text class="b" x="46" y="258">Feeder firmware</text>
+  <text class="s" x="46" y="280">ESP32-CAM: 2 photos per check</text>
+  <text class="s" x="46" y="298">meals with every visit,</text>
+  <text class="s" x="46" y="316">device alerts</text>
+
+  <!-- AI server frame -->
+  <rect class="frame" x="280" y="66" width="1030" height="830" rx="14"/>
+  <text class="frame-title" x="300" y="94">AI server (Python, FastAPI)</text>
+
+  <rect class="data" x="300" y="108" width="990" height="58" rx="8"/>
+  <text class="b" x="318" y="133">API gateway and data contract</text>
+  <text class="s" x="318" y="153">Routes photos to perception, profiles and meals to the engines. Validates every document against 8 shared JSON Schemas before storing it.</text>
+
+  <!-- Lane A: perception -->
+  <rect class="lane" x="300" y="186" width="990" height="200" rx="10"/>
+  <text class="lane-title" x="446" y="210">PERCEPTION PIPELINE (VISION MODELS): WHO IS AT THE BOWL?</text>
+  <rect class="model" x="316" y="246" width="206" height="122" rx="9"/>
+  <text class="b" x="332" y="272">1. Find the dog</text>
+  <text class="s" x="332" y="294">YOLO11n object detector</text>
+  <text class="s" x="332" y="312">returns a dog box</text>
+  <rect class="model" x="566" y="246" width="206" height="122" rx="9"/>
+  <text class="b" x="582" y="272">2. Scene check</text>
+  <text class="s" x="582" y="294">CLIP zero shot prompts:</text>
+  <text class="s" x="582" y="312">dog, cat, person or nothing</text>
+  <text class="s" x="582" y="330">if YOLO finds no dog</text>
+  <text class="s" x="582" y="348">accepts a dog at p ≥ 0.89</text>
+  <rect class="model" x="816" y="246" width="206" height="122" rx="9"/>
+  <text class="b" x="832" y="272">3. Describe</text>
+  <text class="s" x="832" y="294">DINOv2 small vision model</text>
+  <text class="s" x="832" y="312">+ learned 384 × 384 layer</text>
+  <text class="s" x="832" y="330">photo → identity vector</text>
+  <rect class="code" x="1066" y="246" width="208" height="122" rx="9"/>
+  <text class="b" x="1082" y="272">4. Match</text>
+  <text class="s" x="1082" y="294">nearest enrolled dog,</text>
+  <text class="s" x="1082" y="312">accept ≥ 0.485, lead ≥ 0.08</text>
+  <text class="s" x="1082" y="330">→ dog id + confidence</text>
+  <text class="s" x="1082" y="348">or unknown, or not a dog</text>
+  <line class="arrow" x1="522" y1="307" x2="564" y2="307" marker-end="url(#ah)"/>
+  <text class="lbl" x="525" y="298">no box</text>
+  <line class="arrow" x1="772" y1="307" x2="814" y2="307" marker-end="url(#ah)"/>
+  <line class="arrow" x1="1022" y1="307" x2="1064" y2="307" marker-end="url(#ah)"/>
+  <path class="arrow" d="M419 246 C 419 220, 919 220, 919 244" marker-end="url(#ah)"/>
+  <text class="lbl" x="620" y="241">dog box found</text>
+
+  <!-- Lane B: engines -->
+  <rect class="lane" x="300" y="406" width="990" height="174" rx="10"/>
+  <text class="lane-title code-t" x="316" y="430">ENGINES (DETERMINISTIC CODE, UNIT TESTED): EVERY NUMBER AND DECISION</text>
+  <rect class="code" x="316" y="448" width="298" height="112" rx="9"/>
+  <text class="b" x="332" y="474">Nutrition engine</text>
+  <text class="s" x="332" y="496">resting energy × life stage factor</text>
+  <text class="s" x="332" y="514">÷ kibble kcal per kg</text>
+  <text class="s" x="332" y="532">→ grams per meal (5 g steps)</text>
+  <rect class="code" x="646" y="448" width="298" height="112" rx="9"/>
+  <text class="b" x="662" y="474">Meal statistics</text>
+  <text class="s" x="662" y="496">daily summary, 7 day baseline,</text>
+  <text class="s" x="662" y="514">change vs usual, behavior flags,</text>
+  <text class="s" x="662" y="532">needs_vet set by rule</text>
+  <rect class="code" x="976" y="448" width="298" height="112" rx="9"/>
+  <text class="b" x="992" y="474">Decision rules</text>
+  <text class="s" x="992" y="496">this meal's dog: serve</text>
+  <text class="s" x="992" y="514">other home dog: block</text>
+  <text class="s" x="992" y="532">unknown dog: small portion, person: nothing</text>
+  <line class="arrow" x1="1170" y1="368" x2="1170" y2="446" marker-end="url(#ah)"/>
+  <path class="arrow" d="M300 162 L 290 162 L 290 504 L 314 504" marker-end="url(#ah)"/>
+  <line class="arrow" x1="419" y1="166" x2="419" y2="244" marker-end="url(#ah)"/>
+  <text class="lbl" x="427" y="184">photos</text>
+
+  <!-- Lane C: prompt pipeline -->
+  <rect class="lane" x="300" y="600" width="990" height="280" rx="10"/>
+  <text class="lane-title" x="1274" y="624" text-anchor="end">PROMPT PIPELINE (LANGUAGE LAYER): FACTS IN, CHECKED TEXT OUT</text>
+  <rect class="code" x="316" y="644" width="167" height="122" rx="9"/>
+  <text class="b" x="330" y="670">Facts</text>
+  <text class="s" x="330" y="692">computed by engines,</text>
+  <text class="s" x="330" y="710">sent as JSON,</text>
+  <text class="s" x="330" y="728">never raw sensor logs</text>
+  <rect class="data" x="513" y="644" width="167" height="122" rx="9"/>
+  <text class="b" x="527" y="670">Prompt template</text>
+  <text class="s" x="527" y="692">system rules + facts:</text>
+  <text class="s" x="527" y="710">plan notes (v3),</text>
+  <text class="s" x="527" y="728">meal report,</text>
+  <text class="s" x="527" y="746">explained alert</text>
+  <rect class="model" x="710" y="644" width="167" height="122" rx="9"/>
+  <text class="b" x="724" y="670">LLM provider</text>
+  <text class="s" x="724" y="692">gemma3:4b, local</text>
+  <text class="s" x="724" y="710">Claude Haiku, cloud</text>
+  <text class="s" x="724" y="728">JSON mode,</text>
+  <text class="s" x="724" y="746">temperature 0.2</text>
+  <rect class="code" x="907" y="644" width="167" height="122" rx="9"/>
+  <text class="b" x="921" y="670">Output guards</text>
+  <text class="s" x="921" y="692">valid JSON schema</text>
+  <text class="s" x="921" y="710">no medical words</text>
+  <text class="s" x="921" y="728">numbers match facts</text>
+  <text class="s" x="921" y="746">vet sentence if needed</text>
+  <rect class="data" x="1104" y="644" width="167" height="122" rx="9"/>
+  <text class="b" x="1118" y="670">Owner message</text>
+  <text class="s" x="1118" y="692">feeding plan notes,</text>
+  <text class="s" x="1118" y="710">meal report,</text>
+  <text class="s" x="1118" y="728">explained alert</text>
+  <line class="arrow" x1="483" y1="705" x2="511" y2="705" marker-end="url(#ah)"/>
+  <line class="arrow" x1="680" y1="705" x2="708" y2="705" marker-end="url(#ah)"/>
+  <line class="arrow" x1="877" y1="705" x2="905" y2="705" marker-end="url(#ah)"/>
+  <line class="arrow" x1="1074" y1="705" x2="1102" y2="705" marker-end="url(#ah)"/>
+  <text class="lbl" x="1076" y="698">pass</text>
+  <rect class="note" x="907" y="790" width="364" height="78" rx="9"/>
+  <text class="b" x="921" y="816">Fallback</text>
+  <text class="s" x="921" y="838">retry once, then a fixed template</text>
+  <text class="s" x="921" y="856">message with the same facts</text>
+  <line class="arrow" x1="990" y1="766" x2="990" y2="788" marker-end="url(#ah)"/>
+  <text class="lbl" x="998" y="783">fail</text>
+  <line class="arrow" x1="1187" y1="790" x2="1187" y2="768" marker-end="url(#ah)"/>
+  <rect class="note" x="316" y="790" width="561" height="78" rx="9"/>
+  <text class="b" x="330" y="816">Prompt rules</text>
+  <text class="s" x="330" y="838">JSON only · copy every number exactly · no diagnosis · no sex guess</text>
+  <text class="s" x="330" y="856">end with the vet sentence when needs_vet is true · ignore questions in owner notes</text>
+  <line class="arrow" x1="400" y1="560" x2="400" y2="642" marker-end="url(#ah)"/>
+  <path class="arrow" d="M760 560 C 760 610, 470 600, 470 642" marker-end="url(#ah)"/>
+
+  <!-- Outputs -->
+  <text class="frame-title" x="1340" y="86">Outputs</text>
+  <rect class="data" x="1340" y="100" width="230" height="104" rx="10"/>
+  <text class="b" x="1356" y="126">Firebase (Firestore)</text>
+  <text class="s" x="1356" y="148">profiles, schedules, meals,</text>
+  <text class="s" x="1356" y="166">daily summaries, alerts</text>
+  <line class="arrow" x1="1290" y1="137" x2="1338" y2="137" marker-end="url(#ah)"/>
+  <rect class="note" x="1340" y="232" width="230" height="150" rx="10"/>
+  <text class="rule" x="1356" y="262">Design rule</text>
+  <text class="s" x="1356" y="286">Models perceive images or</text>
+  <text class="s" x="1356" y="304">write text. Code computes</text>
+  <text class="s" x="1356" y="322">grams, alerts and vet advice</text>
+  <text class="s" x="1356" y="340">and decides when to serve.</text>
+  <text class="s" x="1356" y="362">Every prompt and model is tested.</text>
+  <rect class="data" x="1340" y="456" width="230" height="96" rx="10"/>
+  <text class="b" x="1356" y="482">Feeder firmware</text>
+  <text class="s" x="1356" y="504">receives the decision,</text>
+  <text class="s" x="1356" y="522">dispenses 5 g bursts</text>
+  <line class="arrow" x1="1274" y1="504" x2="1338" y2="504" marker-end="url(#ah)"/>
+  <rect class="data" x="1340" y="656" width="230" height="98" rx="10"/>
+  <text class="b" x="1356" y="682">Owner web app</text>
+  <text class="s" x="1356" y="704">shows plan notes, meal</text>
+  <text class="s" x="1356" y="722">reports and alerts</text>
+  <line class="arrow" x1="1271" y1="705" x2="1338" y2="705" marker-end="url(#ah)"/>
+
+  <!-- Input arrows -->
+  <line class="arrow" x1="250" y1="140" x2="298" y2="124" marker-end="url(#ah)"/>
+  <line class="arrow" x1="250" y1="262" x2="298" y2="144" marker-end="url(#ah)"/>
+
+  <!-- Evaluation band -->
+  <rect class="eval" x="280" y="914" width="1290" height="62" rx="10"/>
+  <text class="b" x="300" y="940">Evaluation harness (offline)</text>
+  <text class="s" x="300" y="962">Prompt versions v1, v2, v3 on 7 test cases with 8 automatic checks · local model benchmark · recognition on 1,500 simulated homes · dog or not check on held out images</text>
+  <line class="arrow warm" x1="795" y1="912" x2="795" y2="882" marker-end="url(#aw)"/>
+  <text class="lbl warm" x="803" y="910">measures every prompt and model</text>
+
+  <!-- Legend -->
+  <rect class="model" x="30" y="420" width="18" height="14" rx="3"/><text class="s" x="56" y="432">AI model</text>
+  <rect class="code" x="30" y="446" width="18" height="14" rx="3"/><text class="s" x="56" y="458">deterministic code</text>
+  <rect class="data" x="30" y="472" width="18" height="14" rx="3"/><text class="s" x="56" y="484">data, template or service</text>
+  <rect class="note" x="30" y="498" width="18" height="14" rx="3"/><text class="s" x="56" y="510">rule or fallback</text>
+</svg>
+</html>
