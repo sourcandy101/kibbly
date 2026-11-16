@@ -41,3 +41,7 @@ Thumbs.db
 # Kibbly AI v2 local storage (development data)
 ai_v2/data/local_store/
 ai_v2/**/*.pt
+
+# ESP32 local WiFi secrets and build output
+firmware/**/secrets.h
+firmware/**/.pio/

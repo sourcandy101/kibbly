@@ -166,6 +166,26 @@ def test_most_varied_picks_spread_vectors():
     assert len(set(chosen)) == 3 and {2, 3} <= set(chosen)
 
 
+def textured(seed, blur=0.0):
+    from PIL import ImageFilter
+    rng = np.random.default_rng(seed)
+    noise = rng.integers(0, 255, (120, 160, 3), dtype=np.uint8)
+    noise[:, :, 0] = 255  # red: the fake detector sees a dog
+    image = Image.fromarray(noise)
+    return image.filter(ImageFilter.GaussianBlur(blur)) if blur else image
+
+
+def test_soft_photos_enroll_but_heavy_blur_is_dropped():
+    from kibbly_ai.perception.enrollment import sharpness
+    soft = [textured(i, blur=0.8) for i in range(4)]         # soft camera, still some detail
+    blurred = textured(9, blur=6)                            # heavy motion blur
+    assert all(sharpness(im) >= 8 for im in soft) and sharpness(blurred) < 8
+    # min_dog_confidence 0.85: the fake detector's second, smaller dog (0.8) is ignored
+    vectors, report = build_references(soft + [blurred], FakeDetector(), FakeEmbedder(), k=5,
+                                       min_dog_confidence=0.85)
+    assert report["usable"] == 4 and report["dropped"]["blurry"] == 1
+
+
 def test_build_references_drops_frames_without_a_dog():
     frames = [photo(red=0), photo(red=0, blue=255)]
     vectors, report = build_references(frames, FakeDetector(), FakeEmbedder(), k=5)
