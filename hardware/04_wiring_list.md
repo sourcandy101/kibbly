@@ -153,7 +153,7 @@ Drawn in [circuit 5](circuits_by_part/05_esp32_cam_link/README.md). The ESP32-CA
 | E2 | ESP32-CAM `GND` (next to 5V) | Top − rail (GND), column 36 | Black | | |
 | E3 | ESP32-CAM `IO15` (TX in code) | Column 33, row j | Green | | |
 | E4 | ESP32-CAM `IO14` (RX in code) | Column 32, row j | Light green | | |
-| E5 | 1000 uF capacitor | Column 38: long leg (+) in the top + rail, short leg in the top − rail | | Stripe side is the short leg. Stops restarts on WiFi current peaks | |
+| E5 | 470 uF capacitor | Column 38: long leg (+) in the top + rail, short leg in the top − rail | | Stripe side is the short leg. Stops restarts on WiFi current peaks | |
 | E6 | 1 kohm resistor | Column 29, row i, to column 32, row i, lying flat | | Bands brown, black, red. Protects both pins | |
 | E7 | Column 33 (row g) | Nucleo D21 · PC7 (CN7 pin 11) | Green | ESP32-CAM TX to STM32 RX | |
 | E8 | Column 29 (row h) | Nucleo D16 · PC6 (CN7 pin 1) | Light green | STM32 TX to ESP32-CAM RX, through E6 | |
@@ -163,7 +163,7 @@ Also needed: R1, R3 and R4 from section 4B.
 
 1. IO15 and IO14 are free because the ESP32-CAM microSD slot is not used: **keep that slot empty**.
 2. U0T and U0R stay free for loading programs; IO12 must stay low at start up or the board does not boot.
-3. The 100 nF capacitor of the first plan is left out: the ESP32-CAM already has small capacitors next to its chips, and the 1000 uF gives the big reserve it lacks.
+3. The 100 nF capacitor of the first plan is left out: the ESP32-CAM already has small capacitors next to its chips, and the 470 uF gives the big reserve it lacks.
 
 If the XIAO ESP32S3 Sense is ever used instead: `5V` and `GND` as E1 and E2, `D6` (GPIO43, TX) in place of IO15 and `D7` (GPIO44, RX) in place of IO14; everything else stays the same.
 
@@ -221,7 +221,7 @@ flowchart LR
 |---|---|---|---|---|---|
 | M1 | `VM` | 12 V bus | Red | 12 V | |
 | M2 | `GND` (power side, next to VM) | GND bus | Black | | |
-| M3 | 1000 uF and 100 nF capacitors | Between `VM` and `GND`, at the driver | | Long leg (+) on VM | |
+| M3 | 470 uF and 100 nF capacitors | Between `VM` and `GND`, at the driver | | Long leg (+) on VM | |
 | M4 | `VIO` (also marked `VDD`) | 3.3 V bus | Yellow | 3.3 V | |
 | M5 | `GND` (logic side, next to VIO) | GND rail | Black | | |
 | M6 | `STEP` | STM32 PE9 (CN10, D6) | Grey | | |
@@ -261,7 +261,7 @@ Breadboard layout: the DRV8825 straddles the middle gap in **columns 5 to 12**, 
 |---|---|---|---|---|---|
 | V1 | DC jack `+` | Column 5, top half, row g (12 V) | Red | Never on a rail | |
 | V2 | DC jack `−` | Top − rail (GND), column 3 | Black | | |
-| V3 | 1000 uF capacitor | Long leg (+) in column 5, row j; short leg in the top − rail, column 4 | | Stripe side is the short leg | |
+| V3 | 470 uF capacitor | Long leg (+) in column 5, row j; short leg in the top − rail, column 4 | | Stripe side is the short leg | |
 | V4 | VMOT (column 5) | No wire | | Gets 12 V through column 5 | |
 | V5 | GND (column 6) | Top − rail (GND), column 6 | Black | From row j | |
 | V6 | GND (column 12, above DIR) | No wire | | Linked to the other GND inside the board | |

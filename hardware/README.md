@@ -16,8 +16,8 @@ The parts list in [step 1](01_hardware_list.md) and the architecture in [step 2]
 | 2 | Write the exact list of components (see what to record below) | Youssef and Hedi | |
 | 3 | Compare the real list with [01_hardware_list.md](01_hardware_list.md): what matches, what differs, what is missing | Youssef with Claude | |
 | 4 | Decide the changes: keep, replace or buy each differing or missing part | Youssef and Hedi | |
-| 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | |
-| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | Done on 10 November 2026 for the parts known so far; check again after the ISS group answers |
+| 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | Partly on 19 November 2026: motor, DRV8825, capacitors, resistors, button and microSD module recorded; some models still to check |
+| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | Done on 10 November 2026 for the parts known so far; capacitors changed to the team's 470 uF on 19 November 2026; check again after the ISS group answers on the adapter and jack |
 | 7 | Start coding the boards (step 3 component tests, then step 5) | Youssef and Hedi | |
 
 What to record for each part:

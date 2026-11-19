@@ -1264,7 +1264,7 @@
 <ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>
 <circle cx="580" cy="356" r="3.5" fill="#757575"/>
 <circle cx="560" cy="312" r="3.5" fill="#757575"/>
-<text x="466" y="222" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1f2f74" text-anchor="end" font-weight="bold">1000 µF capacitor</text>
+<text x="466" y="222" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1f2f74" text-anchor="end" font-weight="bold">470 µF capacitor</text>
 <text x="466" y="237" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#1f2f74" text-anchor="end" font-weight="normal">long leg (+): column 5 →</text>
 <rect x="352" y="128" width="100" height="50" rx="8" fill="#263238"/>
 <text x="402" y="151" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">12 V 2 A</text>

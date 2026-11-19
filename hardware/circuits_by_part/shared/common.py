@@ -273,7 +273,7 @@ class Drawing:
         t(564, 138, "+", 12, "#fff", "middle", "bold")
 
     def driver_capacitor(self, labels=True):
-        """1000 uF capacitor of the driver: long leg (+) in column 5 row j (12 V), short leg in the top − rail, column 4."""
+        """470 uF capacitor of the driver: long leg (+) in column 5 row j (12 V), short leg in the top − rail, column 4."""
         a, t = self.add, self.text
         a(f'<line x1="582" y1="248" x2="{X(5)}" y2="{ROW["j"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
         a(f'<line x1="566" y1="248" x2="{X(4)}" y2="{ROW["top-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
@@ -285,7 +285,7 @@ class Drawing:
         for x, y in ((X(5), ROW["j"]), (X(4), ROW["top-"])):
             a(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#757575"/>')
         if labels:
-            t(466, 222, "1000 µF capacitor", 12, "#1f2f74", "end", "bold")
+            t(466, 222, "470 µF capacitor", 12, "#1f2f74", "end", "bold")
             t(466, 237, "long leg (+): column 5 →", 10, "#1f2f74", "end")
 
     def twelve_volt_column(self):

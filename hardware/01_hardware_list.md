@@ -4,9 +4,9 @@ Every part the prototype needs, sorted in groups:
 
 | Group | Meaning | Parts |
 |---|---|---|
-| [A. Owned](#a-owned) | The team already has it | 8 |
-| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 13 |
-| [C. No link in Tunisia](#c-no-link-in-tunisia) | Not owned yet; no Tunisian online seller found (ask a shop, make it, or import). Cheapest first | 5 |
+| [A. Owned](#a-owned) | The team already has it | 14 |
+| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 8 |
+| [C. No link in Tunisia](#c-no-link-in-tunisia) | Not owned yet; no Tunisian online seller found (ask a shop, make it, or import). Cheapest first | 4 |
 | [D. Extra parts](#d-extra-parts-not-used-in-the-prototype) | Owned, but not used in the prototype | 2 |
 
 **How to use this list**
@@ -31,34 +31,34 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | 26 | <img src="https://little-son.tn/2470-large_default/40-fils-de-connexion-jumper-ff-40cm.jpg" width="90"> | **Jumper wires** (female to female, male to male, male to female) | Tool | 40 of each | 12 per pack of 40 | Connections | [Little Son (F/F)](https://little-son.tn/accueil/1691-40-fils-de-connexion-jumper-ff-40cm.html), [Little Son (M/M)](https://little-son.tn/accueil/1530-40-fils-de-connexion-jumper-mm-40cm.html) | Yes |
 | 29 | <img src="https://little-son.tn/1205-large_default/carte-esp32-wroom-32d-wifi-bluetooth-.jpg" width="90"> | **ESP32 DevKit V1** (ESP32 WROOM 32, USB) | Board | 1 | 32 | Flashes the ESP32-CAM; test board for the WiFi, server and UART code | [Little Son](https://little-son.tn/accueil/729-carte-esp32-wroom-32d-wifi-bluetooth-.html) | Yes |
 | 30 | <img src="https://little-son.tn/1214-large_default/cordon-usb-micro-usb-pour-raspberry-pi-microbit-esp-longueur-15m.jpg" width="90"> | **USB cables** (micro USB) | Tool | 3 | 7.5 each | Power and program the Nucleo and the DevKit from the computer | [Little Son](https://little-son.tn/accueil/737-cordon-usb-micro-usb-pour-raspberry-pi-microbit-esp-longueur-15m.html) | Yes |
+| 4B | <img src="https://little-son.tn/852-large_default/module-driver-moteur-pas-a-pas-drv8825-.jpg" width="90"> | **DRV8825 driver** (the driver for the demo): same size and pins for STEP, DIR, EN; louder, no stall detection | Dispenser | 1 | 8.5 | Drives the stepper from the STM32 | [Little Son](https://little-son.tn/accueil/559-module-driver-moteur-pas-a-pas-drv8825-.html) | Yes |
+| 3 | <img src="https://little-son.tn/2229-large_default/moteur-nema-17-pas-a-pas-17hs4401s.jpg" width="90"> | **NEMA 17 stepper motor** (17HS4401 or similar, 42 x 40 mm, about 0.4 Nm, 1.5 A) | Dispenser | 1 | 35 (29.9 at Celectronix) | Turns the auger | [Little Son](https://little-son.tn/accueil/1481-moteur-nema-17-pas-a-pas-17hs4401s.html), [Didactico](https://didactico.tn/produit/moteur-pas-a-pas-nema-17/), [Celectronix](https://www.celectronix.com/moteur-pas-pas/3986-moteur-pas-a-pas-nema-17-17hs4401.html) | Yes, with its DRV8825 board; model on the motor label still to check |
+| 20 | <img src="https://little-son.tn/1218-large_default/kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.jpg" width="90"> | **Capacitors**: 470 uF electrolytic, 16 V or more, and 100 nF ceramic | Power | 2 of each | about 1 each when bought singly (kits 25 each) | 470 uF next to the motor driver and the ESP32-CAM; 100 nF on the button against bounce | [Little Son (electrolytic kit, up to 470 uF)](https://little-son.tn/accueil/739-kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.html), [Little Son (ceramic kit, includes 100 nF)](https://little-son.tn/accueil/741-kit-condensateurs-ceramiques-300-pieces-10-valeurs-2pf-01uf.html) | Yes: two 470 uF 16 V electrolytic (one at the driver, one at the ESP32-CAM). The 100 nF ceramic is still missing |
+| 21 | <img src="https://little-son.tn/2593-large_default/resistance-1kohm-14w.jpg" width="90"> | **Resistors**: 330 ohm, 1 kohm, 2 kohm, 10 kohm | Power | 2 of each | 0.05 each | LED, ultrasonic divider, driver UART, motor enable | [Little Son 1 kohm](https://little-son.tn/accueil/1796-resistance-1kohm-14w.html), [Little Son 2 kohm](https://little-son.tn/accueil/1797-resistance-2kohm-14w.html); the others in the same shop | Yes; values still to check (needed: 330 ohm, 1 kohm, 2 kohm, 10 kohm) |
+| 13 | <img src="https://souilah-electronique.tn/656-large_default/module-sd.jpg" width="90"> | **MicroSD card module (SPI)** and an 8 to 32 GB card from a known brand | Sound and storage | 1 | 7, plus about 20 for the card | Voice clips, schedule copy, offline meal logs | [Souilah](https://souilah-electronique.tn/modules-et-capteurs/396-module-sd.html), [Celectronix](https://www.celectronix.com/modules-kits/7382-waveshare-micro-sd-storage-board-copie-.html) | Yes, the 6 pin SPI module (pin order and 3.3 V regulator still to check); microSD card still to check |
+| 14 |  | **Push button**, momentary, 12 mm, panel mount | Button and LED | 1 | about 2 (estimate) | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Ask any electronics shop for "bouton poussoir 12 mm" | Yes; type still to check (circuit 10 is drawn for a 2 terminal panel button) |
 
 ## B. Buy in Tunisia
 
 | # | Picture | Part | Category | Qty | Price (TND) | Job | Buy in Tunisia | Have it |
 |---|---|---|---|---|---|---|---|---|
-| 21 | <img src="https://little-son.tn/2593-large_default/resistance-1kohm-14w.jpg" width="90"> | **Resistors**: 330 ohm, 1 kohm, 2 kohm, 10 kohm | Power | 2 of each | 0.05 each | LED, ultrasonic divider, driver UART, motor enable | [Little Son 1 kohm](https://little-son.tn/accueil/1796-resistance-1kohm-14w.html), [Little Son 2 kohm](https://little-son.tn/accueil/1797-resistance-2kohm-14w.html); the others in the same shop |  |
-| 20 | <img src="https://little-son.tn/1218-large_default/kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.jpg" width="90"> | **Capacitors**: 1000 uF 25 V electrolytic (or two 470 uF in parallel) and 100 nF ceramic | Power | 2 of each | about 1 each when bought singly (kits 25 each) | 1000 uF next to the motor driver and the ESP32-CAM; 100 nF on the button against bounce | [Little Son (electrolytic kit, up to 470 uF)](https://little-son.tn/accueil/739-kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.html), [Little Son (ceramic kit, includes 100 nF)](https://little-son.tn/accueil/741-kit-condensateurs-ceramiques-300-pieces-10-valeurs-2pf-01uf.html) | See with Hedi |
 | 17 | <img src="https://little-son.tn/2200-large_default/module-adaptateur-courant-dc-fiche-jack-pour-arduino.jpg" width="90"> | **DC barrel jack with screw terminals** | Power | 1 | 4 | Adapter input | [Little Son](https://little-son.tn/accueil/1456-module-adaptateur-courant-dc-fiche-jack-pour-arduino.html) | See with Hedi's ISS Group |
 | 8 | <img src="https://little-son.tn/413-large_default/module-capteur-ultrason-hc-sr04.jpg" width="90"> | **HC-SR04 ultrasonic sensor** with a 1 kohm and a 2 kohm resistor | Sensor | 1 | 4.8 | Detects an animal in front of the bowl | [Little Son](https://little-son.tn/accueil/294-module-capteur-ultrason-hc-sr04.html) | No |
 | 7 | <img src="https://2btrading.tn/1882-large_default/hx711-module-load-cell-amplifier.jpg" width="90"> | **HX711 board** | Sensor | 1 | 7 | Reads the load cell | [2B Trading](https://2btrading.tn/accueil/1884-hx711-module-load-cell-amplifier.html), [Little Son](https://little-son.tn/accueil/521-capteur-de-pesage-hx711.html) | No |
-| 13 | <img src="https://souilah-electronique.tn/656-large_default/module-sd.jpg" width="90"> | **MicroSD card module (SPI)** and an 8 to 32 GB card from a known brand | Sound and storage | 1 | 7, plus about 20 for the card | Voice clips, schedule copy, offline meal logs | [Souilah](https://souilah-electronique.tn/modules-et-capteurs/396-module-sd.html), [Celectronix](https://www.celectronix.com/modules-kits/7382-waveshare-micro-sd-storage-board-copie-.html) | No |
 | 10 | <img src="https://little-son.tn/687-large_default/module-rtc-ds3231-i2c-at24c32-pour-arduino.jpg" width="90"> | **DS3231 RTC module** with a CR2032 coin cell | Sensor | 1 | 8, plus about 3 for the coin cell | Keeps the real time during a power cut | [Little Son](https://little-son.tn/accueil/454-module-rtc-ds3231-i2c-at24c32-pour-arduino.html), [Souilah](https://souilah-electronique.tn/modules-et-capteurs/78-module-rtc-ds3231-.html) | No |
-| 4B | <img src="https://little-son.tn/852-large_default/module-driver-moteur-pas-a-pas-drv8825-.jpg" width="90"> | **DRV8825 driver** (the driver for the demo): same size and pins for STEP, DIR, EN; louder, no stall detection | Dispenser | 1 | 8.5 | Drives the stepper from the STM32 | [Little Son](https://little-son.tn/accueil/559-module-driver-moteur-pas-a-pas-drv8825-.html) |  |
 | 16 | <img src="https://little-son.tn/2577-large_default/alimentation-12v-2a.jpg" width="90"> | **12 V wall adapter**, at least 2 A (3 A better) | Power | 1 | 12 | Powers the whole feeder | [Little Son (12 V 2 A)](https://little-son.tn/accueil/1319-alimentation-12v-2a.html) | See with Hedi's ISS Group |
 | 19 | <img src="https://little-son.tn/512-large_default/module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.jpg" width="90"> | **XL4015 buck converter**, set to 5.0 V (5 A) | Power | 1 | 12 | 5 V for the Nucleo, the ESP32, the amplifier and the SD card | [Little Son](https://little-son.tn/accueil/345-module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.html), [TET Electronics](https://tet-electronics.com/product/module-xl4015-convertisseur-abaisseur-de-tension-dc-dc-5a-75w-e3ee5b2e) | No |
 | 11 | <img src="https://little-son.tn/2637-large_default/module-max98357a-i2s-amplificateur-audio.jpg" width="90"> | **MAX98357A I2S amplifier** | Sound and storage | 1 | 14 (9.9 at 2B Trading) | Plays the voice clips, clean digital sound | [Little Son](https://little-son.tn/accueil/1651-module-max98357a-i2s-amplificateur-audio.html), [2B Trading](https://2btrading.tn/accueil/9068-module-max98357a-i2s-audio-amplifier.html) | No |
 | 9 | <img src="https://little-son.tn/1739-large_default/gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.jpg" width="90"> | **VL53L0X time of flight sensor** (GY-530 board) | Sensor | 1 | 20 (19.5 at 2B Trading) | Food level in the tank, from the lid | [Little Son](https://little-son.tn/accueil/1121-gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.html), [2B Trading](https://2btrading.tn/arduino/2218-module-capteur-de-distance-de-portee-laser-vl53l0x-v2.html) | No |
-| 3 | <img src="https://little-son.tn/2229-large_default/moteur-nema-17-pas-a-pas-17hs4401s.jpg" width="90"> | **NEMA 17 stepper motor** (17HS4401 or similar, 42 x 40 mm, about 0.4 Nm, 1.5 A) | Dispenser | 1 | 35 (29.9 at Celectronix) | Turns the auger | [Little Son](https://little-son.tn/accueil/1481-moteur-nema-17-pas-a-pas-17hs4401s.html), [Didactico](https://didactico.tn/produit/moteur-pas-a-pas-nema-17/), [Celectronix](https://www.celectronix.com/moteur-pas-pas/3986-moteur-pas-a-pas-nema-17-17hs4401.html) | See with Hedi's ISS Group |
 
 ## C. No link in Tunisia
 
 | # | Picture | Part | Category | Qty | Price (TND) | Job | Buy in Tunisia | Have it |
 |---|---|---|---|---|---|---|---|---|
 | 28 |  | Known weights or a kitchen scale | Tool | 1 | 0 | Calibrate the load cell | Home |  |
-| 14 |  | **Push button**, momentary, 12 mm, panel mount | Button and LED | 1 | about 2 (estimate) | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Ask any electronics shop for "bouton poussoir 12 mm" | No |
 | 12 |  | **Speaker, 4 or 8 ohm, 2 to 3 W**, about 40 to 50 mm | Sound and storage | 1 | about 8 (estimate) | The dog's call or a chime | No online listing found: ask any electronics shop for "haut parleur 4 ohm 3 W", or reuse one from old computer speakers | No |
 | 5 |  | **Auger**, 3D printed in PETG, with a 5 mm shaft coupler | Dispenser | 1 | about 15 (estimate) | Pushes about 5 g of kibble per burst | 3D print (school fab lab or a print shop) |  |
-| 4 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Trinamic_TMC2209_stepper_motor_controller_board.jpg/250px-Trinamic_TMC2209_stepper_motor_controller_board.jpg" width="90"> | **TMC2209 driver** (only if the ISS group lends one): silent, stall detection, current set in software | Dispenser | 1 | about 20 to 40 imported (estimate) | Drives the stepper from the STM32 | **Not found in Tunisian shops.** Borrow from the ISS group, or order abroad | See with Hedi's ISS Group |
+| 4 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Trinamic_TMC2209_stepper_motor_controller_board.jpg/250px-Trinamic_TMC2209_stepper_motor_controller_board.jpg" width="90"> | **TMC2209 driver** (only if the ISS group lends one): silent, stall detection, current set in software | Dispenser | 1 | about 20 to 40 imported (estimate) | Drives the stepper from the STM32 | **Not found in Tunisian shops.** Borrow from the ISS group, or order abroad | No; not needed, the team has a DRV8825 |
 
 ## D. Extra parts, not used in the prototype
 
@@ -71,7 +71,7 @@ Parts the team owns that do not fit the prototype. Kept here so nobody buys or w
 
 ## Notes on parts
 
-Camera board note: the XIAO ESP32S3 Sense recommended before is more reliable but is **not sold in Tunisia** (only from [Seeed Studio](https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html), with weeks of shipping). The ESP32-CAM is sold locally and does the same job; it needs the 1000 uF capacitor on its 5 V pin to avoid resets.
+Camera board note: the XIAO ESP32S3 Sense recommended before is more reliable but is **not sold in Tunisia** (only from [Seeed Studio](https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html), with weeks of shipping). The ESP32-CAM is sold locally and does the same job; it needs the 470 uF capacitor on its 5 V pin to avoid resets.
 
 Programming note: the ESP32-CAM has no USB port and we have no USB board for it. The ESP32 DevKit V1 flashes it instead:
 
@@ -87,6 +87,8 @@ Drawn in [circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md), with a s
 If this is unreliable, the ESP32-CAM-MB USB board costs about 9 TND at [Little Son](https://little-son.tn/accueil/1410-module-shield-de-programmation-televersement-pour-esp32-cam.html).
 
 Driver note: with the DRV8825 the scale is the only jam check, which is enough for the demo. Its wiring (no UART wire, three microstep pins) is in section 6B of the [wiring list](04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) and in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
+
+Capacitor note: the team has two 470 uF 16 V electrolytic capacitors (checked on 19 November 2026). 470 uF is plenty for both places: the DRV8825 needs about 47 uF or more on its motor supply, and the ESP32-CAM needs a reserve for its WiFi peaks. 16 V is above the 12 V of the adapter. The long leg is plus; the stripe marks the minus leg.
 
 Sensor notes:
 
@@ -127,33 +129,32 @@ Prices in Tunisian dinars (TND) from the shop pages on 9 November 2026, mostly L
 
 ### Still to buy
 
-Based on the **Have it** column (10 November 2026): the team already has the NUCLEO-F439ZI, the ESP32-CAM, the ESP32 DevKit V1, the 5 kg load cell, the LED, breadboards, jumper wires and USB cables.
+Based on the **Have it** column (19 November 2026): the team already has the NUCLEO-F439ZI, the ESP32-CAM, the ESP32 DevKit V1, the 5 kg load cell, the NEMA 17 motor with its DRV8825, two 470 uF capacitors, resistors, the microSD module, the push button, the LED, breadboards, jumper wires and USB cables.
 
 | Part | Price (TND) |
 |---|---|
 | HX711 | 7 |
-| HC-SR04 and resistors | about 6 |
+| HC-SR04 | 4.8 |
 | VL53L0X | 20 |
 | DS3231 and coin cell | about 11 |
 | MAX98357A | 14 |
 | Speaker | about 8 |
-| microSD module and card | about 27 |
-| Push button | about 2 |
+| microSD card, if the team has none | about 20 |
+| 100 nF ceramic capacitor (button) | about 1 |
 | XL4015 | 12 |
-| **Total** | **about 108** |
+| **Total** | **about 98** |
 
 | Case | Extra | New total (TND) |
 |---|---|---|
-| The ISS group cannot lend the motor, driver, adapter, jack and capacitors | NEMA 17 35, DRV8825 8.5, adapter 12, DC jack 4, capacitors about 3 | **about 171** |
+| The ISS group cannot lend the adapter and jack | Adapter 12, DC jack 4 | **about 114** |
 | Auger | Printed in PETG | about 15 more |
 
 ### Ways to save
 
 1. Buy capacitors singly (about 1 TND each) instead of the two kits (25 TND each).
 2. Buy the MAX98357A at 2B Trading (9.9) instead of Little Son (14).
-3. Buy the NEMA 17 at Celectronix (29.9) instead of Little Son (35).
-4. Flash the ESP32-CAM with the ESP32 DevKit V1 instead of buying the USB board (9 TND).
-5. Keep the DRV8825 (8.5) for the demo instead of importing a TMC2209 (about 20 to 40 with shipping, and weeks of waiting).
+3. Flash the ESP32-CAM with the ESP32 DevKit V1 instead of buying the USB board (9 TND).
+4. Keep the DRV8825 (8.5) for the demo instead of importing a TMC2209 (about 20 to 40 with shipping, and weeks of waiting).
 
 ## Shops
 

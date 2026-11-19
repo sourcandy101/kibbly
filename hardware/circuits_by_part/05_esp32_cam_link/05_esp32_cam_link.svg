@@ -1283,7 +1283,7 @@
 <circle cx="1240" cy="292" r="3.5" fill="#757575"/>
 <circle cx="1240" cy="312" r="3.5" fill="#757575"/>
 <line x1="1252" y1="226" x2="1250" y2="246" stroke="#1f2f74" stroke-width="1.2"/>
-<text x="1250" y="176" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1f2f74" text-anchor="start" font-weight="bold">1000 µF capacitor</text>
+<text x="1250" y="176" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1f2f74" text-anchor="start" font-weight="bold">470 µF capacitor</text>
 <text x="1250" y="192" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#1f2f74" text-anchor="start" font-weight="normal">long leg (+): top + rail, column 38</text>
 <text x="1250" y="206" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#1f2f74" text-anchor="start" font-weight="normal">short leg (stripe): top − rail, column 38</text>
 <text x="1250" y="220" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#1f2f74" text-anchor="start" font-weight="normal">stops restarts on WiFi current peaks</text>
@@ -1362,7 +1362,7 @@
 <text x="1060" y="784" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">STM32 TX (PC6) → 1 kΩ → ESP32-CAM RX (IO14)</text>
 <text x="1060" y="804" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Text lines, 115200 baud, 8N1</text>
 <text x="1060" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Both boards use 3.3 V signals: no divider</text>
-<text x="1060" y="844" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">1000 µF on the rails: no restarts on WiFi peaks</text>
+<text x="1060" y="844" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">470 µF on the rails: no restarts on WiFi peaks</text>
 <text x="1060" y="864" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Test program: load it first with the DevKit</text>
 <text x="1060" y="884" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">(circuit 6)</text>
 <text x="1460" y="740" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">TIPS</text>

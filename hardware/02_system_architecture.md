@@ -238,7 +238,7 @@ Rules:
 
 1. **All grounds are connected together**: adapter, buck, Nucleo, ESP32-CAM, driver, amplifier. Without a common ground, UART and sensors give wrong values.
 2. **Set the buck to 5.0 V with the multimeter before connecting anything** to it. A new XL4015 can come set to any voltage.
-3. A 1000 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
+3. A 470 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
 4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the driver).
 5. During tests the Nucleo runs from the laptop USB (power jumper JP3 on U5V). When the feeder runs alone, wire P6 joins the top + rail to E5V and JP3 goes to E5V (see the Nucleo user manual UM1974); the USB is then plugged in only after the adapter. Before circuit 7 the Nucleo 5V pin fed the top + rail for the tests (wire R1); from circuit 7 on the XL4015 feeds it and R1 is out for good, so two 5 V sources never meet.
 6. Most DS3231 boards (ZS-042) have a charging circuit meant for a rechargeable LIR2032 cell. At our 3.3 V it cannot charge a normal CR2032, so the board is used as it is; remove its 200 ohm charging resistor (marked 201) only if it ever runs on 5 V.
@@ -291,7 +291,7 @@ Built in parts kept for debugging: LD1 green (PB0), LD2 blue (PB7), LD3 red (PB1
 |---|---|---|
 | UART TX | IO15 | STM32 PC7 |
 | UART RX | IO14 | STM32 PC6, through 1 kohm |
-| 5V | 5V | 5 V top + rail, with a 1000 uF capacitor next to the wires |
+| 5V | 5V | 5 V top + rail, with a 470 uF capacitor next to the wires |
 | GND | GND, next to 5V | Common ground |
 | Loading programs | U0T, U0R, IO0 | Left free; used with the ESP32 DevKit V1 ([circuit 6](circuits_by_part/06_esp32_cam_flashing/README.md)) |
 
@@ -301,7 +301,7 @@ The OV2640 camera is on the board. Its microSD slot stays empty, because a card 
 
 | Driver pin | Connects to |
 |---|---|
-| VMOT | 12 V (breadboard column 5), with a 1000 uF capacitor |
+| VMOT | 12 V (breadboard column 5), with a 470 uF capacitor |
 | GND (both pins) | Common ground |
 | STEP, DIR, EN | STM32 PE9, PF13, PF15; EN also through 10 kohm to 3.3 V |
 | M0, M1 | Not connected (pulled low inside the driver) |
@@ -512,7 +512,7 @@ Wiring: [circuit 10](circuits_by_part/10_button_led/README.md). The button uses 
 | 7 | Values from the spec | 80% confidence, 5 g bursts, calls at 0, 5 and 10 minutes, alert at 15, unknown dog 20 g twice a day | Team |
 | 8 | Jam rule | 3 bursts in a row with less than 2 g gain | Hedi |
 | 9 | Missed meals after a power cut | Not served automatically, the owner decides in the app | Team |
-| 10 | Motor driver | DRV8825 for the demo (sold locally); TMC2209 only if the ISS group lends one | Hedi and the ISS group |
+| 10 | Motor driver | DRV8825 (the team has one, checked on 19 November 2026) | Hedi and the ISS group |
 | 11 | Camera board | ESP32-CAM (owned), programs loaded through the ESP32 DevKit V1 | Hedi |
 | 12 | Demo sound | 2 or 3 short clips kept in STM32 flash; the microSD card comes after the demo | Hedi |
 | 13 | Multimeter | Borrow one from the lab or the ISS group to set the XL4015 (circuit 7); it is not on the parts list | Hedi |

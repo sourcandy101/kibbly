@@ -32,7 +32,7 @@ d.wire(f"M{px['GND']},248 L{px['GND']},{ROW['top-']}", BLACK, [(px['GND'], ROW['
 d.wire(f"M{px['IO15']},248 L{px['IO15']},{ROW['j']}", GREEN, [(px['IO15'], ROW['j'])])
 d.wire(f"M{px['IO14']},248 L{px['IO14']},{ROW['j']}", LIGHTGREEN, [(px['IO14'], ROW['j'])])
 
-# 1000 uF capacitor across the top rails in column 38: long leg (+) in the top + rail, short leg in the top − rail
+# 470 uF capacitor across the top rails in column 38: long leg (+) in the top + rail, short leg in the top − rail
 c = X(38)
 a(f'<line x1="{c}" y1="280" x2="{c}" y2="{ROW["top+"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
 a(f'<path d="M{c + 12},280 L{c + 12},302 L{c},{ROW["top-"]}" fill="none" stroke="#9e9e9e" stroke-width="2.5"/>')
@@ -44,7 +44,7 @@ a(f'<ellipse cx="{c + 6}" cy="251" rx="12" ry="3.5" fill="#3a4c9a"/>')
 for y in (ROW["top+"], ROW["top-"]):
     a(f'<circle cx="{c}" cy="{y}" r="3.5" fill="#757575"/>')
 a(f'<line x1="{bx2 + 16}" y1="226" x2="{c + 10}" y2="246" stroke="#1f2f74" stroke-width="1.2"/>')
-t(bx2 + 14, 176, "1000 µF capacitor", 12, "#1f2f74", weight="bold")
+t(bx2 + 14, 176, "470 µF capacitor", 12, "#1f2f74", weight="bold")
 t(bx2 + 14, 192, "long leg (+): top + rail, column 38", 10, "#1f2f74")
 t(bx2 + 14, 206, "short leg (stripe): top − rail, column 38", 10, "#1f2f74")
 t(bx2 + 14, 220, "stops restarts on WiFi current peaks", 10, "#1f2f74")
@@ -87,7 +87,7 @@ d.lines(1060, 764, ["ESP32-CAM TX (IO15) → STM32 RX (PC7)",
                     "STM32 TX (PC6) → 1 kΩ → ESP32-CAM RX (IO14)",
                     "Text lines, 115200 baud, 8N1",
                     "Both boards use 3.3 V signals: no divider",
-                    "1000 µF on the rails: no restarts on WiFi peaks",
+                    "470 µF on the rails: no restarts on WiFi peaks",
                     "Test program: load it first with the DevKit",
                     "(circuit 6)"])
 t(1460, 740, "TIPS", 14, "#c62828", weight="bold")

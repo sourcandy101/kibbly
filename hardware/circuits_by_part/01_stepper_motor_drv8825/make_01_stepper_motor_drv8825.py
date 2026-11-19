@@ -41,7 +41,7 @@ for y in (ROW["a"], ROW["bot+"]):
     a(f'<circle cx="{X(5)}" cy="{y}" r="3.5" fill="#757575"/>')
 t(X(5) + 11, 588, "10 kΩ", 10, "#6d5a2a", "start", "bold")
 
-# 1000 uF capacitor (long leg in column 5), adapter and DC jack module
+# 470 uF capacitor (long leg in column 5), adapter and DC jack module
 d.driver_capacitor()
 d.dc_jack()
 t(527, 116, "DC jack", 12, "#1565c0", "middle", "bold")

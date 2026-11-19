@@ -6,7 +6,7 @@
 
 **Where on the board:** columns 5 to 12, both halves (see the [column map](../README.md#board-and-column-map)).
 
-**Parts:** NUCLEO-F439ZI, NEMA 17 motor, DRV8825, 12 V adapter, DC jack, 1000 uF capacitor, 10 kohm resistor, breadboard, jumper wires, USB cable.
+**Parts:** NUCLEO-F439ZI, NEMA 17 motor, DRV8825, 12 V adapter, DC jack, 470 uF capacitor, 10 kohm resistor, breadboard, jumper wires, USB cable.
 
 **Wire table:** wires V1 to V19 in [04_wiring_list.md, section 6B](../../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver), plus rails R2 to R4 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 
