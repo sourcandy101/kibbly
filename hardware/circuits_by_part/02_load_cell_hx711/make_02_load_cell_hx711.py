@@ -17,7 +17,7 @@ d.breadboard(used=(False, False, True, True))
 # HX711: 4 pin header in row a, columns 15 to 18, board hanging over the bottom edge
 x1, x2 = X(15) - 12, X(18) + 12
 a(f'<rect x="{x1}" y="546" width="{x2 - x1}" height="144" rx="4" fill="#1b6e3a" stroke="#0f4a26" stroke-width="2"/>')
-for k, lab in enumerate(["GND", "DT", "SCK", "VCC"]):
+for k, lab in enumerate(["VCC", "DAT", "CLK", "GND"]):
     x = X(15 + k)
     a(f'<rect x="{x - 4}" y="{ROW["a"] - 4}" width="8" height="8" fill="#d4af37"/>')
     t(x, 574, lab, 8, "#fff", "middle", "bold")
@@ -29,6 +29,7 @@ for x, lab in zip(pin6, ["E+", "E−", "A−", "A+", "B−", "B+"]):
     a(f'<rect x="{x - 3.5}" y="674" width="7" height="8" fill="#d4af37"/>')
     t(x, 668, lab, 7, "#fff", "middle", "bold")
 t(x1 - 8, 700, "HX711 board", 13, "#1b6e3a", "end", "bold")
+t(x1 - 8, 716, "pins VCC DAT CLK GND", 10, "#555", "end")
 
 # load cell bar and its 4 thin wires to E+, E−, A−, A+ (no crossing)
 a('<rect x="900" y="708" width="260" height="48" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>')
@@ -43,10 +44,10 @@ for y, xpin, col in ((720, pin6[3], GREEN), (728, pin6[2], WHITE), (736, pin6[1]
     d.wire(f"M900,{y} L{xpin + 12},{y} Q{xpin},{y} {xpin},{y - 12} L{xpin},678", col, [(xpin, 678)], width=3)
 
 # wires on the breadboard and to the Nucleo
-d.wire(f"M{X(15)},{ROW['b']} C{X(14) + 2},{ROW['b']} {X(14)},556 {X(14)},{ROW['bot-']}", BLACK,
-       [(X(15), ROW['b']), (X(14), ROW['bot-'])])
-d.wire(f"M{X(18)},{ROW['b']} C{X(20) - 5},{ROW['b']} {X(20)},560 {X(20)},{ROW['bot+']}", YELLOW,
-       [(X(18), ROW['b']), (X(20), ROW['bot+'])])
+d.wire(f"M{X(15)},{ROW['b']} C{X(14) + 2},{ROW['b']} {X(14)},556 {X(14)},{ROW['bot+']}", YELLOW,
+       [(X(15), ROW['b']), (X(14), ROW['bot+'])])
+d.wire(f"M{X(18)},{ROW['b']} C{X(20) - 5},{ROW['b']} {X(20)},560 {X(20)},{ROW['bot-']}", BLACK,
+       [(X(18), ROW['b']), (X(20), ROW['bot-'])])
 x, y = CN10(8)
 d.wire(f"M{x},{y} C440,{y} 600,{ROW['d']} {X(16)},{ROW['d']}", BROWN, [(x, y), (X(16), ROW['d'])])
 x, y = CN10(10)
@@ -80,11 +81,11 @@ d.zones(2, 880)
 # notes
 d.notes_box(640, 918, 1220, 220)
 t(660, 946, "WIRE COLOURS", 14, "#c62828", weight="bold")
-d.colour_list(660, 970, [(YELLOW, "3.3 V"), (BLACK, "GND"), (BROWN, "DT: Nucleo D4 · PF14"),
-                         (GREY, "SCK: Nucleo D3 · PE13")])
+d.colour_list(660, 970, [(YELLOW, "3.3 V"), (BLACK, "GND"), (BROWN, "DAT: Nucleo D4 · PF14"),
+                         (GREY, "CLK: Nucleo D3 · PE13")])
 d.lines(662, 1064, ["Load cell: red E+, black E−, white A−, green A+", "(colours vary by brand)"], 18)
 t(1060, 946, "HX711 SETTINGS", 14, "#c62828", weight="bold")
-d.lines(1060, 970, ["Powered at 3.3 V: its DT signal is safe for the STM32",
+d.lines(1060, 970, ["Powered at 3.3 V: its DAT signal is safe for the STM32",
                     "Channel A, gain 128 (chosen by the code)",
                     "B− and B+: not used",
                     "10 readings per second (fixed on most boards)"])

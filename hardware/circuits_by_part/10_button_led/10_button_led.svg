@@ -1230,11 +1230,6 @@
 <text x="1262" y="678" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#c62828" text-anchor="start" font-weight="bold">LED: long leg (+) in row a,</text>
 <text x="1262" y="692" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#c62828" text-anchor="start" font-weight="normal">short leg (flat side) in the rail</text>
 <line x1="1402" y1="664" x2="1414" y2="590" stroke="#e57373" stroke-width="1.2"/>
-<line x1="1460" y1="556" x2="1460" y2="600" stroke="#9e9e9e" stroke-width="2.5"/>
-<ellipse cx="1460" cy="578" rx="8" ry="10" fill="#fbc02d" stroke="#c49000" stroke-width="1.5"/>
-<text x="1460" y="581" font-family="Arial, Helvetica, sans-serif" font-size="6" fill="#5d4037" text-anchor="middle" font-weight="bold">104</text>
-<circle cx="1460" cy="556" r="3.5" fill="#757575"/>
-<circle cx="1460" cy="600" r="3.5" fill="#757575"/>
 <rect x="1466" y="742" width="68" height="36" rx="6" fill="#455a64" stroke="#263238" stroke-width="2"/>
 <circle cx="1500" cy="760" r="14" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>
 <circle cx="1496" cy="756" r="4" fill="#ef9a9a"/>
@@ -1242,7 +1237,7 @@
 <rect x="1507" y="730" width="6" height="12" fill="#bdbdbd" stroke="#757575"/>
 <text x="1546" y="754" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c62828" text-anchor="start" font-weight="bold">Push button, 12 mm, panel mount</text>
 <text x="1546" y="770" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">on the feeder body, 2 wires soldered to it</text>
-<text x="1546" y="786" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">Not bought yet: touch the two wire ends together to test</text>
+<text x="1546" y="786" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">Not soldered yet: touch the two wire ends together to test</text>
 <path d="M1490,730 L1490,640 C1490,630 1490,620 1490,526 C1490,520 1486,516 1480,516 L1460,516" fill="none" stroke="#5f5f5f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M1490,730 L1490,640 C1490,630 1490,620 1490,526 C1490,520 1486,516 1480,516 L1460,516" fill="none" stroke="#a8a8a8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="1460" cy="516" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
@@ -1298,7 +1293,7 @@
 <text x="1060" y="946" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">SETTINGS</text>
 <text x="1060" y="970" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">PF12: input, internal pull up, interrupt</text>
 <text x="1060" y="990" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">on the falling edge: free 3.3 V, pressed 0 V</text>
-<text x="1060" y="1010" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">100 nF + pull up smooth the bounce (a few ms)</text>
+<text x="1060" y="1010" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Bounce filtered in the code (50 ms), no capacitor</text>
 <text x="1060" y="1030" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">PG14: output, high = LED on</text>
 <text x="1060" y="1050" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">LED current: (3.3 − 2.0) V ÷ 330 Ω ≈ 4 mA</text>
 <text x="1060" y="1070" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Resistor bands: orange, orange, brown</text>

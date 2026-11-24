@@ -115,7 +115,7 @@ for c, r, col in ((7, "g", BLUE), (8, "h", RED), (9, "i", BLACK), (10, "j", GREE
 # ---------------------------------------------------------------- circuit 2: HX711 and load cell
 x1, x2 = X(15) - 12, X(18) + 12
 a(f'<rect x="{x1}" y="546" width="{x2 - x1}" height="144" rx="4" fill="#1b6e3a" stroke="#0f4a26" stroke-width="2"/>')
-for k, lab in enumerate(["GND", "DT", "SCK", "VCC"]):
+for k, lab in enumerate(["VCC", "DAT", "CLK", "GND"]):
     x = X(15 + k)
     a(f'<rect x="{x - 4}" y="{ROW["a"] - 4}" width="8" height="8" fill="#d4af37"/>')
     t(x, 574, lab, 8, "#fff", "middle", "bold")
@@ -127,10 +127,10 @@ for x, lab in zip(pin6, ["E+", "E−", "A−", "A+", "B−", "B+"]):
     a(f'<rect x="{x - 3.5}" y="674" width="7" height="8" fill="#d4af37"/>')
     t(x, 668, lab, 7, "#fff", "middle", "bold")
 t(x1 - 8, 700, "HX711", 12, "#1b6e3a", "end", "bold")
-d.wire(f"M{X(15)},{ROW['b']} C{X(14) + 2},{ROW['b']} {X(14)},556 {X(14)},{ROW['bot-']}", BLACK,
-       [(X(15), ROW['b']), (X(14), ROW['bot-'])])
-d.wire(f"M{X(18)},{ROW['b']} C{X(20) - 5},{ROW['b']} {X(20)},560 {X(20)},{ROW['bot+']}", YELLOW,
-       [(X(18), ROW['b']), (X(20), ROW['bot+'])])
+d.wire(f"M{X(15)},{ROW['b']} C{X(14) + 2},{ROW['b']} {X(14)},556 {X(14)},{ROW['bot+']}", YELLOW,
+       [(X(15), ROW['b']), (X(14), ROW['bot+'])])
+d.wire(f"M{X(18)},{ROW['b']} C{X(20) - 5},{ROW['b']} {X(20)},560 {X(20)},{ROW['bot-']}", BLACK,
+       [(X(18), ROW['b']), (X(20), ROW['bot-'])])
 a('<rect x="560" y="770" width="200" height="46" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>')
 for x in (580, 602, 718, 740):
     a(f'<circle cx="{x}" cy="793" r="6" fill="#ffffff" stroke="#90a4ae" stroke-width="1.5"/>')
@@ -251,12 +251,12 @@ d.wire(f"M{X(34)},{ROW['b']} L{X(35) - 8},{ROW['b']} C{X(35) - 2},{ROW['b']} {X(
        f"L{X(35)},{ROW['bot-']}", BLACK, [(X(34), ROW['b']), (X(35), ROW['bot-'])])
 d.wire(f"M{X(33)},{ROW['c']} L{X(36) - 8},{ROW['c']} C{X(36) - 2},{ROW['c']} {X(36)},{ROW['c'] + 4} {X(36)},{ROW['c'] + 10} "
        f"L{X(36)},{ROW['bot+']}", YELLOW, [(X(33), ROW['c']), (X(36), ROW['bot+'])])
-vp = {"VIN": X(24), "GND": X(25), "SCL": X(26), "SDA": X(27), "GPIO1": X(28), "XSHUT": X(29)}
-a(f'<rect x="{X(24) - 16}" y="740" width="{X(29) - X(24) + 32}" height="54" rx="4" fill="#6a1b9a" stroke="#4a148c" stroke-width="2"/>')
+vp = {"VIN": X(24), "GND": X(25), "SCL": X(26), "SDA": X(27)}
+a(f'<rect x="{X(24) - 16}" y="740" width="{X(27) - X(24) + 32}" height="54" rx="4" fill="#6a1b9a" stroke="#4a148c" stroke-width="2"/>')
 for name, x in vp.items():
     a(f'<rect x="{x - 3}" y="728" width="6" height="12" fill="#d4af37"/>')
     t(x, 754, name, 5.2 if len(name) > 3 else 7, "#fff" if name in ("VIN", "GND", "SCL", "SDA") else "#ce93d8", "middle", "bold")
-vcx = (X(24) + X(29)) / 2
+vcx = (X(24) + X(27)) / 2
 a(f'<rect x="{vcx - 16}" y="762" width="32" height="20" rx="2" fill="#111"/>')
 for ox in (-7, 7):
     a(f'<circle cx="{vcx + ox}" cy="772" r="4" fill="#ffb300" fill-opacity="0.8"/>')
@@ -297,13 +297,8 @@ a(f'<line x1="{lx}" y1="{ROW["a"]}" x2="{lx}" y2="{ROW["bot-"]}" stroke="#9e9e9e
 a(f'<circle cx="{lx}" cy="578" r="10" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>')
 a(f'<circle cx="{lx - 3}" cy="575" r="3" fill="#ffcdd2"/>')
 a(f'<line x1="{lx - 10}" y1="586" x2="{lx + 10}" y2="586" stroke="#b71c1c" stroke-width="2"/>')
-cx = X(49)
-a(f'<line x1="{cx}" y1="{ROW["a"]}" x2="{cx}" y2="{ROW["bot-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-a(f'<ellipse cx="{cx}" cy="578" rx="8" ry="10" fill="#fbc02d" stroke="#c49000" stroke-width="1.5"/>')
-t(cx, 581, "104", 6, "#5d4037", "middle", "bold")
-for x in (lx, cx):
-    for yy in (ROW["a"], ROW["bot-"]):
-        a(f'<circle cx="{x}" cy="{yy}" r="3.5" fill="#757575"/>')
+for yy in (ROW["a"], ROW["bot-"]):
+    a(f'<circle cx="{lx}" cy="{yy}" r="3.5" fill="#757575"/>')
 bx, by = X(51), 760
 a(f'<rect x="{bx - 34}" y="{by - 18}" width="68" height="36" rx="6" fill="#455a64" stroke="#263238" stroke-width="2"/>')
 a(f'<circle cx="{bx}" cy="{by}" r="14" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>')
@@ -321,8 +316,8 @@ TAGS = [  # (column, row, side, pin text, colour, Nucleo pin position, Nucleo ta
     (5, "b", "left", "PF15", BLUEGREY, CN10(12), "PF15 EN", "PF15 · D2 · CN10 pin 12: driver EN, column 5 b"),
     (11, "c", "left", "PE9", GREY, CN10(4), "PE9 STEP", "PE9 · D6 · CN10 pin 4: driver STEP, column 11 c"),
     (12, "d", "left", "PF13", BROWN, CN10(2), "PF13 DIR", "PF13 · D7 · CN10 pin 2: driver DIR, column 12 d"),
-    (16, "d", "left", "PF14", BROWN, CN10(8), "PF14 DT", "PF14 · D4 · CN10 pin 8: HX711 DT, column 16 d"),
-    (17, "c", "left", "PE13", GREY, CN10(10), "PE13 HX SCK", "PE13 · D3 · CN10 pin 10: HX711 SCK, column 17 c"),
+    (16, "d", "left", "PF14", BROWN, CN10(8), "PF14 DAT", "PF14 · D4 · CN10 pin 8: HX711 DAT, column 16 d"),
+    (17, "c", "left", "PE13", GREY, CN10(10), "PE13 HX CLK", "PE13 · D3 · CN10 pin 10: HX711 CLK, column 17 c"),
     (15, "g", "left", "PA4", LIGHTPURPLE, CN7(17), "PA4 LRC", "PA4 · D24 · CN7 pin 17: amplifier LRC, column 15 g"),
     (16, "i", "left", "PC10", PURPLE, CN8(6), "PC10 BCLK", "PC10 · D45 · CN8 pin 6: amplifier BCLK, column 16 i"),
     (17, "h", "left", "PC12", DARKPURPLE, CN8(10), "PC12 DIN", "PC12 · D47 · CN8 pin 10: amplifier DIN, column 17 h"),

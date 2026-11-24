@@ -38,17 +38,17 @@ d.wire(f"M{X(34)},{ROW['b']} L{X(35) - 8},{ROW['b']} C{X(35) - 2},{ROW['b']} {X(
 d.wire(f"M{X(33)},{ROW['c']} L{X(36) - 8},{ROW['c']} C{X(36) - 2},{ROW['c']} {X(36)},{ROW['c'] + 4} {X(36)},{ROW['c'] + 10} "
        f"L{X(36)},{ROW['bot+']}", YELLOW, [(X(33), ROW['c']), (X(36), ROW['bot+'])])
 
-# VL53L0X (GY-530) outside the board, below columns 24 to 29
-pins = {"VIN": X(24), "GND": X(25), "SCL": X(26), "SDA": X(27), "GPIO1": X(28), "XSHUT": X(29)}
-a(f'<rect x="{X(24) - 16}" y="740" width="{X(29) - X(24) + 32}" height="54" rx="4" fill="#6a1b9a" stroke="#4a148c" stroke-width="2"/>')
+# VL53L0X (the team's 4 pin board) outside the board, below columns 24 to 27
+pins = {"VIN": X(24), "GND": X(25), "SCL": X(26), "SDA": X(27)}
+a(f'<rect x="{X(24) - 16}" y="740" width="{X(27) - X(24) + 32}" height="54" rx="4" fill="#6a1b9a" stroke="#4a148c" stroke-width="2"/>')
 for name, x in pins.items():
     a(f'<rect x="{x - 3}" y="728" width="6" height="12" fill="#d4af37"/>')
     t(x, 754, name, 5.2 if len(name) > 3 else 7, "#fff" if name in ("VIN", "GND", "SCL", "SDA") else "#ce93d8", "middle", "bold")
-sx = (X(24) + X(29)) / 2
+sx = (X(24) + X(27)) / 2
 a(f'<rect x="{sx - 16}" y="762" width="32" height="20" rx="2" fill="#111"/>')
 for ox in (-7, 7):
     a(f'<circle cx="{sx + ox}" cy="772" r="4" fill="#ffb300" fill-opacity="0.8"/>')
-t(X(24) - 28, 756, "VL53L0X tank sensor (GY-530)", 13, "#c62828", "end", "bold")
+t(X(24) - 28, 756, "VL53L0X tank sensor (4 pins)", 13, "#c62828", "end", "bold")
 t(X(24) - 28, 772, "in the tank lid, facing the food,", 11, "#555", "end")
 t(X(24) - 28, 788, "joined with 4 female to male wires", 11, "#555", "end")
 t(sx, 812, "peel off the thin film on the sensor", 10, "#c62828", "middle", "bold")
@@ -85,7 +85,7 @@ d.notes_box(640, 918, 1220, 220)
 t(660, 946, "WIRE COLOURS", 14, "#c62828", weight="bold")
 d.colour_list(660, 970, [(YELLOW, "3.3 V: Nucleo 3V3 to the bottom + rail; VCC, VIN"), (BLACK, "GND"),
                          (WHITE, "SCL: Nucleo D15 · PB8, column 31"), (BLUE, "SDA: Nucleo D14 · PB9, column 32")])
-d.lines(662, 1064, ["Not connected: DS3231 32K and SQW,", "VL53L0X GPIO1 and XSHUT"], 18)
+d.lines(662, 1064, ["Not connected: DS3231 32K and SQW", "Tank sensor: 4 pins only, VIN GND SCL SDA"], 18)
 t(1060, 946, "I2C SETTINGS", 14, "#c62828", weight="bold")
 d.lines(1060, 970, ["I2C1 at 400 kHz",
                     "Addresses: VL53L0X 0x29, DS3231 0x68,",

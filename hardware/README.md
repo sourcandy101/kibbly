@@ -6,18 +6,18 @@ This folder holds everything technical about the feeder: parts, architecture, wi
 
 ## MUST DO NOW: real hardware inventory
 
-**Owners: Youssef and Hedi. The hardware work is blocked until this is done.**
+**Owners: Youssef and Hedi. Done on 24 November 2026: every part on hand is checked and the docs match it, so wiring can start. Only the speaker is still to buy.**
 
 The parts list in [step 1](01_hardware_list.md) and the architecture in [step 2](02_system_architecture.md) are based on recommended parts. Before any coding or wiring, they must match the parts we really have.
 
 | # | Task | Who | Done |
 |---|---|---|---|
-| 1 | Gather every hardware part the team physically has, in one place | Youssef and Hedi | |
-| 2 | Write the exact list of components (see what to record below) | Youssef and Hedi | |
-| 3 | Compare the real list with [01_hardware_list.md](01_hardware_list.md): what matches, what differs, what is missing | Youssef with Claude | |
-| 4 | Decide the changes: keep, replace or buy each differing or missing part | Youssef and Hedi | |
-| 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | Partly on 19 November 2026: motor, DRV8825, capacitors, resistors, button and microSD module recorded; some models still to check |
-| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | Done on 10 November 2026 for the parts known so far; capacitors changed to the team's 470 uF on 19 November 2026; check again after the ISS group answers on the adapter and jack |
+| 1 | Gather every hardware part the team physically has, in one place | Youssef and Hedi | Done on 24 November 2026 |
+| 2 | Write the exact list of components (see what to record below) | Youssef and Hedi | Done on 24 November 2026 |
+| 3 | Compare the real list with [01_hardware_list.md](01_hardware_list.md): what matches, what differs, what is missing | Youssef with Claude | Done on 24 November 2026: HX711 pin order reversed, VL53L0X board has 4 pins, 100 uF bought instead of 100 nF, speaker missing |
+| 4 | Decide the changes: keep, replace or buy each differing or missing part | Youssef and Hedi | Done on 24 November 2026: the button capacitor is dropped (the code filters the bounce); the speaker is still to buy |
+| 5 | Update [01_hardware_list.md](01_hardware_list.md) to the real parts | Youssef with Claude | Done on 24 November 2026: all 8 parts of the hardware bill, the 12 V adapter, the microSD card and the multimeter recorded. Still to check: resistor values, button terminals, microSD module pin order |
+| 6 | Update [02_system_architecture.md](02_system_architecture.md) and the wiring list to the real parts | Youssef with Claude | Done on 24 November 2026: HX711 power wires swapped (VCC in column 15, GND in column 18), 4 pin VL53L0X, no button capacitor; circuits 2, 8, 10 and 11 redrawn |
 | 7 | Start coding the boards (step 3 component tests, then step 5) | Youssef and Hedi | |
 
 What to record for each part:
@@ -72,7 +72,7 @@ We build the hardware in 7 steps, in order. Each step has its own file or folder
 
 | Step | What | Where | Status |
 |---|---|---|---|
-| 1 | List of hardware | [01_hardware_list.md](01_hardware_list.md) | In progress |
+| 1 | List of hardware | [01_hardware_list.md](01_hardware_list.md) | Done on 24 November 2026, except the speaker (still to buy) |
 | 2 | System architecture | [02_system_architecture.md](02_system_architecture.md) | Updated to the real parts on 10 November 2026 (decisions to confirm) |
 | 3 | Wiring and testing each component alone | [03_component_tests/](03_component_tests/) | Not started |
 | 4 | Wiring list for every component, with circuit pictures part by part | [04_wiring_list.md](04_wiring_list.md), [circuits_by_part/](circuits_by_part/README.md) | Written and updated to the real parts; all 11 circuit pictures done, full circuit in circuits_by_part/11_full_circuit |

@@ -50,7 +50,7 @@ A new XL4015 can come set to any voltage up to almost 12 V. Connected like that,
 3. Turn the small screw of the blue box. It is a multi turn screw: it can take 10 or more turns before the voltage moves. If the voltage goes the wrong way, turn the other way. Stop at **5.0 V** (between 4.95 and 5.10 V).
 4. Unplug the adapter. Only now wire OUT+ and OUT− to the rails (P4, P5).
 
-**No multimeter in the team:** it was taken off the parts list, but this step needs one. Borrow one from the lab or the ISS group for 10 minutes; never guess this voltage.
+**Multimeter:** the team has one (24 November 2026). Never guess this voltage.
 
 ## Two ways to power the Nucleo
 

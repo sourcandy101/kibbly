@@ -491,7 +491,7 @@ flowchart TD
     N -->|"Other"| IGN["Ignored"]
 ```
 
-Wiring: [circuit 10](circuits_by_part/10_button_led/README.md). The button uses the STM32 internal pull up and a 100 nF capacitor against bounce; the LED has a 330 ohm resistor.
+Wiring: [circuit 10](circuits_by_part/10_button_led/README.md). The button uses the STM32 internal pull up and no capacitor: the code ignores presses closer than about 50 ms (the 100 nF capacitor was dropped on 24 November 2026). The LED has a 330 ohm resistor.
 
 | LED | Meaning |
 |---|---|
@@ -515,4 +515,4 @@ Wiring: [circuit 10](circuits_by_part/10_button_led/README.md). The button uses 
 | 10 | Motor driver | DRV8825 (the team has one, checked on 19 November 2026) | Hedi and the ISS group |
 | 11 | Camera board | ESP32-CAM (owned), programs loaded through the ESP32 DevKit V1 | Hedi |
 | 12 | Demo sound | 2 or 3 short clips kept in STM32 flash; the microSD card comes after the demo | Hedi |
-| 13 | Multimeter | Borrow one from the lab or the ISS group to set the XL4015 (circuit 7); it is not on the parts list | Hedi |
+| 13 | Multimeter | The team has one (24 November 2026): sets the XL4015 (circuit 7) and the DRV8825 Vref (circuit 1) | Hedi |

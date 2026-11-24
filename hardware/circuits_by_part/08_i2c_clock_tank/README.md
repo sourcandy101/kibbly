@@ -6,7 +6,7 @@
 
 **Where on the board:** columns 29 to 34, bottom half (see the [column map](../README.md#board-and-column-map)). The clock plugs in there; the tank sensor sits outside the board and joins the same columns with 4 wires.
 
-**Parts:** NUCLEO-F439ZI, DS3231 clock board (ZS-042) with a CR2032 coin cell, VL53L0X sensor (GY-530 board), breadboard, 4 female to male jumper wires for the sensor, other jumper wires, USB cable.
+**Parts:** NUCLEO-F439ZI, DS3231 clock board (ZS-042) with a CR2032 coin cell, VL53L0X sensor (the team's 4 pin board: VIN, GND, SCL, SDA), breadboard, 4 female to male jumper wires for the sensor, other jumper wires, USB cable.
 
 **Wire table:** wires I1 to I15 in [04_wiring_list.md, section 9](../../04_wiring_list.md#9-i2c-bus-vl53l0x-and-ds3231), plus rails R2 and R3 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 
@@ -52,7 +52,9 @@ The VL53L0X sends a tiny invisible laser pulse and times its return, so it measu
 | GND | Bottom − rail, column 25 | Black |
 | SCL | Column 31, row c (SCL bus) | White |
 | SDA | Column 32, row b (SDA bus) | Blue |
-| GPIO1, XSHUT | None | Not needed: the sensor is always on |
+| GPIO1, XSHUT | No such pins on the team's board | Not needed: the sensor is always on |
+
+The team's board has only 4 pins (checked on 24 November 2026). Its marking was read as "UL53LDK": the first I2C test reads the chip ID to confirm it is a VL53L0X. A 6 pin GY-530 board wires the same way, with GPIO1 and XSHUT left free.
 
 **Peel off the thin protective film** on the sensor window before testing; with the film on, the readings are wrong. Keep the space in front of the sensor clear: only the food should be in its view.
 

@@ -4,8 +4,8 @@ Every part the prototype needs, sorted in groups:
 
 | Group | Meaning | Parts |
 |---|---|---|
-| [A. Owned](#a-owned) | The team already has it | 14 |
-| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 8 |
+| [A. Owned](#a-owned) | The team already has it | 23 |
+| [B. Buy in Tunisia](#b-buy-in-tunisia) | Not owned yet; sold online by a Tunisian shop (link given). Cheapest first | 0 (all bought on 24 November 2026) |
 | [C. No link in Tunisia](#c-no-link-in-tunisia) | Not owned yet; no Tunisian online seller found (ask a shop, make it, or import). Cheapest first | 4 |
 | [D. Extra parts](#d-extra-parts-not-used-in-the-prototype) | Owned, but not used in the prototype | 2 |
 
@@ -32,24 +32,24 @@ Links checked on 9 November 2026. Pictures come from the shop pages (they belong
 | 29 | <img src="https://little-son.tn/1205-large_default/carte-esp32-wroom-32d-wifi-bluetooth-.jpg" width="90"> | **ESP32 DevKit V1** (ESP32 WROOM 32, USB) | Board | 1 | 32 | Flashes the ESP32-CAM; test board for the WiFi, server and UART code | [Little Son](https://little-son.tn/accueil/729-carte-esp32-wroom-32d-wifi-bluetooth-.html) | Yes |
 | 30 | <img src="https://little-son.tn/1214-large_default/cordon-usb-micro-usb-pour-raspberry-pi-microbit-esp-longueur-15m.jpg" width="90"> | **USB cables** (micro USB) | Tool | 3 | 7.5 each | Power and program the Nucleo and the DevKit from the computer | [Little Son](https://little-son.tn/accueil/737-cordon-usb-micro-usb-pour-raspberry-pi-microbit-esp-longueur-15m.html) | Yes |
 | 4B | <img src="https://little-son.tn/852-large_default/module-driver-moteur-pas-a-pas-drv8825-.jpg" width="90"> | **DRV8825 driver** (the driver for the demo): same size and pins for STEP, DIR, EN; louder, no stall detection | Dispenser | 1 | 8.5 | Drives the stepper from the STM32 | [Little Son](https://little-son.tn/accueil/559-module-driver-moteur-pas-a-pas-drv8825-.html) | Yes |
-| 3 | <img src="https://little-son.tn/2229-large_default/moteur-nema-17-pas-a-pas-17hs4401s.jpg" width="90"> | **NEMA 17 stepper motor** (17HS4401 or similar, 42 x 40 mm, about 0.4 Nm, 1.5 A) | Dispenser | 1 | 35 (29.9 at Celectronix) | Turns the auger | [Little Son](https://little-son.tn/accueil/1481-moteur-nema-17-pas-a-pas-17hs4401s.html), [Didactico](https://didactico.tn/produit/moteur-pas-a-pas-nema-17/), [Celectronix](https://www.celectronix.com/moteur-pas-pas/3986-moteur-pas-a-pas-nema-17-17hs4401.html) | Yes, with its DRV8825 board; model on the motor label still to check |
-| 20 | <img src="https://little-son.tn/1218-large_default/kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.jpg" width="90"> | **Capacitors**: 470 uF electrolytic, 16 V or more, and 100 nF ceramic | Power | 2 of each | about 1 each when bought singly (kits 25 each) | 470 uF next to the motor driver and the ESP32-CAM; 100 nF on the button against bounce | [Little Son (electrolytic kit, up to 470 uF)](https://little-son.tn/accueil/739-kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.html), [Little Son (ceramic kit, includes 100 nF)](https://little-son.tn/accueil/741-kit-condensateurs-ceramiques-300-pieces-10-valeurs-2pf-01uf.html) | Yes: two 470 uF 16 V electrolytic (one at the driver, one at the ESP32-CAM). The 100 nF ceramic is still missing |
+| 3 | <img src="https://little-son.tn/2229-large_default/moteur-nema-17-pas-a-pas-17hs4401s.jpg" width="90"> | **NEMA 17 stepper motor** (17HS4401 or similar, 42 x 40 mm, about 0.4 Nm, 1.5 A) | Dispenser | 1 | 35 (29.9 at Celectronix) | Turns the auger | [Little Son](https://little-son.tn/accueil/1481-moteur-nema-17-pas-a-pas-17hs4401s.html), [Didactico](https://didactico.tn/produit/moteur-pas-a-pas-nema-17/), [Celectronix](https://www.celectronix.com/moteur-pas-pas/3986-moteur-pas-a-pas-nema-17-17hs4401.html) | Yes, with its DRV8825 board; the label reads 17HS440 (17HS4401 family), checked on 24 November 2026. DRV8825 Vref 0.5 V (1 A) |
+| 20 | <img src="https://little-son.tn/1218-large_default/kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.jpg" width="90"> | **Capacitors**: 470 uF electrolytic, 16 V or more | Power | 2 | about 1 each when bought singly (kits 25 each) | Next to the motor driver and the ESP32-CAM | [Little Son (electrolytic kit, up to 470 uF)](https://little-son.tn/accueil/739-kit-condensateurs-electrolytiques-en-aluminium-120-pieces-12-valeurs-022uf-470uf.html) | Yes: two 470 uF 16 V electrolytic (one at the driver, one at the ESP32-CAM). The 100 nF button capacitor is dropped (see the capacitor note) |
 | 21 | <img src="https://little-son.tn/2593-large_default/resistance-1kohm-14w.jpg" width="90"> | **Resistors**: 330 ohm, 1 kohm, 2 kohm, 10 kohm | Power | 2 of each | 0.05 each | LED, ultrasonic divider, driver UART, motor enable | [Little Son 1 kohm](https://little-son.tn/accueil/1796-resistance-1kohm-14w.html), [Little Son 2 kohm](https://little-son.tn/accueil/1797-resistance-2kohm-14w.html); the others in the same shop | Yes; values still to check (needed: 330 ohm, 1 kohm, 2 kohm, 10 kohm) |
-| 13 | <img src="https://souilah-electronique.tn/656-large_default/module-sd.jpg" width="90"> | **MicroSD card module (SPI)** and an 8 to 32 GB card from a known brand | Sound and storage | 1 | 7, plus about 20 for the card | Voice clips, schedule copy, offline meal logs | [Souilah](https://souilah-electronique.tn/modules-et-capteurs/396-module-sd.html), [Celectronix](https://www.celectronix.com/modules-kits/7382-waveshare-micro-sd-storage-board-copie-.html) | Yes, the 6 pin SPI module (pin order and 3.3 V regulator still to check); microSD card still to check |
+| 13 | <img src="https://souilah-electronique.tn/656-large_default/module-sd.jpg" width="90"> | **MicroSD card module (SPI)** and an 8 to 32 GB card from a known brand | Sound and storage | 1 | 7, plus about 20 for the card | Voice clips, schedule copy, offline meal logs | [Souilah](https://souilah-electronique.tn/modules-et-capteurs/396-module-sd.html), [Celectronix](https://www.celectronix.com/modules-kits/7382-waveshare-micro-sd-storage-board-copie-.html) | Yes, the 6 pin SPI module (pin order and 3.3 V regulator still to check) and a microSD card (24 November 2026) |
 | 14 |  | **Push button**, momentary, 12 mm, panel mount | Button and LED | 1 | about 2 (estimate) | Long press: shut down. 2 presses: WiFi pairing. 5 presses: reset | Ask any electronics shop for "bouton poussoir 12 mm" | Yes; type still to check (circuit 10 is drawn for a 2 terminal panel button) |
+| 17 | <img src="https://little-son.tn/2200-large_default/module-adaptateur-courant-dc-fiche-jack-pour-arduino.jpg" width="90"> | **DC barrel jack with screw terminals** | Power | 1 | 4 | Adapter input | [Little Son](https://little-son.tn/accueil/1456-module-adaptateur-courant-dc-fiche-jack-pour-arduino.html) | Yes (24 November 2026); the adapter plug must fit it |
+| 8 | <img src="https://little-son.tn/413-large_default/module-capteur-ultrason-hc-sr04.jpg" width="90"> | **HC-SR04 ultrasonic sensor** with a 1 kohm and a 2 kohm resistor | Sensor | 1 | 4.8 | Detects an animal in front of the bowl | [Little Son](https://little-son.tn/accueil/294-module-capteur-ultrason-hc-sr04.html) | Yes (24 November 2026): standard HC-SR04, pins VCC, Trig, Echo, GND |
+| 7 | <img src="https://2btrading.tn/1882-large_default/hx711-module-load-cell-amplifier.jpg" width="90"> | **HX711 board** | Sensor | 1 | 7 | Reads the load cell | [2B Trading](https://2btrading.tn/accueil/1884-hx711-module-load-cell-amplifier.html), [Little Son](https://little-son.tn/accueil/521-capteur-de-pesage-hx711.html) | Yes (24 November 2026): the 4 pin side reads VCC, DAT, CLK, GND, the reverse of the generic board, so VCC goes in column 15 and GND in column 18 (see circuit 2) |
+| 10 | <img src="https://little-son.tn/687-large_default/module-rtc-ds3231-i2c-at24c32-pour-arduino.jpg" width="90"> | **DS3231 RTC module** with a CR2032 coin cell | Sensor | 1 | 8, plus about 3 for the coin cell | Keeps the real time during a power cut | [Little Son](https://little-son.tn/accueil/454-module-rtc-ds3231-i2c-at24c32-pour-arduino.html), [Souilah](https://souilah-electronique.tn/modules-et-capteurs/78-module-rtc-ds3231-.html) | Yes (24 November 2026): ZS-042 board, pins 32K, SQW, SCL, SDA, VCC, GND, coin cell included |
+| 16 | <img src="https://little-son.tn/2577-large_default/alimentation-12v-2a.jpg" width="90"> | **12 V wall adapter**, at least 2 A (3 A better) | Power | 1 | 12 | Powers the whole feeder | [Little Son (12 V 2 A)](https://little-son.tn/accueil/1319-alimentation-12v-2a.html) | Yes (24 November 2026); check the label before the first plug in: 12 V, 2 A or more, centre pin + |
+| 19 | <img src="https://little-son.tn/512-large_default/module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.jpg" width="90"> | **XL4015 buck converter**, set to 5.0 V (5 A) | Power | 1 | 12 | 5 V for the Nucleo, the ESP32, the amplifier and the SD card | [Little Son](https://little-son.tn/accueil/345-module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.html), [TET Electronics](https://tet-electronics.com/product/module-xl4015-convertisseur-abaisseur-de-tension-dc-dc-5a-75w-e3ee5b2e) | Yes (24 November 2026) |
+| 11 | <img src="https://little-son.tn/2637-large_default/module-max98357a-i2s-amplificateur-audio.jpg" width="90"> | **MAX98357A I2S amplifier** | Sound and storage | 1 | 14 (9.9 at 2B Trading) | Plays the voice clips, clean digital sound | [Little Son](https://little-son.tn/accueil/1651-module-max98357a-i2s-amplificateur-audio.html), [2B Trading](https://2btrading.tn/accueil/9068-module-max98357a-i2s-audio-amplifier.html) | Yes (24 November 2026) |
+| 9 | <img src="https://little-son.tn/1739-large_default/gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.jpg" width="90"> | **VL53L0X time of flight sensor** (the team's board has 4 pins) | Sensor | 1 | 20 (19.5 at 2B Trading) | Food level in the tank, from the lid | [Little Son](https://little-son.tn/accueil/1121-gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.html), [2B Trading](https://2btrading.tn/arduino/2218-module-capteur-de-distance-de-portee-laser-vl53l0x-v2.html) | Yes (24 November 2026): 4 pin board (VIN, GND, SCL, SDA), no GPIO1 or XSHUT pin, which were not wired anyway. Marking read as "UL53LDK": the first I2C test reads the chip ID to confirm it is a VL53L0X |
+| 31 |  | **Multimeter** | Tool | 1 | 0 (not bought) | Sets the XL4015 to 5.0 V and the DRV8825 Vref; finds the motor coil pairs | Borrow from the lab or the ISS group | Yes (24 November 2026) |
 
 ## B. Buy in Tunisia
 
-| # | Picture | Part | Category | Qty | Price (TND) | Job | Buy in Tunisia | Have it |
-|---|---|---|---|---|---|---|---|---|
-| 17 | <img src="https://little-son.tn/2200-large_default/module-adaptateur-courant-dc-fiche-jack-pour-arduino.jpg" width="90"> | **DC barrel jack with screw terminals** | Power | 1 | 4 | Adapter input | [Little Son](https://little-son.tn/accueil/1456-module-adaptateur-courant-dc-fiche-jack-pour-arduino.html) | See with Hedi's ISS Group |
-| 8 | <img src="https://little-son.tn/413-large_default/module-capteur-ultrason-hc-sr04.jpg" width="90"> | **HC-SR04 ultrasonic sensor** with a 1 kohm and a 2 kohm resistor | Sensor | 1 | 4.8 | Detects an animal in front of the bowl | [Little Son](https://little-son.tn/accueil/294-module-capteur-ultrason-hc-sr04.html) | No |
-| 7 | <img src="https://2btrading.tn/1882-large_default/hx711-module-load-cell-amplifier.jpg" width="90"> | **HX711 board** | Sensor | 1 | 7 | Reads the load cell | [2B Trading](https://2btrading.tn/accueil/1884-hx711-module-load-cell-amplifier.html), [Little Son](https://little-son.tn/accueil/521-capteur-de-pesage-hx711.html) | No |
-| 10 | <img src="https://little-son.tn/687-large_default/module-rtc-ds3231-i2c-at24c32-pour-arduino.jpg" width="90"> | **DS3231 RTC module** with a CR2032 coin cell | Sensor | 1 | 8, plus about 3 for the coin cell | Keeps the real time during a power cut | [Little Son](https://little-son.tn/accueil/454-module-rtc-ds3231-i2c-at24c32-pour-arduino.html), [Souilah](https://souilah-electronique.tn/modules-et-capteurs/78-module-rtc-ds3231-.html) | No |
-| 16 | <img src="https://little-son.tn/2577-large_default/alimentation-12v-2a.jpg" width="90"> | **12 V wall adapter**, at least 2 A (3 A better) | Power | 1 | 12 | Powers the whole feeder | [Little Son (12 V 2 A)](https://little-son.tn/accueil/1319-alimentation-12v-2a.html) | See with Hedi's ISS Group |
-| 19 | <img src="https://little-son.tn/512-large_default/module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.jpg" width="90"> | **XL4015 buck converter**, set to 5.0 V (5 A) | Power | 1 | 12 | 5 V for the Nucleo, the ESP32, the amplifier and the SD card | [Little Son](https://little-son.tn/accueil/345-module-xl4015-abaisseur-de-tension-dc-dc-5a-75w.html), [TET Electronics](https://tet-electronics.com/product/module-xl4015-convertisseur-abaisseur-de-tension-dc-dc-5a-75w-e3ee5b2e) | No |
-| 11 | <img src="https://little-son.tn/2637-large_default/module-max98357a-i2s-amplificateur-audio.jpg" width="90"> | **MAX98357A I2S amplifier** | Sound and storage | 1 | 14 (9.9 at 2B Trading) | Plays the voice clips, clean digital sound | [Little Son](https://little-son.tn/accueil/1651-module-max98357a-i2s-amplificateur-audio.html), [2B Trading](https://2btrading.tn/accueil/9068-module-max98357a-i2s-audio-amplifier.html) | No |
-| 9 | <img src="https://little-son.tn/1739-large_default/gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.jpg" width="90"> | **VL53L0X time of flight sensor** (GY-530 board) | Sensor | 1 | 20 (19.5 at 2B Trading) | Food level in the tank, from the lid | [Little Son](https://little-son.tn/accueil/1121-gy-530-vl53l0x-v2-module-telemetre-laser-temps-de-vol-i2c.html), [2B Trading](https://2btrading.tn/arduino/2218-module-capteur-de-distance-de-portee-laser-vl53l0x-v2.html) | No |
+Nothing left in this group: all 8 parts were bought or received on 24 November 2026 and moved to [group A](#a-owned). The only part still to buy is the speaker, in group C.
 
 ## C. No link in Tunisia
 
@@ -90,11 +90,13 @@ Driver note: with the DRV8825 the scale is the only jam check, which is enough f
 
 Capacitor note: the team has two 470 uF 16 V electrolytic capacitors (checked on 19 November 2026). 470 uF is plenty for both places: the DRV8825 needs about 47 uF or more on its motor supply, and the ESP32-CAM needs a reserve for its WiFi peaks. 16 V is above the 12 V of the adapter. The long leg is plus; the stripe marks the minus leg.
 
+Button capacitor note (24 November 2026): the 100 nF capacitor on the button is dropped. The code already ignores presses closer than about 50 ms, which is enough to count each press once. A 100 uF 50 V capacitor was bought for it by mistake (100 uF is 1000 times 100 nF): it must never go on the button, because with the STM32 pull up of about 40 kohm it would slow every press and release to about 4 s and break the long press and the press counts. It is kept as a spare, for example on the MAX98357A `Vin` if the sound crackles when the motor runs.
+
 Sensor notes:
 
 1. The 3.3 V ultrasonic versions (RCWL-1601, HC-SR04P) are not sold locally. The standard HC-SR04 works at 5 V; its Echo wire goes through the two resistors so the STM32 receives 3.3 V.
 2. The VL53L1X is not sold locally. The VL53L0X reaches 2 m, more than enough for a 1 kg tank, and ST also provides its STM32 driver.
-3. The team's load cell is a **5 kg** bar (confirmed on 14 November 2026). Plate, bowl and one meal weigh under 1 kg, so 5 kg leaves a wide margin, and with the HX711 it still sees well under 1 g, plenty for the 5 g bursts. A dog leaning on the bowl can push more than 5 kg: the mount gets an overload stop (see [circuit 2](circuits_by_part/02_load_cell_hx711/README.md#the-5-kg-load-cell)). The HX711 is still to buy.
+3. The team's load cell is a **5 kg** bar (confirmed on 14 November 2026). Plate, bowl and one meal weigh under 1 kg, so 5 kg leaves a wide margin, and with the HX711 it still sees well under 1 g, plenty for the 5 g bursts. A dog leaning on the bowl can push more than 5 kg: the mount gets an overload stop (see [circuit 2](circuits_by_part/02_load_cell_hx711/README.md#the-5-kg-load-cell)). The HX711 was bought on 24 November 2026.
 
 Power note: avoid the "alimentation à découpage" metal box supplies; they need 230 V wiring by hand. A closed wall adapter is safer.
 
@@ -129,25 +131,16 @@ Prices in Tunisian dinars (TND) from the shop pages on 9 November 2026, mostly L
 
 ### Still to buy
 
-Based on the **Have it** column (19 November 2026): the team already has the NUCLEO-F439ZI, the ESP32-CAM, the ESP32 DevKit V1, the 5 kg load cell, the NEMA 17 motor with its DRV8825, two 470 uF capacitors, resistors, the microSD module, the push button, the LED, breadboards, jumper wires and USB cables.
+Based on the **Have it** column (24 November 2026): every electronic part of the prototype is owned except the speaker.
 
 | Part | Price (TND) |
 |---|---|
-| HX711 | 7 |
-| HC-SR04 | 4.8 |
-| VL53L0X | 20 |
-| DS3231 and coin cell | about 11 |
-| MAX98357A | 14 |
-| Speaker | about 8 |
-| microSD card, if the team has none | about 20 |
-| 100 nF ceramic capacitor (button) | about 1 |
-| XL4015 | 12 |
-| **Total** | **about 98** |
+| Speaker, 4 or 8 ohm, about 3 W ("haut parleur 4 ohm 3 W", any shop, or one from old computer speakers) | about 8 |
+| **Total** | **about 8** |
 
-| Case | Extra | New total (TND) |
-|---|---|---|
-| The ISS group cannot lend the adapter and jack | Adapter 12, DC jack 4 | **about 114** |
-| Auger | Printed in PETG | about 15 more |
+| Later | Extra (TND) |
+|---|---|
+| Auger, printed in PETG | about 15 |
 
 ### Ways to save
 

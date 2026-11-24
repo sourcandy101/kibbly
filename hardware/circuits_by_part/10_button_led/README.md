@@ -6,7 +6,7 @@
 
 **Where on the board:** columns 44 to 49, bottom half (see the [column map](../README.md#board-and-column-map)). The button sits outside the board, on the feeder body.
 
-**Parts:** NUCLEO-F439ZI, push button (12 mm, panel mount, 2 terminals), LED (5 mm) with a 330 ohm resistor, one 100 nF ceramic capacitor (marked 104), breadboard, jumper wires, USB cable.
+**Parts:** NUCLEO-F439ZI, push button (12 mm, panel mount, 2 terminals), LED (5 mm) with a 330 ohm resistor, breadboard, jumper wires, USB cable.
 
 **Wire table:** wires B1 to B4 and L1 to L3 in [04_wiring_list.md, section 12](../../04_wiring_list.md#12-button-and-led), plus rail R3 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 
@@ -27,13 +27,14 @@ The full press logic is in [step 2, section 13](../../02_system_architecture.md#
 
 ```
 3.3 V ── internal pull up (inside the STM32) ──┬── PF12
-                                              ├── button ── GND
-                                              └── 100 nF ── GND
+                                              └── button ── GND
 ```
 
 PF12 is set as an input with the STM32's **internal pull up**, so no resistor is needed: free, the pin reads 3.3 V; pressed, the button joins it to GND and it reads 0 V. A press is the fall from 3.3 V to 0 V, which starts an interrupt.
 
-A mechanical button **bounces**: one press makes several fast contacts. The 100 nF capacitor with the pull up smooths these into one clean fall (a few milliseconds), so "pressed 2 times" is not counted as 6. The program also ignores presses closer than about 50 ms, as a second safety.
+A mechanical button **bounces**: one press makes several fast contacts. The program ignores presses closer than about 50 ms, so "pressed 2 times" is not counted as 6. The 100 nF capacitor of the first plan was dropped on 24 November 2026: the code alone is enough.
+
+**Never put the 100 uF spare capacitor here.** It is 1000 times bigger than 100 nF: with the pull up (about 40 kohm) every press and release would take about 4 s, and the long press and the press counts would stop working.
 
 | Button wire | Goes to | Colour |
 |---|---|---|
@@ -42,7 +43,7 @@ A mechanical button **bounces**: one press makes several fast contacts. The 100 
 
 A panel button has 2 terminals and no polarity: either wire on either terminal. Solder the 2 wires to it (ask Hedi or the lab), ending in male pins for the breadboard.
 
-**Not bought yet?** Test with the 2 wire ends alone: touching them together is a press.
+**Button not soldered yet?** Test with the 2 wire ends alone: touching them together is a press.
 
 ## How the LED works
 
@@ -65,11 +66,10 @@ If the LED stays dark when it should be on, it is probably the wrong way round: 
 1. USB unplugged.
 2. Rail: R3 (Nucleo GND to the bottom − rail).
 3. L2: 330 ohm resistor flat in row c, columns 44 and 47. L3: LED, long leg in column 47 row a, short leg in the bottom − rail.
-4. B3: 100 nF capacitor from column 49 row a to the bottom − rail.
-5. L1: column 44 (row d) to Nucleo D1 · PG14 (CN10 pin 14). B4: column 49 (row e) to Nucleo D8 · PF12 (CN7 pin 20).
-6. Button: B1 into column 49, row c; B2 to the bottom − rail, column 52.
-7. Check: LED long leg in row a; no wire from the button to a + rail.
-8. Plug in the USB.
+4. L1: column 44 (row d) to Nucleo D1 · PG14 (CN10 pin 14). B4: column 49 (row e) to Nucleo D8 · PF12 (CN7 pin 20).
+5. Button: B1 into column 49, row c; B2 to the bottom − rail, column 52.
+6. Check: LED long leg in row a; no wire from the button to a + rail.
+7. Plug in the USB.
 
 ## First test
 

@@ -1212,13 +1212,13 @@
 <text x="1774" y="333" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#b0b0b0" text-anchor="start" font-weight="normal">(not used)</text>
 <rect x="768" y="546" width="84" height="144" rx="4" fill="#1b6e3a" stroke="#0f4a26" stroke-width="2"/>
 <rect x="776" y="552" width="8" height="8" fill="#d4af37"/>
-<text x="780" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
+<text x="780" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">VCC</text>
 <rect x="796" y="552" width="8" height="8" fill="#d4af37"/>
-<text x="800" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">DT</text>
+<text x="800" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">DAT</text>
 <rect x="816" y="552" width="8" height="8" fill="#d4af37"/>
-<text x="820" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">SCK</text>
+<text x="820" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">CLK</text>
 <rect x="836" y="552" width="8" height="8" fill="#d4af37"/>
-<text x="840" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">VCC</text>
+<text x="840" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
 <rect x="792.0" y="598" width="36" height="28" rx="2" fill="#1a1a1a"/>
 <text x="810.0" y="616" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#ddd" text-anchor="middle" font-weight="bold">HX711</text>
 <rect x="774.5" y="674" width="7" height="8" fill="#d4af37"/>
@@ -1234,6 +1234,7 @@
 <rect x="849.5" y="674" width="7" height="8" fill="#d4af37"/>
 <text x="853" y="668" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">B+</text>
 <text x="760" y="700" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#1b6e3a" text-anchor="end" font-weight="bold">HX711 board</text>
+<text x="760" y="716" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#555" text-anchor="end" font-weight="normal">pins VCC DAT CLK GND</text>
 <rect x="900" y="708" width="260" height="48" rx="3" fill="#cfd8dc" stroke="#90a4ae" stroke-width="2"/>
 <circle cx="922" cy="732" r="6" fill="#ffffff" stroke="#90a4ae" stroke-width="1.5"/>
 <circle cx="946" cy="732" r="6" fill="#ffffff" stroke="#90a4ae" stroke-width="1.5"/>
@@ -1256,14 +1257,14 @@
 <path d="M900,744 L790,744 Q778,744 778,732 L778,678" fill="none" stroke="#8e1b18" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M900,744 L790,744 Q778,744 778,732 L778,678" fill="none" stroke="#e53935" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="778" cy="678" r="4.6" fill="#8e1b18" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M780,536 C762,536 760,556 760,600" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M780,536 C762,536 760,556 760,600" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="780" cy="536" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="760" cy="600" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M840,536 C875,536 880,560 880,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M840,536 C875,536 880,560 880,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="840" cy="536" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="880" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M780,536 C762,536 760,556 760,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M780,536 C762,536 760,556 760,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="780" cy="536" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="760" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M840,536 C875,536 880,560 880,600" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M840,536 C875,536 880,560 880,600" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="840" cy="536" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="880" cy="600" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
 <path d="M280,502 C440,502 600,496 800,496" fill="none" stroke="#4e342e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M280,502 C440,502 600,496 800,496" fill="none" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="280" cy="502" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
@@ -1335,14 +1336,14 @@
 <text x="712" y="992" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">GND</text>
 <line x1="662" y1="1010" x2="700" y2="1010" stroke="#4e342e" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="1010" x2="700" y2="1010" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="1014" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">DT: Nucleo D4 · PF14</text>
+<text x="712" y="1014" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">DAT: Nucleo D4 · PF14</text>
 <line x1="662" y1="1032" x2="700" y2="1032" stroke="#5f5f5f" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="1032" x2="700" y2="1032" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="1036" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">SCK: Nucleo D3 · PE13</text>
+<text x="712" y="1036" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">CLK: Nucleo D3 · PE13</text>
 <text x="662" y="1064" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Load cell: red E+, black E−, white A−, green A+</text>
 <text x="662" y="1082" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">(colours vary by brand)</text>
 <text x="1060" y="946" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">HX711 SETTINGS</text>
-<text x="1060" y="970" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Powered at 3.3 V: its DT signal is safe for the STM32</text>
+<text x="1060" y="970" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Powered at 3.3 V: its DAT signal is safe for the STM32</text>
 <text x="1060" y="990" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Channel A, gain 128 (chosen by the code)</text>
 <text x="1060" y="1010" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">B− and B+: not used</text>
 <text x="1060" y="1030" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">10 readings per second (fixed on most boards)</text>

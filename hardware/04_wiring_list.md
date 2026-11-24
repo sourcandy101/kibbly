@@ -292,7 +292,7 @@ Differences from the TMC2209 wiring of section 6:
 
 ## 7. Load cell and HX711
 
-Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic green HX711 board: 4 pin side (GND, DT, SCK, VCC) and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 15 to 18** of the bottom half; the board hangs over the bottom edge.
+Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). The team's HX711 board (checked on 24 November 2026): 4 pin side **VCC, DAT, CLK, GND**, the reverse of the generic green board (GND, DT, SCK, VCC), and 6 pin side (E+, E−, A−, A+, B−, B+). The 4 pin side plugs into **row a, columns 15 to 18** of the bottom half, **VCC in column 15 and GND in column 18**; DAT and CLK keep columns 16 and 17, so only the two power wires moved. The board hangs over the bottom edge.
 
 | # | From | To | Colour | Measure or note | Checked |
 |---|---|---|---|---|---|
@@ -301,10 +301,10 @@ Drawn in [circuit 2](circuits_by_part/02_load_cell_hx711/README.md). Generic gre
 | H3 | Load cell white | HX711 `A-` | White (cell wire) | | |
 | H4 | Load cell green | HX711 `A+` | Green (cell wire) | | |
 | H5 | HX711 `B+`, `B-` | Not connected | | Channel B is not used | |
-| H6 | HX711 `VCC` (column 18) | Bottom + rail (3.3 V), column 20 | Yellow | From row b. 3.3 V keeps DT safe for the STM32 | |
-| H7 | HX711 `GND` (column 15) | Bottom − rail (GND), column 14 | Black | From row b | |
-| H8 | HX711 `DT` or `DOUT` (column 16) | Nucleo D4 · PF14 (CN10 pin 8) | Brown | Row d | |
-| H9 | HX711 `SCK` or `CLK` (column 17) | Nucleo D3 · PE13 (CN10 pin 10) | Grey | Row c | |
+| H6 | HX711 `VCC` (column 15) | Bottom + rail (3.3 V), column 14 | Yellow | From row b. 3.3 V keeps DAT safe for the STM32. Never 5 V | |
+| H7 | HX711 `GND` (column 18) | Bottom − rail (GND), column 20 | Black | From row b | |
+| H8 | HX711 `DAT` (also `DT` or `DOUT`) (column 16) | Nucleo D4 · PF14 (CN10 pin 8) | Brown | Row d | |
+| H9 | HX711 `CLK` (also `SCK`) (column 17) | Nucleo D3 · PE13 (CN10 pin 10) | Grey | Row c | |
 | H10 | HX711 `VDD` (SparkFun board only) | 3.3 V rail | Yellow | Must equal VCC; generic boards do not have it | |
 
 Also needed: R2 and R3 from section 4B.
@@ -356,8 +356,8 @@ flowchart LR
 | I4 | VL53L0X `GND` | Bottom − rail (GND), column 25 | Black | | |
 | I5 | VL53L0X `SDA` | Column 32, row b | Blue | | |
 | I6 | VL53L0X `SCL` | Column 31, row c | White | | |
-| I7 | VL53L0X `XSHUT` | Not connected | | Pulled up on the module; sensor always on | |
-| I8 | VL53L0X `GPIO1` | Not connected | | Interrupt not used | |
+| I7 | VL53L0X `XSHUT` | No pin on the team's 4 pin board | | Tied inside the module; sensor always on | |
+| I8 | VL53L0X `GPIO1` | No pin on the team's 4 pin board | | Interrupt not used | |
 | I9 | DS3231 `VCC` (column 33) | Bottom + rail (3.3 V), column 36 | Yellow | From row c | |
 | I10 | DS3231 `GND` (column 34) | Bottom − rail (GND), column 35 | Black | From row b | |
 | I11 | DS3231 `SDA` | Column 32, row a | | Its own pin, in the SDA bus column; no wire | |
@@ -413,13 +413,15 @@ Drawn in [circuit 10](circuits_by_part/10_button_led/README.md). Bottom half, co
 |---|---|---|---|---|---|
 | B1 | Button terminal 1 | Column 49, row c | Grey | No polarity: either terminal | |
 | B2 | Button terminal 2 | Bottom − rail (GND), column 52 | Black | Pressed = 0 V on PF12 | |
-| B3 | 100 nF capacitor (marked 104) | Column 49 row a to the bottom − rail, column 49 | | Smooths the bounce, so one press counts once | |
+| B3 | No capacitor | | | Removed on 24 November 2026: the code ignores presses closer than about 50 ms | |
 | B4 | Column 49, row e | Nucleo D8 · PF12 (CN7 pin 20) | Grey | Internal pull up in the STM32: free = 3.3 V | |
 | L1 | Column 44, row d | Nucleo D1 · PG14 (CN10 pin 14) | Brown | High = LED on | |
 | L2 | 330 ohm resistor | Column 44 row c to column 47 row c, lying flat | | Bands orange, orange, brown | |
 | L3 | LED | Long leg (+) in column 47 row a, short leg in the bottom − rail, column 47 | | Short leg = flat side of the rim; about 4 mA | |
 
-Also needed: R3 from section 4B. Button not bought yet: touching the B1 and B2 wire ends together is a press.
+Also needed: R3 from section 4B. To test before the button is soldered, touch the B1 and B2 wire ends together: that is a press.
+
+**Never put the 100 uF spare capacitor on the button.** With the internal pull up (about 40 kohm) it would slow every press to about 4 s and break the long press and the press counts.
 
 ## 13. Totals per rail
 

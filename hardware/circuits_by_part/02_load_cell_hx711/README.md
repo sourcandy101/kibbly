@@ -22,7 +22,7 @@ Load cell ──4 thin wires──► HX711 (E+, E−, A−, A+) ── DT, SCK 
 |---|---|
 | HX711 to load cell (E+, E−) | A steady voltage that powers the 4 tiny resistors glued on the bar (the strain gauges) |
 | Load cell to HX711 (A+, A−) | A very small voltage that changes when the bar bends under weight |
-| HX711 to Nucleo (DT, SCK) | The weight as a 24 bit number: the Nucleo pulses SCK, the HX711 answers bit by bit on DT |
+| HX711 to Nucleo (DAT, CLK) | The weight as a 24 bit number: the Nucleo pulses CLK, the HX711 answers bit by bit on DAT |
 
 The HX711 amplifies the tiny signal of the bar and turns it into a number. The Nucleo turns that number into grams with a calibration factor measured once with a known weight.
 
@@ -57,7 +57,9 @@ The team's cell is a **5 kg bar** (rating confirmed on 14 November 2026).
 
 ## The HX711 on the breadboard
 
-The 4 pin side (GND, DT, SCK, VCC) plugs into **row a, columns 15 to 18**, and the board hangs over the bottom edge of the breadboard. Check the order printed on your board: if it is different, keep the same wires but follow the labels.
+The team's board reads **VCC, DAT, CLK, GND** on its 4 pin side (checked on 24 November 2026). It plugs into **row a, columns 15 to 18**, with **VCC in column 15 and GND in column 18**, and the board hangs over the bottom edge of the breadboard. DAT is the same signal as DT or DOUT, and CLK the same as SCK.
+
+This is the reverse of the generic green board (GND, DT, SCK, VCC) drawn before: DAT and CLK keep columns 16 and 17, so only the two power wires moved (H6 and H7). Follow the labels, not the board colour.
 
 | Pin left empty | Why |
 |---|---|
@@ -82,9 +84,9 @@ For the first test, the bar can lie on the table with a weight pressing its free
 2. Solder the header and the load cell wires to the HX711 if needed (H1 to H4).
 3. Push the HX711 4 pin header into row a, columns 15 to 18.
 4. R2 and R3: Nucleo 3V3 and GND to the bottom rails (already there if circuit 1 is wired).
-5. H7: HX711 GND (column 15) to the bottom − rail.
-6. H6: HX711 VCC (column 18) to the bottom + rail (3.3 V).
-7. H8: DT (column 16) to Nucleo D4 · PF14. H9: SCK (column 17) to Nucleo D3 · PE13.
+5. H7: HX711 GND (column 18) to the bottom − rail, column 20.
+6. H6: HX711 VCC (column 15) to the bottom + rail (3.3 V), column 14.
+7. H8: DAT (column 16) to Nucleo D4 · PF14. H9: CLK (column 17) to Nucleo D3 · PE13.
 8. Check: VCC goes to the bottom + rail (3.3 V), not to the top + rail (5 V).
 9. Plug in the USB.
 

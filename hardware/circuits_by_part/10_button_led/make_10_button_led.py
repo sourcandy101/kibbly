@@ -38,14 +38,6 @@ t(X(39) + 2, 678, "LED: long leg (+) in row a,", 10, "#c62828", weight="bold")
 t(X(39) + 2, 692, "short leg (flat side) in the rail", 10, "#c62828")
 a(f'<line x1="{X(46) + 2}" y1="664" x2="{lx - 6}" y2="590" stroke="#e57373" stroke-width="1.2"/>')
 
-# 100 nF capacitor in column 49: row a to the bottom − rail (smooths the button bounce)
-cx = X(49)
-a(f'<line x1="{cx}" y1="{ROW["a"]}" x2="{cx}" y2="{ROW["bot-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-a(f'<ellipse cx="{cx}" cy="578" rx="8" ry="10" fill="#fbc02d" stroke="#c49000" stroke-width="1.5"/>')
-t(cx, 581, "104", 6, "#5d4037", "middle", "bold")
-for yy in (ROW["a"], ROW["bot-"]):
-    a(f'<circle cx="{cx}" cy="{yy}" r="3.5" fill="#757575"/>')
-
 # push button (12 mm, panel mount) outside the board: one wire into column 49, one to the bottom − rail
 bx, by = X(51), 760
 a(f'<rect x="{bx - 34}" y="{by - 18}" width="68" height="36" rx="6" fill="#455a64" stroke="#263238" stroke-width="2"/>')
@@ -55,7 +47,7 @@ for ox in (-10, 10):
     a(f'<rect x="{bx + ox - 3}" y="{by - 30}" width="6" height="12" fill="#bdbdbd" stroke="#757575"/>')
 t(bx + 46, by - 6, "Push button, 12 mm, panel mount", 13, "#c62828", weight="bold")
 t(bx + 46, by + 10, "on the feeder body, 2 wires soldered to it", 11, "#555")
-t(bx + 46, by + 26, "Not bought yet: touch the two wire ends together to test", 11, "#555")
+t(bx + 46, by + 26, "Not soldered yet: touch the two wire ends together to test", 11, "#555")
 d.wire(f"M{bx - 10},{by - 30} L{bx - 10},640 C{bx - 10},630 {bx - 10},620 {bx - 10},{ROW['c'] + 10} "
        f"C{bx - 10},{ROW['c'] + 4} {bx - 14},{ROW['c']} {bx - 20},{ROW['c']} L{X(49)},{ROW['c']}", GREY, [(X(49), ROW['c'])], width=3.5)
 d.wire(f"M{bx + 10},{by - 30} L{bx + 10},{ROW['bot-'] + 30} C{bx + 10},{ROW['bot-'] + 12} {X(52)},{ROW['bot-'] + 12} "
@@ -80,7 +72,7 @@ d.lines(662, 1042, ["Button wires: one into column 49,", "the other to the botto
 t(1060, 946, "SETTINGS", 14, "#c62828", weight="bold")
 d.lines(1060, 970, ["PF12: input, internal pull up, interrupt",
                     "on the falling edge: free 3.3 V, pressed 0 V",
-                    "100 nF + pull up smooth the bounce (a few ms)",
+                    "Bounce filtered in the code (50 ms), no capacitor",
                     "PG14: output, high = LED on",
                     "LED current: (3.3 − 2.0) V ÷ 330 Ω ≈ 4 mA",
                     "Resistor bands: orange, orange, brown"])
