@@ -27,7 +27,9 @@ from kibbly_ai import __version__
 from kibbly_ai.config import Settings, load_settings
 from kibbly_ai.contracts import ContractError
 from kibbly_ai.engines import age_in_months, decide, feeding_plan
+from kibbly_ai.engines import stats
 from kibbly_ai.language import chat as chat_module
+from kibbly_ai.language import report as report_module
 from kibbly_ai.language.providers import make_provider
 from kibbly_ai.perception.recognizer import RecognitionSettings
 from kibbly_ai.storage import Storage, make_storage
@@ -63,6 +65,15 @@ class ChatRequest(BaseModel):
     dog: dict | None = None
     dog_id: str | None = None
     facts: list[str] = Field(default_factory=list)
+
+
+class ReportRequest(BaseModel):
+    """A daily meal report for one dog. Send the meals inline, or a dog_id to load them."""
+
+    dog_name: str | None = None
+    dog_id: str | None = None
+    meals: list[dict] | None = None
+    baseline_grams_eaten: float | None = None
 
 
 def _split_ids(dog_ids: str | None) -> list | None:
@@ -251,6 +262,21 @@ def create_app(settings: Settings = None, storage: Storage = None,
                 yield piece
 
         return StreamingResponse(pieces(), media_type="text/plain; charset=utf-8")
+
+    @app.post("/reports/daily")
+    def reports_daily(body: ReportRequest):
+        """A daily meal report: the numbers from engines/stats.py, worded by the model, with a
+        plain template fallback when the model is down. Send meals inline or a dog_id to load them."""
+        meals, name = body.meals, body.dog_name
+        if meals is None:
+            if not body.dog_id:
+                raise HTTPException(status_code=400, detail="send meals or a dog_id")
+            meals = storage.query("meals", dog_id=body.dog_id)
+            doc = storage.get("dogs", body.dog_id)
+            name = name or (doc.get("name") if doc else body.dog_id)
+        summary = stats.daily_summary(meals, body.baseline_grams_eaten).as_dict()
+        report = report_module.daily_report(provider_factory(), name or "your dog", summary)
+        return {"summary": summary, **report}
 
     def store_document(collection: str, document: dict) -> dict:
         try:

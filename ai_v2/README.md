@@ -20,8 +20,8 @@ A rebuild of the Kibbly AI from scratch, on a stronger foundation. The first ver
 | 3 | Architecture of the AI server (see `architecture.md`) | done |
 | 4 | Dog recognition (see `evaluation/recognition/README.md`) | done on public data: 91.3% right dog, 0% wrong dog at simulated feeder quality; to confirm with real photos |
 | 5 | Nutrition engine and feeding plan | done: `engines/nutrition.py` and `POST /plans` |
-| 6 | Meal insights (reports, alerts) | Ask Kibbly chat done (`language/chat.py`, `POST /chat`); meal reports and the daily summary recompute still to do |
-| 7 | Server API for the ESP32-CAM and the app | recognition, feeder config, meals, visits, alerts, plans and chat all live; protocol in `../docs/esp32_server_protocol.md`. Remaining: `POST /dogs/{dog_id}/enroll`. |
+| 6 | Meal insights (reports, alerts) | done: `engines/stats.py`, `language/report.py`, `POST /reports/daily`, and Ask Kibbly chat (`language/chat.py`, `POST /chat` + `/chat/stream`). Model comparison eval still to run |
+| 7 | Server API for the ESP32-CAM and the app | recognition, feeder config/meals/visits/alerts, plans, chat and reports all live; protocol in `../docs/esp32_server_protocol.md`. Remaining: `POST /dogs/{dog_id}/enroll`. See `STATUS.md` for where to pick up. |
 
 This table is updated at the end of each step.
 

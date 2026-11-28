@@ -7,5 +7,7 @@ no model inside.
 
 from kibbly_ai.engines.nutrition import FeedingPlan, Meal, age_in_months, feeding_plan
 from kibbly_ai.engines.serving import Decision, decide
+from kibbly_ai.engines.stats import DailySummary, daily_summary
 
-__all__ = ["Decision", "decide", "FeedingPlan", "Meal", "age_in_months", "feeding_plan"]
+__all__ = ["Decision", "decide", "FeedingPlan", "Meal", "age_in_months", "feeding_plan",
+           "DailySummary", "daily_summary"]

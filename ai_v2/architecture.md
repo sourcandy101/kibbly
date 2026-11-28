@@ -76,7 +76,8 @@ Dependencies point down only: API uses engines, perception, language and storage
 | `POST /feeder/alerts` | ESP32-CAM | Store a device alert (jam, low tank, power cut) (**built**) |
 | `POST /plans` | app | Feeding plan suggestion (**built**; `engines/nutrition.py`) |
 | `POST /dogs/{dog_id}/enroll` | app | Build the recognition profile from photos and video |
-| `POST /chat` | app | Ask Kibbly, grounded in the dog's logs (**built**; `language/chat.py`) |
+| `POST /chat`, `POST /chat/stream` | app | Ask Kibbly, grounded in the dog's logs (**built**; `language/chat.py`) |
+| `POST /reports/daily` | app | Daily meal report: stats in code, wording by the model (**built**; `engines/stats.py`, `language/report.py`) |
 
 ## 6. Where it runs
 
