@@ -236,7 +236,7 @@ flowchart LR
 | M15 | `B1`, `B2` (also `2A`, `2B`) | Motor coil B, both wires | | | |
 | M16 | `VREF` potentiometer | | | Set to about 1.1 V for 0.8 A as a safe start; check the formula on the module page | |
 
-How to find the coil pairs: with the motor unplugged, measure the resistance between wires. Two wires with **1 to 5 ohm** between them are one coil. Wires of different coils show no connection. If the motor only shakes, swap the two wires of one coil.
+How to find the coil pairs: with the motor unplugged, measure the resistance between wires. Two wires with **1 to 5 ohm** between them are one coil. Wires of different coils show no connection. If the motor only shakes, the pairs are mixed: each pair must go on one coil output. Swapping the two wires inside one coil only reverses the direction.
 
 **Never plug or unplug the motor while the driver has 12 V.** This destroys the TMC2209.
 
