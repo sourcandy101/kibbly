@@ -17,12 +17,19 @@ class LLMProvider:
     def generate(self, system: str, user: str, json_output: bool = True) -> str:
         raise NotImplementedError
 
+    def generate_stream(self, system: str, user: str):
+        """Yield the answer in pieces as it is written. The default yields it in one piece,
+        so providers without real streaming (and the fake) still work."""
+        yield self.generate(system, user, json_output=False)
+
 
 class OllamaProvider(LLMProvider):
     """Local model served by Ollama. Default gemma3:4b (chosen by benchmark, see ai_v2/scope.md)."""
 
-    def __init__(self, model: str, url: str, timeout: int = 180, temperature: float = 0.2):
+    def __init__(self, model: str, url: str, timeout: int = 180, temperature: float = 0.2,
+                 num_predict: int = 256, keep_alive: str = "30m"):
         self.model, self.url, self.timeout, self.temperature = model, url, timeout, temperature
+        self.num_predict, self.keep_alive = num_predict, keep_alive
         self.name = f"ollama:{model}"
 
     def generate(self, system: str, user: str, json_output: bool = True) -> str:
@@ -30,7 +37,10 @@ class OllamaProvider(LLMProvider):
             "model": self.model,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
             "stream": False,
-            "options": {"temperature": self.temperature},
+            # keep_alive holds the model in memory so the next answer is not a cold start;
+            # num_predict caps the length so a short answer does not run on.
+            "keep_alive": self.keep_alive,
+            "options": {"temperature": self.temperature, "num_predict": self.num_predict},
         }
         if json_output:
             body["format"] = "json"
@@ -44,6 +54,34 @@ class OllamaProvider(LLMProvider):
         except (urllib.error.URLError, TimeoutError) as exc:
             raise ProviderError(f"Ollama not reachable at {self.url}: {exc}") from exc
         return payload["message"]["content"]
+
+    def generate_stream(self, system: str, user: str):
+        """Stream the answer token by token, so the app can show it as it is written."""
+        body = {
+            "model": self.model,
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+            "stream": True,
+            "keep_alive": self.keep_alive,
+            "options": {"temperature": self.temperature, "num_predict": self.num_predict},
+        }
+        if self.model.startswith("qwen"):
+            body["think"] = False
+        request = urllib.request.Request(self.url, data=json.dumps(body).encode("utf-8"),
+                                         headers={"Content-Type": "application/json"}, method="POST")
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                for line in response:            # Ollama streams one JSON object per line
+                    line = line.strip()
+                    if not line:
+                        continue
+                    chunk = json.loads(line.decode("utf-8"))
+                    piece = chunk.get("message", {}).get("content", "")
+                    if piece:
+                        yield piece
+                    if chunk.get("done"):
+                        break
+        except (urllib.error.URLError, TimeoutError) as exc:
+            raise ProviderError(f"Ollama not reachable at {self.url}: {exc}") from exc
 
 
 class FakeProvider(LLMProvider):

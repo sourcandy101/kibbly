@@ -19,6 +19,7 @@ from typing import Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 
@@ -212,10 +213,8 @@ def create_app(settings: Settings = None, storage: Storage = None,
             "age_months": age_in_months(doc["birth_month"], today) if doc.get("birth_month") else None,
         }
 
-    @app.post("/chat")
-    def chat(body: ChatRequest):
-        """Ask Kibbly about one dog, grounded in its facts. Needs a running model (Ollama by default);
-        if the model is unreachable the answer is a plain fallback, never an error."""
+    def resolve_dog(body: ChatRequest):
+        """The dog and the facts to ground on, from an inline dog or a stored dog_id."""
         dog, facts = body.dog, list(body.facts)
         if dog is None:
             if not body.dog_id:
@@ -230,8 +229,28 @@ def create_app(settings: Settings = None, storage: Storage = None,
             for meal in meals:
                 facts.append(f"{meal.get('scheduled_at', '')}: {meal.get('status')}, "
                              f"ate {meal.get('grams_eaten')} of {meal.get('grams_dispensed')} g")
+        return dog, facts
+
+    @app.post("/chat")
+    def chat(body: ChatRequest):
+        """Ask Kibbly about one dog, grounded in its facts. Needs a running model (Ollama by default);
+        if the model is unreachable the answer is a plain fallback, never an error."""
+        dog, facts = resolve_dog(body)
         answer = chat_module.ask(provider_factory(), dog, body.question, facts)
         return {"dog": dog.get("name"), **answer}
+
+    @app.post("/chat/stream")
+    def chat_stream(body: ChatRequest):
+        """Same as /chat, but streams the answer as plain text while the model writes it, so a slow
+        local model shows words within a second or two instead of one long wait."""
+        dog, facts = resolve_dog(body)
+        provider = provider_factory()
+
+        def pieces():
+            for piece in chat_module.stream(provider, dog, body.question, facts):
+                yield piece
+
+        return StreamingResponse(pieces(), media_type="text/plain; charset=utf-8")
 
     def store_document(collection: str, document: dict) -> dict:
         try:

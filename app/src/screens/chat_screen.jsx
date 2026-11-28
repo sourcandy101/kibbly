@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { dogColors } from "../components/dog_figure.jsx";
 import DogAvatar from "../components/dog_avatar.jsx";
 import Icon, { Mark } from "../components/icons.jsx";
-import { DEFAULT_SERVER, askKibbly, getServerUrl, setServerUrl } from "../data/ai.js";
+import { DEFAULT_SERVER, getServerUrl, setServerUrl, streamKibbly } from "../data/ai.js";
 import { pathTo } from "../logic/routes.js";
 import { buildTodayMeals } from "../logic/today_meals.js";
 
@@ -49,6 +49,7 @@ const SUGGESTIONS = (name) => [
 
 function Bubble({ message, color }) {
   const mine = message.role === "you";
+  const dots = !mine && message.pending && !message.text;
   return (
     <li className={mine ? "bubble_row mine" : "bubble_row"}>
       {!mine &&
@@ -61,7 +62,17 @@ function Bubble({ message, color }) {
             <Mark />
           </span>
         ))}
-      <div className={`bubble_msg ${mine ? "mine" : message.error ? "error" : ""}`}>{message.text}</div>
+      <div className={`bubble_msg ${mine ? "mine" : message.error ? "error" : ""} ${dots ? "typing" : ""}`}>
+        {dots ? (
+          <>
+            <i></i>
+            <i></i>
+            <i></i>
+          </>
+        ) : (
+          message.text
+        )}
+      </div>
       {mine && color && <DogAvatar color={color} mood="happy" size="small" />}
     </li>
   );
@@ -105,25 +116,38 @@ export default function ChatScreen({ data }) {
     );
   }
 
+  // Replace the last message (the Kibbly bubble being streamed into).
+  const setLast = (patch) =>
+    setMessages((current) => {
+      const copy = [...current];
+      copy[copy.length - 1] = { ...copy[copy.length - 1], ...patch };
+      return copy;
+    });
+
   const send = async (text) => {
     const question = (text ?? input).trim();
     if (!question || pending) return;
     setInput("");
-    setMessages((current) => [...current, { role: "you", text: question }]);
+    setMessages((current) => [
+      ...current,
+      { role: "you", text: question },
+      { role: "kibbly", text: "", pending: true },
+    ]);
     setPending(true);
     try {
-      const reply = await askKibbly({ dog: dogPayload(dog), question, facts: factsFor(dog, data) });
-      setMessages((current) => [...current, { role: "kibbly", text: reply.answer }]);
+      let answer = "";
+      await streamKibbly({ dog: dogPayload(dog), question, facts: factsFor(dog, data) }, (piece) => {
+        answer += piece;
+        setLast({ text: answer, pending: false });
+      });
+      if (!answer.trim()) setLast({ text: "I don't have an answer for that yet.", pending: false });
     } catch {
       setShowSettings(true);
-      setMessages((current) => [
-        ...current,
-        {
-          role: "kibbly",
-          error: true,
-          text: `I couldn't reach the Kibbly server at ${getServerUrl()}. On your laptop, start it with "uvicorn kibbly_ai.api.app:app --host 0.0.0.0 --port 8000" and make sure Ollama is running, then set the address below.`,
-        },
-      ]);
+      setLast({
+        error: true,
+        pending: false,
+        text: `I couldn't reach the Kibbly server at ${getServerUrl()}. On your laptop, start it with "uvicorn kibbly_ai.api.app:app --host 0.0.0.0 --port 8000" and make sure Ollama is running, then set the address below.`,
+      });
     } finally {
       setPending(false);
     }
@@ -185,18 +209,6 @@ export default function ChatScreen({ data }) {
         {messages.map((message, index) => (
           <Bubble key={index} message={message} color={colors[dogId]} />
         ))}
-        {pending && (
-          <li className="bubble_row">
-            <span className="kibbly_mark">
-              <Mark />
-            </span>
-            <div className="bubble_msg typing" aria-label="Kibbly is typing">
-              <i></i>
-              <i></i>
-              <i></i>
-            </div>
-          </li>
-        )}
         <li ref={listEnd} />
       </ul>
 

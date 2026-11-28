@@ -1,7 +1,5 @@
 """Ask Kibbly chat: grounding and the fallback, with a fake provider (no model)."""
 
-import json
-
 from fastapi.testclient import TestClient
 
 from kibbly_ai.api.app import create_app
@@ -28,7 +26,7 @@ def test_facts_block_notes_when_there_is_no_history():
 
 
 def test_ask_passes_safety_and_facts_to_the_model():
-    provider = FakeProvider([json.dumps({"answer": "Biscuit ate well today."})])
+    provider = FakeProvider(["Biscuit ate well today."])
     result = chat.ask(provider, BISCUIT, "How did Biscuit eat?", ["Ate 280 g at breakfast."])
     assert result["answer"] == "Biscuit ate well today."
     system, user = provider.calls[0]
@@ -41,13 +39,13 @@ def test_ask_falls_back_when_the_model_is_down():
     assert result["answer"] == chat.FALLBACK
 
 
-def test_ask_falls_back_on_bad_json():
-    result = chat.ask(FakeProvider(["not json at all"]), BISCUIT, "anything")
+def test_ask_falls_back_on_an_empty_answer():
+    result = chat.ask(FakeProvider(["   "]), BISCUIT, "anything")
     assert result["answer"] == chat.FALLBACK
 
 
 def test_chat_endpoint_with_an_inline_dog():
-    provider = FakeProvider([json.dumps({"answer": "Biscuit is doing fine."})])
+    provider = FakeProvider(["Biscuit is doing fine."])
     app = create_app(provider_factory=lambda: provider)
     r = TestClient(app).post("/chat", json={"question": "How is Biscuit?", "dog": BISCUIT,
                                             "facts": ["Ate 280 g at breakfast."]})
@@ -60,3 +58,19 @@ def test_chat_endpoint_with_an_inline_dog():
 def test_chat_endpoint_needs_a_dog():
     app = create_app(provider_factory=lambda: FakeProvider([]))
     assert TestClient(app).post("/chat", json={"question": "hi"}).status_code == 400
+
+
+def test_stream_yields_the_answer():
+    pieces = list(chat.stream(FakeProvider(["Biscuit is doing fine."]), BISCUIT, "How is Biscuit?"))
+    assert "".join(pieces) == "Biscuit is doing fine."
+
+
+def test_stream_falls_back_when_the_model_is_down():
+    assert list(chat.stream(BrokenProvider([]), BISCUIT, "anything")) == [chat.FALLBACK]
+
+
+def test_chat_stream_endpoint_returns_text():
+    app = create_app(provider_factory=lambda: FakeProvider(["Biscuit is doing fine."]))
+    r = TestClient(app).post("/chat/stream", json={"question": "How is Biscuit?", "dog": BISCUIT})
+    assert r.status_code == 200
+    assert r.text == "Biscuit is doing fine."
