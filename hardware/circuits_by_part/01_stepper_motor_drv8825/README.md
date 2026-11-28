@@ -107,6 +107,8 @@ No power anywhere for these checks. Take the DRV8825 **out** of the carrier for 
 
 The motor turns one full turn forward, pauses, turns one turn back, rests, and repeats. Anyone in the team can copy the three code blocks below (each block has a copy button on GitHub) into a new STM32CubeIDE project.
 
+**Easier:** the complete file is in [firmware/tests/stepper_drv8825/main.c](../../../firmware/tests/stepper_drv8825/main.c). It replaces the whole `main.c` of a new project and sets its own pins, so steps 3 and 4 below are not needed; its [README](../../../firmware/tests/stepper_drv8825/README.md) has the short version of the steps.
+
 ### Make the project
 
 1. STM32CubeIDE: **File, New, STM32 Project**, tab **Board Selector**, choose **NUCLEO-F439ZI**, and name the project `stepper_test`.
