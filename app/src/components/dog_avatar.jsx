@@ -1,15 +1,10 @@
-// Stands in for the dog's photo until photo upload is linked to Firebase.
-const TONES = ["tone_clay", "tone_moss", "tone_sky", "tone_plum"];
+import { DOG_COLORS, DogFigure } from "./dog_figure.jsx";
 
-function toneFor(name) {
-  const total = [...name].reduce((sum, letter) => sum + letter.charCodeAt(0), 0);
-  return TONES[total % TONES.length];
-}
-
-export default function DogAvatar({ name }) {
+// The dog character in a round tile of its color. Stands in for a photo until uploads are linked.
+export default function DogAvatar({ color = "butter", mood = "happy", size = "medium" }) {
   return (
-    <span className={`avatar ${toneFor(name)}`} aria-hidden="true">
-      {name.charAt(0).toUpperCase()}
+    <span className={`avatar avatar_${size}`} style={{ background: DOG_COLORS[color]?.tint }} aria-hidden="true">
+      <DogFigure color={color} mood={mood} />
     </span>
   );
 }

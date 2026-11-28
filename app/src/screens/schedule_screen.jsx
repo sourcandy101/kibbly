@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import Icon from "../components/icons.jsx";
 import { saveSchedule } from "../data/store.js";
 import { go, pathTo } from "../logic/routes.js";
 import {
@@ -129,7 +130,7 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
                         onClick={() => updateRow(row.id, "grams", stepGrams(row.grams, -1))}
                         aria-label={`${GRAM_STEP} g less for meal ${index + 1}`}
                       >
-                        −
+                        <Icon name="minus" />
                       </button>
                       <input
                         id={`grams_${row.id}`}
@@ -144,7 +145,7 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
                         onClick={() => updateRow(row.id, "grams", stepGrams(row.grams, 1))}
                         aria-label={`${GRAM_STEP} g more for meal ${index + 1}`}
                       >
-                        +
+                        <Icon name="plus" />
                       </button>
                     </div>
                     {errors.grams && <p className="field_error">{errors.grams}</p>}
@@ -156,13 +157,14 @@ export default function ScheduleScreen({ data, refresh, dogId }) {
         </ul>
 
         {rows.length < MAX_MEALS_PER_DAY && (
-          <button type="button" className="button button_wide" onClick={addRow}>
+          <button type="button" className="button button_wide button_dashed" onClick={addRow}>
+            <Icon name="plus" />
             Add a meal
           </button>
         )}
 
         <p className="schedule_total">
-          Daily total: <strong>{dailyTotal} g</strong>
+          Daily total <strong className="number">{dailyTotal} g</strong>
         </p>
 
         {validation?.formError && (

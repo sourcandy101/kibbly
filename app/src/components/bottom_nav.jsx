@@ -1,9 +1,10 @@
 import { pathTo } from "../logic/routes.js";
+import Icon from "./icons.jsx";
 
 const TABS = [
-  { label: "Today", target: "home", matches: ["home"] },
-  { label: "Dogs", target: "dogs", matches: ["dogs", "dog_new", "dog_edit", "schedule"] },
-  { label: "Calling order", target: "calling_order", matches: ["calling_order"] },
+  { label: "Today", icon: "bowl", target: "home", matches: ["home"] },
+  { label: "Dogs", icon: "dogs", target: "dogs", matches: ["dogs", "dog_new", "dog_edit", "schedule"] },
+  { label: "Calling order", icon: "speaker", target: "calling_order", matches: ["calling_order"] },
 ];
 
 export default function BottomNav({ current }) {
@@ -18,7 +19,8 @@ export default function BottomNav({ current }) {
             className={active ? "nav_link nav_link_active" : "nav_link"}
             aria-current={active ? "page" : undefined}
           >
-            {tab.label}
+            <Icon name={tab.icon} />
+            <span>{tab.label}</span>
           </a>
         );
       })}
