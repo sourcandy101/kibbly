@@ -24,9 +24,11 @@ from pydantic import BaseModel, Field
 
 from kibbly_ai import __version__
 from kibbly_ai.config import Settings, load_settings
+from kibbly_ai.contracts import ContractError
 from kibbly_ai.engines import age_in_months, decide, feeding_plan
 from kibbly_ai.language import chat as chat_module
 from kibbly_ai.language.providers import make_provider
+from kibbly_ai.perception.recognizer import RecognitionSettings
 from kibbly_ai.storage import Storage, make_storage
 
 
@@ -230,6 +232,48 @@ def create_app(settings: Settings = None, storage: Storage = None,
                              f"ate {meal.get('grams_eaten')} of {meal.get('grams_dispensed')} g")
         answer = chat_module.ask(provider_factory(), dog, body.question, facts)
         return {"dog": dog.get("name"), **answer}
+
+    def store_document(collection: str, document: dict) -> dict:
+        try:
+            doc_id = storage.put(collection, document)
+        except ContractError as error:
+            raise HTTPException(status_code=422, detail={"collection": collection, "errors": error.errors})
+        return {"stored": True, "id": doc_id}
+
+    @app.get("/feeder/config", dependencies=[Depends(require_key)])
+    def feeder_config(home_id: str):
+        """Everything the feeder needs for a home: the calling order, each dog's meals and voice clip,
+        and the recognition thresholds. The ESP32-CAM fetches this at startup and after changes."""
+        dogs = sorted(storage.query("dogs", home_id=home_id), key=lambda d: d.get("call_order", 99))
+        thresholds = RecognitionSettings()
+        return {
+            "home_id": home_id,
+            "calling_order": [d["dog_id"] for d in dogs],
+            "dogs": [{
+                "dog_id": d["dog_id"],
+                "name": d.get("name"),
+                "call_order": d.get("call_order"),
+                "voice_clip_url": d.get("media", {}).get("voice_clip_url"),
+                "recognition_status": d.get("recognition", {}).get("status"),
+                "meals": (storage.get("schedules", d["dog_id"]) or {}).get("meals", []),
+            } for d in dogs],
+            "thresholds": {"accept_score": thresholds.accept_score, "min_margin": thresholds.min_margin},
+        }
+
+    @app.post("/feeder/meals", dependencies=[Depends(require_key)])
+    def feeder_meals(document: dict):
+        """Store a completed meal with its visits, after it is validated against the contract."""
+        return store_document("meals", document)
+
+    @app.post("/feeder/visits", dependencies=[Depends(require_key)])
+    def feeder_visits(document: dict):
+        """Store a visit seen outside a meal (for example a dog begging between meals)."""
+        return store_document("visits", document)
+
+    @app.post("/feeder/alerts", dependencies=[Depends(require_key)])
+    def feeder_alerts(document: dict):
+        """Store a device alert from the feeder (jam, low tank, power cut)."""
+        return store_document("alerts", document)
 
     return app
 

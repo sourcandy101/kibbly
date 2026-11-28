@@ -70,13 +70,13 @@ Dependencies point down only: API uses engines, perception, language and storage
 | `GET /health` | all | Liveness check (**built**) |
 | `POST /recognize` | ESP32-CAM | Photo in; dog, confidence and decision out (**built**; see `../docs/esp32_server_protocol.md`) |
 | `POST /recognize/live` | laptop | Server pulls photos from the camera and recognizes (**built**; demo path, no firmware change) |
-| `GET /feeder/config` | ESP32-CAM | Schedules, calling order, voice clip links, thresholds |
-| `POST /feeder/meals` | ESP32-CAM | Store a meal, update the summary |
-| `POST /feeder/visits` | ESP32-CAM | Store a visit outside meal times |
-| `POST /feeder/alerts` | ESP32-CAM | Store a device alert (jam, low tank, power cut) |
-| `POST /plans` | app | Feeding plan suggestion |
+| `GET /feeder/config` | ESP32-CAM | Schedules, calling order, voice clip links, thresholds (**built**) |
+| `POST /feeder/meals` | ESP32-CAM | Store a meal, validated against the contract (**built**; daily summary recompute in step 6) |
+| `POST /feeder/visits` | ESP32-CAM | Store a visit outside meal times (**built**) |
+| `POST /feeder/alerts` | ESP32-CAM | Store a device alert (jam, low tank, power cut) (**built**) |
+| `POST /plans` | app | Feeding plan suggestion (**built**; `engines/nutrition.py`) |
 | `POST /dogs/{dog_id}/enroll` | app | Build the recognition profile from photos and video |
-| `POST /chat` | app | Ask Kibbly (stretch goal) |
+| `POST /chat` | app | Ask Kibbly, grounded in the dog's logs (**built**; `language/chat.py`) |
 
 ## 6. Where it runs
 
