@@ -9,10 +9,12 @@ const PATHS = {
   dog_edit: (dogId) => `#/dogs/${dogId}`,
   schedule: (dogId) => `#/dogs/${dogId}/schedule`,
   calling_order: () => "#/calling_order",
+  chat: () => "#/chat",
 };
 
 export function parseRoute(hash) {
   const parts = hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  if (parts[0] === "chat") return { name: "chat" };
   if (parts[0] === "calling_order") return { name: "calling_order" };
   if (parts[0] !== "dogs") return { name: "home" };
   if (parts.length === 1) return { name: "dogs" };

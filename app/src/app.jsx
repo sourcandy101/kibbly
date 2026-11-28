@@ -3,6 +3,7 @@ import { getCurrentUser, loadHomeData, signOut } from "./data/store.js";
 import { go, useRoute } from "./logic/routes.js";
 import BottomNav from "./components/bottom_nav.jsx";
 import CallingOrderScreen from "./screens/calling_order_screen.jsx";
+import ChatScreen from "./screens/chat_screen.jsx";
 import DogFormScreen from "./screens/dog_form_screen.jsx";
 import DogsScreen from "./screens/dogs_screen.jsx";
 import HomeScreen from "./screens/home_screen.jsx";
@@ -58,6 +59,9 @@ export default function App() {
       break;
     case "calling_order":
       screen = <CallingOrderScreen {...shared} />;
+      break;
+    case "chat":
+      screen = <ChatScreen {...shared} />;
       break;
     default:
       screen = <HomeScreen {...shared} user={user} onSignOut={handleSignOut} />;

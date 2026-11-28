@@ -4,7 +4,8 @@ import Icon from "./icons.jsx";
 const TABS = [
   { label: "Today", icon: "bowl", target: "home", matches: ["home"] },
   { label: "Dogs", icon: "dogs", target: "dogs", matches: ["dogs", "dog_new", "dog_edit", "schedule"] },
-  { label: "Calling order", icon: "speaker", target: "calling_order", matches: ["calling_order"] },
+  { label: "Calling", icon: "speaker", target: "calling_order", matches: ["calling_order"] },
+  { label: "Ask", icon: "chat", target: "chat", matches: ["chat"] },
 ];
 
 export default function BottomNav({ current }) {

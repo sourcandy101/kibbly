@@ -60,6 +60,13 @@ const PATHS = {
       <circle cx="18.2" cy="10.6" r="2.1" />
     </g>
   ),
+  chat: (
+    <>
+      <path d="M4.5 5h15a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19.5 16H10l-4.5 4v-4A1.5 1.5 0 0 1 4.5 5z" />
+      <path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" />
+    </>
+  ),
+  send: <path d="M4.5 12 20 5l-6 15-3-6.5z" />,
 };
 
 export default function Icon({ name, className = "icon" }) {
