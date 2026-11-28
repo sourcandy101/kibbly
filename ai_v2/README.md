@@ -21,7 +21,7 @@ A rebuild of the Kibbly AI from scratch, on a stronger foundation. The first ver
 | 4 | Dog recognition (see `evaluation/recognition/README.md`) | done on public data: 91.3% right dog, 0% wrong dog at simulated feeder quality; to confirm with real photos |
 | 5 | Nutrition engine and feeding plan | next |
 | 6 | Meal insights (reports, alerts) | to do |
-| 7 | Server API for the ESP32-CAM and the app | to do |
+| 7 | Server API for the ESP32-CAM and the app | recognition done: `POST /recognize` and `POST /recognize/live` live, with the serving decision in `engines/serving.py` and the protocol in `../docs/esp32_server_protocol.md`. Remaining: feeder config, meals, visits, alerts, plans, enroll. |
 
 This table is updated at the end of each step.
 

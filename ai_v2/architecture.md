@@ -68,7 +68,8 @@ Dependencies point down only: API uses engines, perception, language and storage
 | Endpoint | Caller | Purpose |
 |---|---|---|
 | `GET /health` | all | Liveness check (**built**) |
-| `POST /recognize` | ESP32-CAM | Photo in; dog, confidence and decision out |
+| `POST /recognize` | ESP32-CAM | Photo in; dog, confidence and decision out (**built**; see `../docs/esp32_server_protocol.md`) |
+| `POST /recognize/live` | laptop | Server pulls photos from the camera and recognizes (**built**; demo path, no firmware change) |
 | `GET /feeder/config` | ESP32-CAM | Schedules, calling order, voice clip links, thresholds |
 | `POST /feeder/meals` | ESP32-CAM | Store a meal, update the summary |
 | `POST /feeder/visits` | ESP32-CAM | Store a visit outside meal times |
