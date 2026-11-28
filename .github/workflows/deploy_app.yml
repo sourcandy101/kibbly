@@ -1,0 +1,52 @@
+name: Deploy app to Pages
+
+# Builds the owner app (app/) in the cloud, where the npm registry is reachable,
+# and publishes it to GitHub Pages at https://sourcandy101.github.io/kibbly/.
+# The local network blocks registry.npmjs.org, so the build cannot run on the team laptops.
+
+on:
+  push:
+    branches: [main, app_redesign]
+    paths: ["app/**", ".github/workflows/deploy_app.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      # Turns on Pages (Actions source) the first time, so no manual repo setting is needed.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # npm install, not npm ci: the lockfile is not regenerated on the laptops (registry blocked).
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
