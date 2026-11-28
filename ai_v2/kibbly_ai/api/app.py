@@ -13,15 +13,20 @@ Both need the header X-Kibbly-Key (the shared secret in Settings.feeder_key). Th
 is written up in docs/esp32_server_protocol.md.
 """
 
+import datetime
 import io
+from typing import Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from kibbly_ai import __version__
 from kibbly_ai.config import Settings, load_settings
-from kibbly_ai.engines import decide
+from kibbly_ai.engines import age_in_months, decide, feeding_plan
+from kibbly_ai.language import chat as chat_module
+from kibbly_ai.language.providers import make_provider
 from kibbly_ai.storage import Storage, make_storage
 
 
@@ -32,6 +37,29 @@ class LiveRequest(BaseModel):
     flash: bool = False
     meal_dog: str | None = None
     dog_ids: list[str] | None = None
+
+
+class PlanRequest(BaseModel):
+    """The dog profile the app already has, before a schedule exists."""
+
+    current_weight_kg: float = Field(gt=0, le=100)
+    birth_month: str                      # YYYY-MM
+    neutered: bool
+    activity: Literal["low", "medium", "high"]
+    body_condition: Literal["thin", "ideal", "overweight"]
+    meals_per_day: int = Field(default=2, ge=1, le=4)
+    kcal_per_kg: int | None = None
+    as_of_date: str | None = None         # defaults to today, for stable tests
+
+
+class ChatRequest(BaseModel):
+    """Ask Kibbly about one dog. The app may send the dog inline (preview mode) or a dog_id
+    the server loads from storage. facts are extra log lines the app already shows."""
+
+    question: str = Field(min_length=1, max_length=400)
+    dog: dict | None = None
+    dog_id: str | None = None
+    facts: list[str] = Field(default_factory=list)
 
 
 def _split_ids(dog_ids: str | None) -> list | None:
@@ -47,11 +75,13 @@ def _default_camera(ip, frames, gap, flash):
 
 
 def create_app(settings: Settings = None, storage: Storage = None,
-               recognizer_provider=None, camera=None) -> FastAPI:
+               recognizer_provider=None, camera=None, provider_factory=None) -> FastAPI:
     """recognizer_provider: callable() -> Recognizer, built lazily on first use (real models are heavy).
-    camera: callable(ip, frames, gap, flash) -> (images, seconds). Both are injected in tests."""
+    camera: callable(ip, frames, gap, flash) -> (images, seconds).
+    provider_factory: callable() -> LLMProvider for the chat. All three are injected in tests."""
     settings = settings or load_settings()
     storage = storage or make_storage(settings)
+    provider_factory = provider_factory or (lambda: make_provider(settings))
     if recognizer_provider is None:
         from kibbly_ai.perception.pipeline import load_names, load_recognizer
 
@@ -64,6 +94,8 @@ def create_app(settings: Settings = None, storage: Storage = None,
     camera = camera or _default_camera
 
     app = FastAPI(title="Kibbly AI server", version=__version__)
+    # The app may be served from GitHub Pages (https) and call this server on the same laptop.
+    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
     app.state.settings = settings
     app.state.storage = storage
     app.state.recognizer = None  # cached after the first recognition call
@@ -134,6 +166,70 @@ def create_app(settings: Settings = None, storage: Storage = None,
         payload["frames"] = len(images)
         payload["transfer_seconds"] = round(transfer_seconds, 3)
         return payload
+
+    @app.post("/plans")
+    def plans(body: PlanRequest):
+        """Suggest a feeding plan from a dog profile. The app shows it; the owner confirms or edits
+        it, then writes the schedule. No model: energy based, see engines/nutrition.py."""
+        as_of = body.as_of_date or datetime.date.today().isoformat()
+        plan = feeding_plan(
+            weight_kg=body.current_weight_kg,
+            age_months=age_in_months(body.birth_month, as_of),
+            neutered=body.neutered,
+            activity=body.activity,
+            body_condition=body.body_condition,
+            meals_per_day=body.meals_per_day,
+            kcal_per_kg=body.kcal_per_kg,
+        )
+        meals = [{"slot": m.slot, "label": m.label, "local_time": m.local_time, "grams": m.grams}
+                 for m in plan.meals]
+        return {
+            "daily_total_grams": plan.daily_total_grams,
+            "meals": meals,
+            "energy": {
+                "resting_kcal": plan.resting_energy_kcal,
+                "daily_kcal": plan.daily_energy_kcal,
+                "factor": plan.factor,
+                "kcal_per_kg": plan.kcal_per_kg_used,
+                "kcal_source": plan.kcal_source,
+            },
+            "notes": plan.notes,
+            "plan_source": "ai_suggested",
+        }
+
+    def dog_from_doc(doc: dict) -> dict:
+        today = datetime.date.today().isoformat()
+        return {
+            "name": doc.get("name"),
+            "breed": doc.get("breed"),
+            "sex": doc.get("sex"),
+            "neutered": doc.get("neutered"),
+            "activity": doc.get("activity"),
+            "body_condition": doc.get("body_condition"),
+            "weight_kg": doc.get("current_weight_kg"),
+            "age_months": age_in_months(doc["birth_month"], today) if doc.get("birth_month") else None,
+        }
+
+    @app.post("/chat")
+    def chat(body: ChatRequest):
+        """Ask Kibbly about one dog, grounded in its facts. Needs a running model (Ollama by default);
+        if the model is unreachable the answer is a plain fallback, never an error."""
+        dog, facts = body.dog, list(body.facts)
+        if dog is None:
+            if not body.dog_id:
+                raise HTTPException(status_code=400, detail="send a dog or a dog_id")
+            doc = storage.get("dogs", body.dog_id)
+            if doc is None:
+                raise HTTPException(status_code=404, detail=f"no dog {body.dog_id}")
+            dog = dog_from_doc(doc)
+            # Ground on the dog's own recent meals, newest first.
+            meals = sorted(storage.query("meals", dog_id=body.dog_id),
+                           key=lambda m: m.get("scheduled_at", ""), reverse=True)[:6]
+            for meal in meals:
+                facts.append(f"{meal.get('scheduled_at', '')}: {meal.get('status')}, "
+                             f"ate {meal.get('grams_eaten')} of {meal.get('grams_dispensed')} g")
+        answer = chat_module.ask(provider_factory(), dog, body.question, facts)
+        return {"dog": dog.get("name"), **answer}
 
     return app
 
