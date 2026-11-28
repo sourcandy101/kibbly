@@ -2,18 +2,18 @@
 
 ![Circuit 7: power, 12 V, 5 V and 3.3 V](07_power.svg)
 
-**What it is for:** one 12 V adapter feeds the whole feeder. The motor driver takes the 12 V; the XL4015 buck converter turns 12 V into 5 V for the top + rail (amplifier, HC-SR04, ESP32-CAM, microSD); the Nucleo makes the 3.3 V of the bottom + rail. From this circuit on, the 5 V rail no longer comes from the laptop USB (wire R1 is removed), so the amplifier can play at full volume and the ESP32-CAM gets enough current for WiFi.
+**What it is for:** one 12 V adapter feeds the whole feeder. The motor driver carrier takes the 12 V straight from the jack; the XL4015 buck converter turns 12 V into 5 V for the top + rail (amplifier, HC-SR04, ESP32-CAM, microSD); the Nucleo makes the 3.3 V of the bottom + rail. From this circuit on, the 5 V rail no longer comes from the laptop USB (wire R1 is removed), so the amplifier can play at full volume and the ESP32-CAM gets enough current for WiFi.
 
-**Where on the board:** the 12 V stays in column 5 (circuit 1). The 5 V enters the top rails at columns 12 and 13, right under the output end of the XL4015; the rail holes of columns 15 to 21 are covered by the amplifier board of circuit 4. The adapter, the jack and the XL4015 sit above the board.
+**Where on the board:** the 12 V never enters the breadboard: the jack feeds the motor driver carrier (circuit 1) and the XL4015 directly. The 5 V enters the top rails at columns 12 and 13, right under the output end of the XL4015; the rail holes of columns 15 to 21 are covered by the amplifier board of circuit 4. The adapter, the jack and the XL4015 sit above the board.
 
-**Parts:** 12 V adapter (2 A, 3 A better), DC jack module with screw terminals, XL4015 buck converter, NUCLEO-F439ZI, breadboard, jumper wires (22 AWG for the power wires if you have them), and a **multimeter, borrowed for this step**.
+**Parts:** 12 V adapter (2 A, 3 A better), DC jack module with screw terminals, XL4015 buck converter, NUCLEO-F439ZI, breadboard, jumper wires (22 AWG for the power wires if you have them), and the team **multimeter**.
 
-**Wire table:** wires P1 to P6 in [04_wiring_list.md, section 4](../../04_wiring_list.md#4-power), plus V1 to V3 in [section 6B](../../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) and rails R2 to R4 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries). R1 is removed.
+**Wire table:** wires P1 to P6 in [04_wiring_list.md, section 4](../../04_wiring_list.md#4-power), plus V1 and V2 in [section 6B](../../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) and rails R2 to R4 in [section 4B](../../04_wiring_list.md#4b-breadboard-rails-and-power-entries). R1 is removed.
 
 ## How the power flows
 
 ```
-12 V adapter ──► DC jack ──┬──► column 5: driver VMOT and motor            12 V
+12 V adapter ──► DC jack ──┬──► carrier Vin: DRV8825 and motor (off board)  12 V
                            └──► XL4015 ──► top + rail                       5 V
                                               ├── amplifier, HC-SR04, ESP32-CAM, microSD
                                               └── Nucleo E5V (feeder alone only)
@@ -24,7 +24,7 @@ All GND joined: jack −, XL4015 OUT−, Nucleo GND, both − rails
 
 | Rail | Comes from | Feeds | Peak current |
 |---|---|---|---|
-| 12 V (column 5) | Adapter, through the DC jack | DRV8825 and motor | 0.8 A |
+| 12 V (carrier Vin, off the board) | Adapter, through the DC jack | DRV8825 on its carrier, and the motor | 0.8 A |
 | 12 V (XL4015 input) | Adapter, second wire in the same jack screws | XL4015 | about 0.8 A |
 | 5 V (top + rail) | XL4015 | Amplifier 0.8 A, ESP32-CAM 0.5 A, Nucleo 0.2 A (feeder alone), HC-SR04 and microSD 0.1 A | about 1.6 A |
 | 3.3 V (bottom + rail) | Nucleo regulator (500 mA max) | HX711, VL53L0X, DS3231, driver control pins | under 0.1 A |
@@ -33,7 +33,7 @@ Total from the adapter: about 1.6 A, so a 2 A adapter is enough and 3 A leaves m
 
 ## Why two wires in each jack screw
 
-The 12 V for the XL4015 is taken straight at the jack screws, not from column 5. A breadboard contact is made for about 1 A; if the XL4015 took its 12 V from column 5, the motor and the XL4015 together (about 1.6 A) would pass through the single contact of the jack wire. At the jack, each path gets its own wire. Twist the two wire ends together before tightening the screw, then pull each wire gently to check it holds.
+The 12 V for the XL4015 is taken straight at the jack screws, like the 12 V for the motor driver carrier. Each path gets its own wire at the jack, so the motor and the XL4015 together (about 1.6 A) never share one wire or one breadboard contact. Twist the two wire ends together before tightening the screw, then pull each wire gently to check it holds.
 
 Same idea on the 5 V side: the XL4015 output reaches the rails with its own two wires (orange and black), so the return current of the 5 V parts does not share the 12 V ground wire.
 
@@ -69,19 +69,19 @@ JP3 is the power jumper of the Nucleo; its positions are printed next to it. Che
 
 1. Everything unplugged: no adapter, no USB.
 2. Remove R1 (Nucleo 5V to the top + rail). Keep R2, R3 and R4.
-3. XL4015 input: P2 (jack + screw to IN+, red) in the same screw as V1; P3 (jack − screw to IN−, black) in the same screw as V2. Tighten both screws.
+3. XL4015 input: P2 (jack + screw to IN+, red) in the same screw as V1 (the carrier Vin wire); P3 (jack − screw to IN−, black) in the same screw as V2. Tighten both screws.
 4. Set the XL4015 to 5.0 V (section above), then unplug the adapter.
 5. P4: OUT+ to the top + rail, column 13 (orange). P5: OUT− to the top − rail, column 12 (black).
 6. Feeder alone only: P6 from the top + rail, column 2, to Nucleo E5V (CN11 pin 6), and JP3 on E5V.
 7. Check before powering:
    1. R1 is out.
-   2. No red wire on a rail: 12 V only in column 5 and on the XL4015 input.
+   2. No red wire on the breadboard: 12 V only from the jack to the carrier Vin and the XL4015 input.
    3. Multimeter in resistance mode between the top + and top − rails: not 0 ohm.
 8. Power on for the tests: USB, then the adapter.
 
 ## First test
 
-1. Measure to GND with the multimeter: top + rail 5.0 V, bottom + rail 3.3 V, column 5 about 12 V.
+1. Measure to GND with the multimeter: top + rail 5.0 V, bottom + rail 3.3 V, carrier Vin pin about 12 V.
 2. After 1 minute, touch the XL4015: warm is normal; too hot to hold means unplug the adapter at once.
 3. With circuits 4 and 5 plugged in: the amplifier plays at full volume without crackle, and the ESP32-CAM runs WiFi for 5 minutes with no restart.
 4. The results table comes with the step 3 test file for this part.

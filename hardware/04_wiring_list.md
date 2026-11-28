@@ -86,12 +86,12 @@ Only the pins this project uses. Header names follow UM1974: **CN7, CN8, CN9, CN
 
 ## 4. Power
 
-Drawn in [circuit 7](circuits_by_part/07_power/README.md). One 12 V adapter feeds everything: 12 V for the driver in column 5, the XL4015 makes the 5 V of the top + rail, the Nucleo makes the 3.3 V of the bottom + rail.
+Drawn in [circuit 7](circuits_by_part/07_power/README.md). One 12 V adapter feeds everything: 12 V for the motor driver carrier (off the board), the XL4015 makes the 5 V of the top + rail, the Nucleo makes the 3.3 V of the bottom + rail.
 
 ```mermaid
 flowchart LR
     AD["12 V adapter"] --> J["DC jack<br/>two wires in each screw"]
-    J -->|"V1 red"| C5["Column 5<br/>driver VMOT"]
+    J -->|"V1 red"| C5["Carrier Vin<br/>motor driver, off the board"]
     J -->|"P2 red"| XIN["XL4015 IN+"]
     J -->|"V2 black"| G["GND rails"]
     J -->|"P3 black"| XGN["XL4015 IN−"]
@@ -110,9 +110,9 @@ flowchart LR
 | P5 | XL4015 `OUT−` | Top − rail (GND), column 12 | Black | | |
 | P6 | Top + rail (5 V), column 2 | Nucleo `E5V` (CN11 pin 6) | Orange | Feeder alone only, with the power jumper JP3 on E5V; same hole as R1, which is out | |
 
-Also: V1 to V3 from section 6B (12 V to column 5 and its capacitor), R2 to R4 from section 4B. **R1 is removed for good**: the XL4015 now feeds the top + rail, and two 5 V sources must never meet.
+Also: V1 and V2 from section 6B (12 V to the carrier, jack − to the rail), R2 to R4 from section 4B. **R1 is removed for good**: the XL4015 now feeds the top + rail, and two 5 V sources must never meet.
 
-Why two wires in each jack screw: a breadboard contact is made for about 1 A. Taking the XL4015 input at the jack, and not from column 5, keeps the motor current (0.8 A) and the XL4015 current (about 0.8 A) on separate contacts.
+Why two wires in each jack screw: a breadboard contact is made for about 1 A. The motor driver (V1) and the XL4015 (P2) each take their 12 V straight at the jack, so no breadboard contact carries 12 V and the two currents stay on separate wires.
 
 | | Tests (laptop next to the feeder) | Feeder alone |
 |---|---|---|
@@ -132,7 +132,7 @@ Used by every circuit of [circuits_by_part](circuits_by_part/README.md). One 830
 | Top − | GND |
 | Bottom − | GND |
 | Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
-| 12 V | **On no rail.** Only in column 5, top half (the driver VMOT column), framed in red in the pictures |
+| 12 V | **Not on the breadboard at all.** It goes from the DC jack straight to the motor driver carrier (V1) and to the XL4015 (P2) |
 
 Checked on the team's board (10 November 2026): 830 points, 63 columns, and the rails run along the whole length, so no bridge wires are needed. On another board whose rails are cut in the middle (a break in the red and blue lines), bridge each of the 4 rails across the cut with a short wire of the same colour.
 
@@ -242,51 +242,46 @@ How to find the coil pairs: with the motor unplugged, measure the resistance bet
 
 ## 6B. DRV8825 driver and stepper motor (demo driver)
 
-The driver for the demo: a DRV8825, sold locally. Section 6 is kept for a TMC2209, if the ISS group lends one. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
+The driver for the demo: the team's DRV8825, **plugged into its carrier board** (red, marked "Keyes 4988 PCB"; changed on 28 November 2026). Section 6 is kept for a TMC2209, if the ISS group lends one. Drawn in [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md), with the checks to do on the carrier before the first power on.
 
-Breadboard layout: the DRV8825 straddles the middle gap in **columns 5 to 12**, turned so that **VMOT is top left (column 5, row f) and EN is bottom left (column 5, row e)**. Top half: power and motor. Bottom half: control. **12 V lives only in column 5, top half**; the rails are 5 V (top) and 3.3 V (bottom), see section 4B.
+The carrier and the motor sit **off the board**, above columns 6 to 11. The 12 V goes from the DC jack straight to the carrier: **no 12 V on the breadboard**. On the board, the bottom half of columns 8 to 11 joins the carrier wires to the Nucleo wires:
 
-| Driver pin | Column | Row | Driver pin | Column | Row |
-|---|---|---|---|---|---|
-| VMOT | 5 | f | EN | 5 | e |
-| GND | 6 | f | M0 | 6 | e |
-| B2 | 7 | f | M1 | 7 | e |
-| B1 | 8 | f | M2 | 8 | e |
-| A1 | 9 | f | RST | 9 | e |
-| A2 | 10 | f | SLP | 10 | e |
-| FLT | 11 | f | STEP | 11 | e |
-| GND | 12 | f | DIR | 12 | e |
+| Column (bottom half) | Row e | Row a, b, c or d |
+|---|---|---|
+| 8 | Carrier 5V pin (V20) | Row a: V15 to the 3.3 V rail |
+| 9 | Carrier E (V21) | Row a: V13, 10 kohm to the 3.3 V rail. Row b: Nucleo EN (V12) |
+| 10 | Carrier D (V22) | Row d: Nucleo DIR (V19) |
+| 11 | Carrier S (V23) | Row c: Nucleo STEP (V18) |
+
+Carrier settings: micro step switches **1 OFF, 2 OFF, 3 ON** (1/16 step, 3200 steps per turn). The DRV8825 goes into the carrier socket by its labels: EN in the EN corner, VMOT on VMOT.
 
 | # | From | To | Colour | Note | Checked |
 |---|---|---|---|---|---|
-| V1 | DC jack `+` | Column 5, top half, row g (12 V) | Red | Never on a rail | |
-| V2 | DC jack `−` | Top − rail (GND), column 3 | Black | | |
-| V3 | 470 uF capacitor | Long leg (+) in column 5, row j; short leg in the top − rail, column 4 | | Stripe side is the short leg | |
-| V4 | VMOT (column 5) | No wire | | Gets 12 V through column 5 | |
-| V5 | GND (column 6) | Top − rail (GND), column 6 | Black | From row j | |
-| V6 | GND (column 12, above DIR) | No wire | | Linked to the other GND inside the board | |
-| V7 | A2 (column 10) | Motor green | Green (motor cable) | Row j; coil A | |
-| V8 | A1 (column 9) | Motor black | Black (motor cable) | Row i; coil A | |
-| V9 | B1 (column 8) | Motor red | Red (motor cable) | Row h; coil B | |
-| V10 | B2 (column 7) | Motor blue | Blue (motor cable) | Row g; coil B | |
-| V11 | FLT (column 11) | No wire | | Fault output, not used | |
-| V12 | EN (column 5) | Nucleo D2 · PF15 (CN10 pin 12) | Blue grey | Row b. Low = motor on | |
-| V13 | 10 kohm resistor | Column 5 row a to bottom + rail (3.3 V) | | Keeps the motor off while the STM32 resets | |
-| V14 | M0, M1 (columns 6, 7) | No wire | | Pulled to 0 inside the driver | |
-| V15 | M2 (column 8) | Bottom + rail (3.3 V) | Yellow | Row a. With M0 = M1 = 0: 1/16 step, 3200 steps per turn | |
-| V16 | RST (column 9) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver running | |
-| V17 | SLP (column 10) | Bottom + rail (3.3 V) | Yellow | Row a. High = driver awake | |
-| V18 | STEP (column 11) | Nucleo D6 · PE9 (CN10 pin 4) | Grey | Row c | |
-| V19 | DIR (column 12) | Nucleo D7 · PF13 (CN10 pin 2) | Brown | Row d | |
+| V1 | DC jack `+` screw | Carrier `Vin` (marked 9V) | Red | 12 V. Never into the breadboard | |
+| V2 | DC jack `−` screw | Top − rail (GND), column 3 | Black | | |
+| V5 | Carrier `GND` (power header) | Top − rail (GND), column 7 | Black | The motor current comes back this way | |
+| V7 | Carrier `1B` | Motor green | Green (motor cable) | Coil A | |
+| V8 | Carrier `1A` | Motor black | Black (motor cable) | Coil A | |
+| V9 | Carrier `2A` | Motor red | Red (motor cable) | Coil B | |
+| V10 | Carrier `2B` | Motor blue | Blue (motor cable) | Coil B | |
+| V12 | Column 9, row b | Nucleo D2 · PF15 (CN10 pin 12) | Blue grey | EN. Low = motor on | |
+| V13 | 10 kohm resistor | Column 9 row a to the bottom + rail (3.3 V), column 9 | | Keeps the motor off while the STM32 resets. Leave it out if the carrier pulls EN down (circuit 1, check 4) | |
+| V15 | Column 8, row a | Bottom + rail (3.3 V), column 8 | Yellow | Gives the carrier 5V pin its 3.3 V | |
+| V18 | Column 11, row c | Nucleo D6 · PE9 (CN10 pin 4) | Grey | STEP | |
+| V19 | Column 10, row d | Nucleo D7 · PF13 (CN10 pin 2) | Brown | DIR | |
+| V20 | Carrier `5V` | Column 8, row e | Yellow | **3.3 V, not 5 V**: it only feeds the micro step switches and the carrier pull ups | |
+| V21 | Carrier `E` | Column 9, row e | Blue grey | | |
+| V22 | Carrier `D` | Column 10, row e | Brown | | |
+| V23 | Carrier `S` | Column 11, row e | Grey | | |
 
-Also needed: R2, R3 and R4 from section 4B.
+Wires V3, V4, V6, V11, V14, V16 and V17 of the first plan are gone: the carrier does their job (capacitor, VMOT, microstep pins, RST and SLP). Also needed: R2, R3 and R4 from section 4B.
 
-Current limit: the DRV8825 gives a current of 2 x Vref. Measure Vref between the potentiometer and GND with 12 V on, and set it to **about 0.5 V (1 A)**. Without a multimeter: turn the potentiometer to the lowest current (usually fully anticlockwise), run the motor, then turn it up in small steps until the motor turns without skipping, and stop there.
+Current limit: the DRV8825 gives a current of 2 x Vref. Measure Vref between the DRV8825 potentiometer and GND with 12 V on, and set it to **about 0.5 V (1 A)**. Without a multimeter: turn the potentiometer to the lowest current (usually fully anticlockwise), run the motor, then turn it up in small steps until the motor turns without skipping, and stop there.
 
 Differences from the TMC2209 wiring of section 6:
 
 1. No UART wire: PD5 is not used and USART2 is not needed in CubeMX.
-2. Microsteps are set by wires (M0, M1, M2), not in software.
+2. Microsteps are set by the carrier switches, not in software.
 3. No stall detection: the scale is the only jam check.
 4. Nucleo pin numbers (CN10 pin 2, 4, 5, 12 and CN8 pin 7) come from the user manual UM1974: check them on the board before plugging.
 
@@ -430,10 +425,10 @@ For the breadboard plan of section 4B. Each rail hole takes one wire, so every w
 | Rail or point | Wires (rail column) |
 |---|---|
 | Top + (5 V) | R1 (2, before circuit 7 only) or P6 (2, feeder alone), P4 (13), A1 (23), U1 (24), E1 (37), E5 long leg (38), S1 (52) |
-| Top − (GND) | R4 (1), V2 (3), V3 short leg (4), V5 (6), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder), S2 (51) |
-| Bottom + (3.3 V) | R2 (2), V13 (5), V15 (8), V16 (9), V17 (10), H6 (20), I3 (24), I9 (36) |
-| Bottom − (GND) | R4 (1), R3 (3), H7 (14), I4 (25), U6 (26), I10 (35), L3 short leg (47), B3 (49), B2 (52) |
-| Column 5, top half (12 V) | V1, V3 long leg, driver VMOT |
+| Top − (GND) | R4 (1), V2 (3), V5 (7), P5 (12), A2 (22), U4 (27), E2 (36), E5 short leg (38), F3 (39, only while loading a program with the ESP32-CAM on the feeder), S2 (51) |
+| Bottom + (3.3 V) | R2 (2), V15 (8), V13 (9), H6 (14), I3 (24), I9 (36) |
+| Bottom − (GND) | R4 (1), R3 (3), H7 (20), I4 (25), U6 (26), I10 (35), L3 short leg (47), B2 (52) |
+| 12 V (off the board) | V1 (jack + to the carrier Vin), P2 (jack + to the XL4015 IN+) |
 
 ## 14. STM32CubeMX settings
 
@@ -491,8 +486,8 @@ Go through it every time something new is wired.
 | 7 | Every part has its GND connected | Count the black wires against section 13 |
 | 8 | TX goes to RX on every UART | Section 5: IO15 to PC7 (E3, E7), PC6 through 1 kohm to IO14 (E8, E6, E4) |
 | 9 | Motor coils in pairs, motor connected before power | V7 to V10 (section 6B) |
-| 10 | Capacitor polarity: long leg on + | E5, V3 |
+| 10 | Capacitor polarity: long leg on + | E5 (the carrier capacitor is soldered on) |
 | 11 | After power on: touch the regulators and the driver | Warm is normal, too hot to hold means power off now |
-| 12 | After power on: 12 V, 5 V and 3.3 V measured on the rails | Within 5% |
+| 12 | After power on: 12 V at the carrier Vin pin, 5 V and 3.3 V on the rails | Within 5% |
 | 13 | Loading a program into the ESP32-CAM: DevKit EN on GND, and never the DevKit VIN and the feeder 5 V on the ESP32-CAM at once | Section 5B |
 | 14 | R1 out once the XL4015 feeds the top + rail | Section 4 |

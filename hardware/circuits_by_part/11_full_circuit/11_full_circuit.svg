@@ -1212,17 +1212,6 @@
 <text x="1774" y="317" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#222" text-anchor="start" font-weight="bold">GND</text>
 <text x="1774" y="605" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#222" text-anchor="start" font-weight="bold">GND</text>
 <text x="1774" y="625" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#b8860b" text-anchor="start" font-weight="bold">3.3 V</text>
-<rect x="569" y="344" width="22" height="102" rx="4" fill="#ffcdd2" fill-opacity="0.55" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4 3"/>
-<line x1="582" y1="248" x2="580" y2="356" stroke="#9e9e9e" stroke-width="2.5"/>
-<line x1="566" y1="248" x2="560" y2="312" stroke="#9e9e9e" stroke-width="2.5"/>
-<rect x="560" y="206" width="28" height="44" rx="6" fill="#1f2f74"/>
-<rect x="560" y="206" width="9" height="44" rx="3" fill="#9fb0e8"/>
-<line x1="562" y1="216" x2="567" y2="216" stroke="#1f2f74" stroke-width="2"/>
-<line x1="562" y1="228" x2="567" y2="228" stroke="#1f2f74" stroke-width="2"/>
-<line x1="562" y1="240" x2="567" y2="240" stroke="#1f2f74" stroke-width="2"/>
-<ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>
-<circle cx="580" cy="356" r="3.5" fill="#757575"/>
-<circle cx="560" cy="312" r="3.5" fill="#757575"/>
 <rect x="352" y="128" width="100" height="50" rx="8" fill="#263238"/>
 <text x="402" y="151" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">12 V 2 A</text>
 <text x="402" y="167" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#cfd8dc" text-anchor="middle" font-weight="normal">adapter</text>
@@ -1242,9 +1231,8 @@
 <path d="M534,186 C534,250 540,262 540,290 L540,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M534,186 C534,250 540,262 540,290 L540,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="540" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,416 560,416 L580,416" fill="none" stroke="#8e1b18" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,416 560,416 L580,416" fill="none" stroke="#e53935" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="580" cy="416" r="4.6" fill="#8e1b18" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M564,186 L564,196 C564,202 568,204 574,204 L590,204 C596,204 600,200 600,194 L600,34" fill="none" stroke="#8e1b18" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M564,186 L564,196 C564,202 568,204 574,204 L590,204 C596,204 600,200 600,194 L600,34" fill="none" stroke="#e53935" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="380" y="-190" width="80" height="160" rx="5" fill="#1e3a8a" stroke="#0f1f4d" stroke-width="2"/>
 <circle cx="420" cy="-128" r="22" fill="#b87333" stroke="#8d5524" stroke-width="3"/>
 <circle cx="420" cy="-128" r="8" fill="#37474f"/>
@@ -1289,86 +1277,98 @@
 <path d="M264,488 C380,488 470,600 540,600" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="264" cy="488" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="540" cy="600" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="568" y="424" width="164" height="64" rx="3" fill="#4a1f7a" stroke="#2e1250" stroke-width="2"/>
-<circle cx="580" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="580" cy="476" r="3.5" fill="#d4af37"/>
-<text x="580" y="451" font-family="Arial, Helvetica, sans-serif" font-size="6.3" fill="#fff" text-anchor="middle" font-weight="bold">VMOT</text>
-<text x="580" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">EN</text>
-<circle cx="600" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="600" cy="476" r="3.5" fill="#d4af37"/>
-<text x="600" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
-<text x="600" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M0</text>
-<circle cx="620" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="620" cy="476" r="3.5" fill="#d4af37"/>
-<text x="620" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">B2</text>
-<text x="620" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M1</text>
-<circle cx="640" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="640" cy="476" r="3.5" fill="#d4af37"/>
-<text x="640" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">B1</text>
-<text x="640" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M2</text>
-<circle cx="660" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="660" cy="476" r="3.5" fill="#d4af37"/>
-<text x="660" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">A1</text>
-<text x="660" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">RST</text>
-<circle cx="680" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="680" cy="476" r="3.5" fill="#d4af37"/>
-<text x="680" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">A2</text>
-<text x="680" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">SLP</text>
-<circle cx="700" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="700" cy="476" r="3.5" fill="#d4af37"/>
-<text x="700" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">FLT</text>
-<text x="700" y="469" font-family="Arial, Helvetica, sans-serif" font-size="6.3" fill="#fff" text-anchor="middle" font-weight="bold">STEP</text>
-<circle cx="720" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="720" cy="476" r="3.5" fill="#d4af37"/>
-<text x="720" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
-<text x="720" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">DIR</text>
-<line x1="580" y1="556" x2="580" y2="620" stroke="#9e9e9e" stroke-width="2.5"/>
-<rect x="573" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>
-<rect x="573" y="573" width="14" height="3.5" fill="#8d4e2b"/>
-<rect x="573" y="580" width="14" height="3.5" fill="#111"/>
-<rect x="573" y="587" width="14" height="3.5" fill="#ef6c00"/>
-<rect x="573" y="597" width="14" height="3.5" fill="#c9a227"/>
-<path d="M600,356 L600,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M600,356 L600,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="600" cy="356" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="600" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="470" y="-120" width="240" height="142" rx="6" fill="#d32f2f" stroke="#8e1b18" stroke-width="2"/>
+<text x="478" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#fff" text-anchor="start" font-weight="bold">Keyes 4988 carrier</text>
+<rect x="480" y="-94" width="50" height="56" rx="3" fill="#ef5350" stroke="#b71c1c"/>
+<text x="484" y="-85" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="start" font-weight="bold">ON</text>
+<rect x="488" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="489" y="-66" width="8" height="12" fill="#37474f"/>
+<text x="493" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">1</text>
+<rect x="504" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="505" y="-66" width="8" height="12" fill="#37474f"/>
+<text x="509" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">2</text>
+<rect x="520" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="521" y="-79" width="8" height="12" fill="#37474f"/>
+<text x="525" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">3</text>
+<text x="505" y="-26" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">1 OFF 2 OFF 3 ON</text>
+<rect x="540" y="-98" width="100" height="84" rx="2" fill="#4a1f7a" stroke="#2e1250" stroke-width="1.5"/>
+<rect x="575" y="-66" width="30" height="30" rx="2" fill="#1a1a1a"/>
+<circle cx="556" cy="-82" r="7" fill="#cfd8dc" stroke="#90a4ae"/>
+<line x1="551" y1="-82" x2="561" y2="-82" stroke="#607d8b" stroke-width="2"/>
+<text x="556" y="-66" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Vref</text>
+<text x="590" y="-22" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">DRV8825</text>
+<rect x="652" y="-96" width="26" height="50" rx="5" fill="#212121"/>
+<rect x="652" y="-96" width="8" height="50" rx="3" fill="#9e9e9e"/>
+<text x="665" y="-34" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">100 µF</text>
+<rect x="588" y="-118" width="84" height="16" rx="2" fill="#f5f5f5" stroke="#bdbdbd"/>
+<rect x="597" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="600" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">2B</text>
+<rect x="617" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="620" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">2A</text>
+<rect x="637" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="640" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">1A</text>
+<rect x="657" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="660" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">1B</text>
+<rect x="590" y="8" width="60" height="14" rx="1" fill="#1a1a1a"/>
+<rect x="652" y="8" width="58" height="14" rx="1" fill="#1a1a1a"/>
+<rect x="597" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="600" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Vin</text>
+<rect x="617" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="620" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="637" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="640" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">5V</text>
+<rect x="657" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="660" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">E</text>
+<rect x="677" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="680" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">D</text>
+<rect x="697" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="700" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">S</text>
+<path d="M620,34 L620,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,34 L620,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="620" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M640,34 L640,476" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,34 L640,476" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="640" cy="476" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M660,34 L660,476" fill="none" stroke="#37474f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,34 L660,476" fill="none" stroke="#78909c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="660" cy="476" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M680,34 L680,476" fill="none" stroke="#4e342e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M680,34 L680,476" fill="none" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="680" cy="476" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M700,34 L700,476" fill="none" stroke="#5f5f5f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M700,34 L700,476" fill="none" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="700" cy="476" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
 <path d="M640,556 L640,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M640,556 L640,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="640" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="640" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M660,556 L660,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M660,556 L660,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="660" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="660" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M680,556 L680,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M680,556 L680,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="680" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="680" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="580" y="-110" width="120" height="112" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>
-<circle cx="594" cy="-96" r="5" fill="#757575"/>
-<circle cx="686" cy="-96" r="5" fill="#757575"/>
-<circle cx="594" cy="-12" r="5" fill="#757575"/>
-<circle cx="686" cy="-12" r="5" fill="#757575"/>
-<circle cx="640" cy="-54" r="24" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>
-<circle cx="640" cy="-54" r="7" fill="#e0e0e0" stroke="#757575"/>
-<rect x="604" y="4" width="92" height="18" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>
-<text x="580" y="-118" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c62828" text-anchor="start" font-weight="bold">NEMA 17 motor</text>
-<path d="M620,22 L620,416" fill="none" stroke="#0d47a1" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M620,22 L620,416" fill="none" stroke="#1e88e5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="620" cy="416" r="4.6" fill="#0d47a1" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="616" y="14" width="8" height="8" fill="#0d47a1"/>
-<path d="M640,22 L640,396" fill="none" stroke="#8e1b18" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M640,22 L640,396" fill="none" stroke="#e53935" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="640" cy="396" r="4.6" fill="#8e1b18" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="636" y="14" width="8" height="8" fill="#8e1b18"/>
-<path d="M660,22 L660,376" fill="none" stroke="#000000" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M660,22 L660,376" fill="none" stroke="#333333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="660" cy="376" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="656" y="14" width="8" height="8" fill="#000000"/>
-<path d="M680,22 L680,356" fill="none" stroke="#1b5e20" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M680,22 L680,356" fill="none" stroke="#43a047" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="680" cy="356" r="4.6" fill="#1b5e20" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="676" y="14" width="8" height="8" fill="#1b5e20"/>
+<line x1="660" y1="556" x2="660" y2="620" stroke="#9e9e9e" stroke-width="2.5"/>
+<rect x="653" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>
+<rect x="653" y="573" width="14" height="3.5" fill="#8d4e2b"/>
+<rect x="653" y="580" width="14" height="3.5" fill="#111"/>
+<rect x="653" y="587" width="14" height="3.5" fill="#ef6c00"/>
+<rect x="653" y="597" width="14" height="3.5" fill="#c9a227"/>
+<circle cx="660" cy="556" r="3.5" fill="#757575"/>
+<circle cx="660" cy="620" r="3.5" fill="#757575"/>
+<text x="671" y="588" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6d5a2a" text-anchor="start" font-weight="bold">10 kΩ</text>
+<rect x="570" y="-358" width="120" height="96" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>
+<circle cx="584" cy="-344" r="5" fill="#757575"/>
+<circle cx="676" cy="-344" r="5" fill="#757575"/>
+<circle cx="584" cy="-276" r="5" fill="#757575"/>
+<circle cx="676" cy="-276" r="5" fill="#757575"/>
+<circle cx="630" cy="-310" r="22" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>
+<circle cx="630" cy="-310" r="7" fill="#e0e0e0" stroke="#757575"/>
+<rect x="588" y="-262" width="84" height="14" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>
+<text x="560" y="-318" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c62828" text-anchor="end" font-weight="bold">NEMA 17 motor</text>
+<text x="560" y="-302" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">DRV8825 on its carrier below</text>
+<path d="M600,-248 L600,-132" fill="none" stroke="#0d47a1" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M600,-248 L600,-132" fill="none" stroke="#1e88e5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,-248 L620,-132" fill="none" stroke="#8e1b18" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,-248 L620,-132" fill="none" stroke="#e53935" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,-248 L640,-132" fill="none" stroke="#000000" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,-248 L640,-132" fill="none" stroke="#333333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,-248 L660,-132" fill="none" stroke="#1b5e20" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,-248 L660,-132" fill="none" stroke="#43a047" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="768" y="546" width="84" height="144" rx="4" fill="#1b6e3a" stroke="#0f4a26" stroke-width="2"/>
 <rect x="776" y="552" width="8" height="8" fill="#d4af37"/>
 <text x="780" y="574" font-family="Arial, Helvetica, sans-serif" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">VCC</text>
@@ -1693,21 +1693,21 @@
 <path d="M1510,730 L1510,630 C1510,612 1520,612 1520,600" fill="none" stroke="#000000" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M1510,730 L1510,630 C1510,612 1520,612 1520,600" fill="none" stroke="#333333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="1520" cy="600" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M580,536 L568,536" fill="none" stroke="#37474f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M580,536 L568,536" fill="none" stroke="#78909c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="580" cy="536" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="538.4" y="529.5" width="29.6" height="13" rx="6" fill="#ffffff" stroke="#37474f" stroke-width="1.6"/>
-<text x="553.2" y="539.2" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#37474f" text-anchor="middle" font-weight="bold">PF15</text>
+<path d="M660,536 L648,536" fill="none" stroke="#37474f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,536 L648,536" fill="none" stroke="#78909c" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="660" cy="536" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="618.4" y="529.5" width="29.6" height="13" rx="6" fill="#ffffff" stroke="#37474f" stroke-width="1.6"/>
+<text x="633.2" y="539.2" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#37474f" text-anchor="middle" font-weight="bold">PF15</text>
 <path d="M700,516 L688,516" fill="none" stroke="#5f5f5f" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M700,516 L688,516" fill="none" stroke="#a8a8a8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="700" cy="516" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
 <rect x="663.8" y="509.5" width="24.200000000000003" height="13" rx="6" fill="#ffffff" stroke="#5f5f5f" stroke-width="1.6"/>
 <text x="675.9" y="519.2" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#5f5f5f" text-anchor="middle" font-weight="bold">PE9</text>
-<path d="M720,496 L708,496" fill="none" stroke="#4e342e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M720,496 L708,496" fill="none" stroke="#8d6e63" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="720" cy="496" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="678.4" y="489.5" width="29.6" height="13" rx="6" fill="#ffffff" stroke="#4e342e" stroke-width="1.6"/>
-<text x="693.2" y="499.2" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#4e342e" text-anchor="middle" font-weight="bold">PF13</text>
+<path d="M680,496 L668,496" fill="none" stroke="#4e342e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M680,496 L668,496" fill="none" stroke="#8d6e63" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="680" cy="496" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
+<rect x="638.4" y="489.5" width="29.6" height="13" rx="6" fill="#ffffff" stroke="#4e342e" stroke-width="1.6"/>
+<text x="653.2" y="499.2" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#4e342e" text-anchor="middle" font-weight="bold">PF13</text>
 <path d="M800,496 L788,496" fill="none" stroke="#4e342e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M800,496 L788,496" fill="none" stroke="#8d6e63" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="800" cy="496" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
@@ -1898,13 +1898,13 @@
 <text x="60" y="946" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">NUCLEO PINS: each tag on the board is a wire from that hole to this pin</text>
 <line x1="62" y1="968" x2="94" y2="968" stroke="#37474f" stroke-width="7" stroke-linecap="round"/>
 <line x1="62" y1="968" x2="94" y2="968" stroke="#78909c" stroke-width="4.5" stroke-linecap="round"/>
-<text x="104" y="972" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PF15 · D2 · CN10 pin 12: driver EN, column 5 b</text>
+<text x="104" y="972" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PF15 · D2 · CN10 pin 12: driver EN, column 9 b</text>
 <line x1="62" y1="993" x2="94" y2="993" stroke="#5f5f5f" stroke-width="7" stroke-linecap="round"/>
 <line x1="62" y1="993" x2="94" y2="993" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round"/>
 <text x="104" y="997" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PE9 · D6 · CN10 pin 4: driver STEP, column 11 c</text>
 <line x1="62" y1="1018" x2="94" y2="1018" stroke="#4e342e" stroke-width="7" stroke-linecap="round"/>
 <line x1="62" y1="1018" x2="94" y2="1018" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round"/>
-<text x="104" y="1022" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PF13 · D7 · CN10 pin 2: driver DIR, column 12 d</text>
+<text x="104" y="1022" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PF13 · D7 · CN10 pin 2: driver DIR, column 10 d</text>
 <line x1="62" y1="1043" x2="94" y2="1043" stroke="#4e342e" stroke-width="7" stroke-linecap="round"/>
 <line x1="62" y1="1043" x2="94" y2="1043" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round"/>
 <text x="104" y="1047" font-family="Arial, Helvetica, sans-serif" font-size="11.5" fill="#222" text-anchor="start" font-weight="normal">PF14 · D4 · CN10 pin 8: HX711 DAT, column 16 d</text>
@@ -1964,8 +1964,8 @@
 <text x="60" y="1264" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3. Parts outside the board join it with female to male wires.</text>
 <text x="60" y="1285" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">4. Every part has its own picture with all its wires drawn</text>
 <text x="60" y="1306" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">in full: circuits 1 to 10 in circuits_by_part.</text>
-<text x="60" y="1327" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">5. Rails: top + 5 V, bottom + 3.3 V, both − GND; 12 V only</text>
-<text x="60" y="1348" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">in column 5 (red frame) and on the XL4015 input.</text>
+<text x="60" y="1327" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">5. Rails: top + 5 V, bottom + 3.3 V, both − GND. 12 V only</text>
+<text x="60" y="1348" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">from the jack to the carrier Vin and the XL4015 IN+.</text>
 <text x="560" y="1198" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">BUILD ORDER</text>
 <text x="560" y="1222" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">1. Rails R2, R3, R4. No R1: the XL4015 feeds the 5 V.</text>
 <text x="560" y="1243" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">2. Power (circuit 7): set the XL4015 to 5.0 V first.</text>

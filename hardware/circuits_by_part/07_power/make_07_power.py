@@ -13,17 +13,13 @@ d.nucleo([(CN8(9), "5V (CN8 pin 9): R1 out", RED, "right"), (CN8(7), "3V3 (CN8 p
           (CN10(5), "GND (pin 5)", BLACK, "left"), (CN11(6), "E5V (CN11 pin 6)", ORANGE, "right", (96, 244))])
 d.breadboard()
 
-# 12 V: adapter, DC jack, the driver column (circuit 1)
-d.twelve_volt_column()
-d.driver_capacitor(labels=False)
-t(594, 232, "470 µF (circuit 1)", 10, "#1f2f74", weight="bold")
+# 12 V: adapter and DC jack; V1 leaves the + screw for the motor driver carrier (circuit 1), off the board
 d.dc_jack()
 t(490, 134, "DC jack", 9, "#fff", "middle", "bold")
-a(f'<rect x="{X(6) - 6}" y="{ROW["i"] - 10}" width="262" height="20" rx="4" fill="#ffffff" stroke="#e57373"/>')
-t(X(6), ROW["i"] + 4, "← 12 V column: the driver VMOT (circuit 1)", 10, "#c62828", weight="bold")
 d.wire(f"M534,186 C534,250 {X(3)},262 {X(3)},290 L{X(3)},{ROW['top-']}", BLACK, [(X(3), ROW['top-'])])
-d.wire(f"M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,{ROW['g']} {X(4)},{ROW['g']} L{X(5)},{ROW['g']}",
-       RED, [(X(5), ROW['g'])])
+d.wire("M564,186 L564,232 C564,240 570,244 578,244 L600,244", RED, [], width=4.5)
+a('<rect x="602" y="235" width="118" height="18" rx="4" fill="#ffffff" stroke="#e57373"/>')
+t(661, 248, "V1: to the carrier Vin", 8.5, "#c62828", "middle", "bold")
 
 # XL4015 buck converter above columns 8 to 19: IN on the left end, OUT on the right end
 x1, x2, y1, y2 = 640, 880, 104, 204
@@ -77,7 +73,7 @@ d.zones(7)
 # notes
 d.notes_box(640, 712, 1220, 230)
 t(660, 740, "WIRE COLOURS", 14, "#c62828", weight="bold")
-d.colour_list(660, 764, [(RED, "12 V: jack + to column 5 and to XL4015 IN+"), (BLACK, "GND"),
+d.colour_list(660, 764, [(RED, "12 V: jack + to the carrier Vin and to XL4015 IN+"), (BLACK, "GND"),
                          (ORANGE, "5 V: XL4015 OUT+ to the top + rail"), (YELLOW, "3.3 V: Nucleo 3V3 to the bottom + rail")])
 d.lines(662, 856, ["Dashed orange: top + rail to Nucleo E5V,",
                    "only when the feeder runs alone"], 18)
@@ -86,7 +82,7 @@ d.lines(1060, 764, ["1. Adapter, jack and XL4015 only, OUT wires free.",
                     "2. Meter on OUT+ and OUT−. Turn the screw, many",
                     "turns, until it reads 5.0 V (4.95 to 5.10 V).",
                     "3. Unplug the adapter, then wire OUT to the rails.",
-                    "No multimeter in the team: borrow one for this step.",
+                    "Use the team multimeter for this step.",
                     "Never connect OUT before it reads 5.0 V."])
 t(1460, 740, "POWER ORDER", 14, "#c62828", weight="bold")
 d.lines(1460, 764, ["R1 always out: never R1 with the XL4015.",
@@ -95,5 +91,5 @@ d.lines(1460, 764, ["R1 always out: never R1 with the XL4015.",
                     "Feeder alone: P6 in, JP3 on E5V, adapter only.",
                     "Logs then: USB after the adapter, out before it.",
                     "Check every Nucleo pin label before plugging."])
-d.footer("Kibbly hardware · circuit 7 of the circuits by part · wires P1 to P6 in hardware/04_wiring_list.md section 4, V1 to V3 in section 6B, rails R2 to R4 in section 4B")
+d.footer("Kibbly hardware · circuit 7 of the circuits by part · wires P1 to P6 in hardware/04_wiring_list.md section 4, V1 and V2 in section 6B, rails R2 to R4 in section 4B")
 d.save(sys.argv[1])

@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="960" viewBox="0 0 1880 960">
-<rect width="1880" height="960" fill="#ffffff"/>
-<text x="40" y="46" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#c62828" text-anchor="start" font-weight="bold">PART 1: STEPPER MOTOR AND DRV8825 DRIVER</text>
-<text x="40" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#444" text-anchor="start" font-weight="normal">Test setup for step 3. The Nucleo runs from the laptop USB; the motor runs from the 12 V adapter.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="1300" viewBox="0 0 1880 1300">
+<rect width="1880" height="1300" fill="#ffffff"/>
+<text x="40" y="46" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#c62828" text-anchor="start" font-weight="bold">PART 1: STEPPER MOTOR AND DRV8825 DRIVER ON ITS CARRIER BOARD</text>
+<text x="40" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#444" text-anchor="start" font-weight="normal">Test setup for step 3. The Nucleo runs from the laptop USB; the 12 V adapter goes straight to the carrier board, never into the breadboard.</text>
+<g transform="translate(0,340)">
 <rect x="40" y="130" width="300" height="720" rx="10" fill="#f6f6f3" stroke="#9e9e9e" stroke-width="2"/>
 <line x1="40" y1="270" x2="340" y2="270" stroke="#bdbdbd" stroke-width="2" stroke-dasharray="6 5"/>
 <rect x="165" y="116" width="50" height="26" rx="3" fill="#b0b0b0" stroke="#757575"/>
@@ -1209,63 +1210,6 @@
 <text x="1774" y="317" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#222" text-anchor="start" font-weight="bold">GND</text>
 <text x="1774" y="605" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#222" text-anchor="start" font-weight="bold">GND</text>
 <text x="1774" y="625" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#b8860b" text-anchor="start" font-weight="bold">3.3 V</text>
-<rect x="569" y="344" width="22" height="102" rx="4" fill="#ffcdd2" fill-opacity="0.55" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4 3"/>
-<rect x="568" y="424" width="164" height="64" rx="3" fill="#4a1f7a" stroke="#2e1250" stroke-width="2"/>
-<circle cx="580" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="580" cy="476" r="3.5" fill="#d4af37"/>
-<text x="580" y="451" font-family="Arial, Helvetica, sans-serif" font-size="6.3" fill="#fff" text-anchor="middle" font-weight="bold">VMOT</text>
-<text x="580" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">EN</text>
-<circle cx="600" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="600" cy="476" r="3.5" fill="#d4af37"/>
-<text x="600" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
-<text x="600" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M0</text>
-<circle cx="620" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="620" cy="476" r="3.5" fill="#d4af37"/>
-<text x="620" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">B2</text>
-<text x="620" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M1</text>
-<circle cx="640" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="640" cy="476" r="3.5" fill="#d4af37"/>
-<text x="640" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">B1</text>
-<text x="640" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">M2</text>
-<circle cx="660" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="660" cy="476" r="3.5" fill="#d4af37"/>
-<text x="660" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">A1</text>
-<text x="660" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">RST</text>
-<circle cx="680" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="680" cy="476" r="3.5" fill="#d4af37"/>
-<text x="680" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">A2</text>
-<text x="680" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">SLP</text>
-<circle cx="700" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="700" cy="476" r="3.5" fill="#d4af37"/>
-<text x="700" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">FLT</text>
-<text x="700" y="469" font-family="Arial, Helvetica, sans-serif" font-size="6.3" fill="#fff" text-anchor="middle" font-weight="bold">STEP</text>
-<circle cx="720" cy="436" r="3.5" fill="#d4af37"/>
-<circle cx="720" cy="476" r="3.5" fill="#d4af37"/>
-<text x="720" y="451" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
-<text x="720" y="469" font-family="Arial, Helvetica, sans-serif" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">DIR</text>
-<text x="742" y="456" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#4a1f7a" text-anchor="start" font-weight="bold">DRV8825 driver</text>
-<text x="742" y="472" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6a4a8a" text-anchor="start" font-weight="normal">chip side up, VMOT and EN in column 5</text>
-<line x1="580" y1="556" x2="580" y2="620" stroke="#9e9e9e" stroke-width="2.5"/>
-<rect x="573" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>
-<rect x="573" y="573" width="14" height="3.5" fill="#8d4e2b"/>
-<rect x="573" y="580" width="14" height="3.5" fill="#111"/>
-<rect x="573" y="587" width="14" height="3.5" fill="#ef6c00"/>
-<rect x="573" y="597" width="14" height="3.5" fill="#c9a227"/>
-<circle cx="580" cy="556" r="3.5" fill="#757575"/>
-<circle cx="580" cy="620" r="3.5" fill="#757575"/>
-<text x="591" y="588" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6d5a2a" text-anchor="start" font-weight="bold">10 kΩ</text>
-<line x1="582" y1="248" x2="580" y2="356" stroke="#9e9e9e" stroke-width="2.5"/>
-<line x1="566" y1="248" x2="560" y2="312" stroke="#9e9e9e" stroke-width="2.5"/>
-<rect x="560" y="206" width="28" height="44" rx="6" fill="#1f2f74"/>
-<rect x="560" y="206" width="9" height="44" rx="3" fill="#9fb0e8"/>
-<line x1="562" y1="216" x2="567" y2="216" stroke="#1f2f74" stroke-width="2"/>
-<line x1="562" y1="228" x2="567" y2="228" stroke="#1f2f74" stroke-width="2"/>
-<line x1="562" y1="240" x2="567" y2="240" stroke="#1f2f74" stroke-width="2"/>
-<ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>
-<circle cx="580" cy="356" r="3.5" fill="#757575"/>
-<circle cx="560" cy="312" r="3.5" fill="#757575"/>
-<text x="466" y="222" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1f2f74" text-anchor="end" font-weight="bold">470 µF capacitor</text>
-<text x="466" y="237" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#1f2f74" text-anchor="end" font-weight="normal">long leg (+): column 5 →</text>
 <rect x="352" y="128" width="100" height="50" rx="8" fill="#263238"/>
 <text x="402" y="151" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">12 V 2 A</text>
 <text x="402" y="167" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#cfd8dc" text-anchor="middle" font-weight="normal">adapter</text>
@@ -1282,18 +1226,80 @@
 <text x="534" y="138" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">−</text>
 <text x="564" y="138" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">+</text>
 <text x="527" y="116" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#1565c0" text-anchor="middle" font-weight="bold">DC jack</text>
-<rect x="606" y="92" width="130" height="120" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>
-<circle cx="622" cy="108" r="5" fill="#757575"/>
-<circle cx="720" cy="108" r="5" fill="#757575"/>
-<circle cx="622" cy="196" r="5" fill="#757575"/>
-<circle cx="720" cy="196" r="5" fill="#757575"/>
-<circle cx="671" cy="152" r="26" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>
-<circle cx="671" cy="152" r="7" fill="#e0e0e0" stroke="#757575"/>
-<rect x="610" y="212" width="80" height="18" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>
-<text x="750" y="118" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">NEMA 17 stepper motor</text>
-<text x="750" y="136" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="start" font-weight="normal">17HS4401, 12 V</text>
-<text x="750" y="152" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">cable colours vary by brand:</text>
-<text x="750" y="166" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">find the two coil pairs first</text>
+<rect x="470" y="-120" width="240" height="142" rx="6" fill="#d32f2f" stroke="#8e1b18" stroke-width="2"/>
+<text x="478" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#fff" text-anchor="start" font-weight="bold">Keyes 4988 carrier</text>
+<rect x="480" y="-94" width="50" height="56" rx="3" fill="#ef5350" stroke="#b71c1c"/>
+<text x="484" y="-85" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="start" font-weight="bold">ON</text>
+<rect x="488" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="489" y="-66" width="8" height="12" fill="#37474f"/>
+<text x="493" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">1</text>
+<rect x="504" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="505" y="-66" width="8" height="12" fill="#37474f"/>
+<text x="509" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">2</text>
+<rect x="520" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>
+<rect x="521" y="-79" width="8" height="12" fill="#37474f"/>
+<text x="525" y="-42" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">3</text>
+<text x="505" y="-26" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">1 OFF 2 OFF 3 ON</text>
+<rect x="540" y="-98" width="100" height="84" rx="2" fill="#4a1f7a" stroke="#2e1250" stroke-width="1.5"/>
+<rect x="575" y="-66" width="30" height="30" rx="2" fill="#1a1a1a"/>
+<circle cx="556" cy="-82" r="7" fill="#cfd8dc" stroke="#90a4ae"/>
+<line x1="551" y1="-82" x2="561" y2="-82" stroke="#607d8b" stroke-width="2"/>
+<text x="556" y="-66" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Vref</text>
+<text x="590" y="-22" font-family="Arial, Helvetica, sans-serif" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">DRV8825</text>
+<rect x="652" y="-96" width="26" height="50" rx="5" fill="#212121"/>
+<rect x="652" y="-96" width="8" height="50" rx="3" fill="#9e9e9e"/>
+<text x="665" y="-34" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">100 µF</text>
+<rect x="588" y="-118" width="84" height="16" rx="2" fill="#f5f5f5" stroke="#bdbdbd"/>
+<rect x="597" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="600" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">2B</text>
+<rect x="617" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="620" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">2A</text>
+<rect x="637" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="640" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">1A</text>
+<rect x="657" y="-132" width="6" height="14" fill="#d4af37"/>
+<text x="660" y="-106" font-family="Arial, Helvetica, sans-serif" font-size="6.5" fill="#555" text-anchor="middle" font-weight="bold">1B</text>
+<rect x="590" y="8" width="60" height="14" rx="1" fill="#1a1a1a"/>
+<rect x="652" y="8" width="58" height="14" rx="1" fill="#1a1a1a"/>
+<rect x="597" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="600" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Vin</text>
+<rect x="617" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="620" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">GND</text>
+<rect x="637" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="640" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">5V</text>
+<rect x="657" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="660" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">E</text>
+<rect x="677" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="680" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">D</text>
+<rect x="697" y="22" width="6" height="12" fill="#d4af37"/>
+<text x="700" y="3" font-family="Arial, Helvetica, sans-serif" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">S</text>
+<text x="458" y="-92" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c62828" text-anchor="end" font-weight="bold">DRV8825 on its carrier board</text>
+<text x="458" y="-74" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">Keyes 4988 PCB, off the breadboard</text>
+<text x="458" y="-58" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">plug the DRV8825 in by its labels:</text>
+<text x="458" y="-44" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">EN on EN, VMOT on VMOT</text>
+<text x="458" y="-26" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">switches: 1 OFF, 2 OFF, 3 ON (1/16 step)</text>
+<text x="458" y="-10" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="end" font-weight="normal">Vref 0.50 V on the DRV8825 (1 A)</text>
+<text x="716" y="30" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#555" text-anchor="start" font-weight="normal">match every pin by the name printed next to it</text>
+<rect x="800" y="-236" width="124" height="116" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>
+<circle cx="814" cy="-222" r="5" fill="#757575"/>
+<circle cx="910" cy="-222" r="5" fill="#757575"/>
+<circle cx="814" cy="-134" r="5" fill="#757575"/>
+<circle cx="910" cy="-134" r="5" fill="#757575"/>
+<circle cx="862" cy="-178" r="26" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>
+<circle cx="862" cy="-178" r="7" fill="#e0e0e0" stroke="#757575"/>
+<rect x="784" y="-216" width="16" height="76" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>
+<text x="940" y="-200" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">NEMA 17 stepper motor</text>
+<text x="940" y="-182" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#555" text-anchor="start" font-weight="normal">17HS4401, 12 V</text>
+<text x="940" y="-164" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">coil A: black and green on 1A and 1B</text>
+<text x="940" y="-148" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">coil B: red and blue on 2A and 2B</text>
+<text x="940" y="-132" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#555" text-anchor="start" font-weight="normal">find the pairs first: about 1.5 to 2 Ω</text>
+<path d="M600,-132 L600,-188 C600,-194 604,-196 610,-196 L784,-196" fill="none" stroke="#0d47a1" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M600,-132 L600,-188 C600,-194 604,-196 610,-196 L784,-196" fill="none" stroke="#1e88e5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,-132 L620,-172 C620,-178 624,-180 630,-180 L784,-180" fill="none" stroke="#8e1b18" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,-132 L620,-172 C620,-178 624,-180 630,-180 L784,-180" fill="none" stroke="#e53935" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,-132 L640,-156 C640,-162 644,-164 650,-164 L784,-164" fill="none" stroke="#000000" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,-132 L640,-156 C640,-162 644,-164 650,-164 L784,-164" fill="none" stroke="#333333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,-132 L660,-140 C660,-146 664,-148 670,-148 L784,-148" fill="none" stroke="#1b5e20" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,-132 L660,-140 C660,-146 664,-148 670,-148 L784,-148" fill="none" stroke="#43a047" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M500,312 L500,600" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M500,312 L500,600" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="500" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
@@ -1301,41 +1307,36 @@
 <path d="M534,186 C534,250 540,262 540,290 L540,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M534,186 C534,250 540,262 540,290 L540,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="540" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,416 560,416 L580,416" fill="none" stroke="#8e1b18" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,416 560,416 L580,416" fill="none" stroke="#e53935" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="580" cy="416" r="4.6" fill="#8e1b18" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M600,356 L600,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M600,356 L600,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="600" cy="356" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="600" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M620,230 L620,416" fill="none" stroke="#0d47a1" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M620,230 L620,416" fill="none" stroke="#1e88e5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="620" cy="416" r="4.6" fill="#0d47a1" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="616" y="222" width="8" height="8" fill="#0d47a1"/>
-<path d="M640,230 L640,396" fill="none" stroke="#8e1b18" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M640,230 L640,396" fill="none" stroke="#e53935" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="640" cy="396" r="4.6" fill="#8e1b18" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="636" y="222" width="8" height="8" fill="#8e1b18"/>
-<path d="M660,230 L660,376" fill="none" stroke="#000000" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M660,230 L660,376" fill="none" stroke="#333333" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="660" cy="376" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="656" y="222" width="8" height="8" fill="#000000"/>
-<path d="M680,230 L680,356" fill="none" stroke="#1b5e20" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M680,230 L680,356" fill="none" stroke="#43a047" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="680" cy="356" r="4.6" fill="#1b5e20" stroke="#ffffff" stroke-width="1.2"/>
-<rect x="676" y="222" width="8" height="8" fill="#1b5e20"/>
+<path d="M564,186 L564,196 C564,202 568,204 574,204 L590,204 C596,204 600,200 600,194 L600,34" fill="none" stroke="#8e1b18" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M564,186 L564,196 C564,202 568,204 574,204 L590,204 C596,204 600,200 600,194 L600,34" fill="none" stroke="#e53935" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,34 L620,312" fill="none" stroke="#000000" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M620,34 L620,312" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="620" cy="312" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M640,34 L640,476" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M640,34 L640,476" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="640" cy="476" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M660,34 L660,476" fill="none" stroke="#37474f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M660,34 L660,476" fill="none" stroke="#78909c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="660" cy="476" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M680,34 L680,476" fill="none" stroke="#4e342e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M680,34 L680,476" fill="none" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="680" cy="476" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
+<path d="M700,34 L700,476" fill="none" stroke="#5f5f5f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M700,34 L700,476" fill="none" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="700" cy="476" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
 <path d="M640,556 L640,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M640,556 L640,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="640" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="640" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M660,556 L660,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M660,556 L660,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="660" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="660" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M680,556 L680,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M680,556 L680,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="680" cy="556" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="680" cy="620" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
+<line x1="660" y1="556" x2="660" y2="620" stroke="#9e9e9e" stroke-width="2.5"/>
+<rect x="653" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>
+<rect x="653" y="573" width="14" height="3.5" fill="#8d4e2b"/>
+<rect x="653" y="580" width="14" height="3.5" fill="#111"/>
+<rect x="653" y="587" width="14" height="3.5" fill="#ef6c00"/>
+<rect x="653" y="597" width="14" height="3.5" fill="#c9a227"/>
+<circle cx="660" cy="556" r="3.5" fill="#757575"/>
+<circle cx="660" cy="620" r="3.5" fill="#757575"/>
+<text x="671" y="588" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#6d5a2a" text-anchor="start" font-weight="bold">10 kΩ</text>
 <path d="M100,342 C40,342 22,380 22,440 L22,866 C22,886 40,892 64,892 L430,892 C456,892 464,876 464,850 L464,654 C464,644 470,640 480,640 L510,640 C516,640 520,634 520,620" fill="none" stroke="#a68a00" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M100,342 C40,342 22,380 22,440 L22,866 C22,886 40,892 64,892 L430,892 C456,892 464,876 464,850 L464,654 C464,644 470,640 480,640 L510,640 C516,640 520,634 520,620" fill="none" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="100" cy="342" r="4.6" fill="#a68a00" stroke="#ffffff" stroke-width="1.2"/>
@@ -1344,18 +1345,18 @@
 <path d="M264,488 C380,488 470,600 540,600" fill="none" stroke="#333333" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="264" cy="488" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="540" cy="600" r="4.6" fill="#000000" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M280,530 C400,530 470,536 580,536" fill="none" stroke="#37474f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M280,530 C400,530 470,536 580,536" fill="none" stroke="#78909c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M280,530 C400,530 470,536 660,536" fill="none" stroke="#37474f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M280,530 C400,530 470,536 660,536" fill="none" stroke="#78909c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="280" cy="530" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="580" cy="536" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="660" cy="536" r="4.6" fill="#37474f" stroke="#ffffff" stroke-width="1.2"/>
 <path d="M280,474 C430,474 560,516 700,516" fill="none" stroke="#5f5f5f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M280,474 C430,474 560,516 700,516" fill="none" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="280" cy="474" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="700" cy="516" r="4.6" fill="#5f5f5f" stroke="#ffffff" stroke-width="1.2"/>
-<path d="M280,460 C430,460 540,496 720,496" fill="none" stroke="#4e342e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M280,460 C430,460 540,496 720,496" fill="none" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M280,460 C430,460 540,496 680,496" fill="none" stroke="#4e342e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M280,460 C430,460 540,496 680,496" fill="none" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="280" cy="460" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
-<circle cx="720" cy="496" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
+<circle cx="680" cy="496" r="4.6" fill="#4e342e" stroke="#ffffff" stroke-width="1.2"/>
 <circle cx="280" cy="460" r="7" fill="none" stroke="#4e342e" stroke-width="2"/>
 <text x="252" y="464" font-family="Arial, Helvetica, sans-serif" font-size="10" fill="#4e342e" text-anchor="end" font-weight="bold">D7 · PF13 (pin 2)</text>
 <circle cx="280" cy="474" r="7" fill="none" stroke="#5f5f5f" stroke-width="2"/>
@@ -1383,35 +1384,36 @@
 <text x="660" y="740" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">WIRE COLOURS</text>
 <line x1="662" y1="760" x2="700" y2="760" stroke="#8e1b18" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="760" x2="700" y2="760" stroke="#e53935" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="764" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">12 V: DC jack + to column 5 only</text>
+<text x="712" y="764" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">12 V: DC jack + to the carrier Vin only</text>
 <line x1="662" y1="782" x2="700" y2="782" stroke="#000000" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="782" x2="700" y2="782" stroke="#333333" stroke-width="4.5" stroke-linecap="round"/>
 <text x="712" y="786" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">GND</text>
 <line x1="662" y1="804" x2="700" y2="804" stroke="#a68a00" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="804" x2="700" y2="804" stroke="#fdd835" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="808" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3.3 V</text>
+<text x="712" y="808" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3.3 V, also into the carrier 5V pin</text>
 <line x1="662" y1="826" x2="700" y2="826" stroke="#5f5f5f" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="826" x2="700" y2="826" stroke="#a8a8a8" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="830" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">STEP: Nucleo D6 · PE9</text>
+<text x="712" y="830" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">STEP: carrier S, Nucleo D6 · PE9</text>
 <line x1="662" y1="848" x2="700" y2="848" stroke="#4e342e" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="848" x2="700" y2="848" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="852" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">DIR: Nucleo D7 · PF13</text>
+<text x="712" y="852" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">DIR: carrier D, Nucleo D7 · PF13</text>
 <line x1="662" y1="870" x2="700" y2="870" stroke="#37474f" stroke-width="7" stroke-linecap="round"/>
 <line x1="662" y1="870" x2="700" y2="870" stroke="#78909c" stroke-width="4.5" stroke-linecap="round"/>
-<text x="712" y="874" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">EN: Nucleo D2 · PF15</text>
+<text x="712" y="874" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">EN: carrier E, Nucleo D2 · PF15</text>
 <text x="1060" y="740" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">DRIVER SETTINGS</text>
-<text x="1060" y="764" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">M2 to 3.3 V, M0 and M1 open: 1/16 step (3200 per turn)</text>
-<text x="1060" y="784" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">SLP and RST to 3.3 V: driver awake</text>
+<text x="1060" y="764" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Switches 1 OFF, 2 OFF, 3 ON: 1/16 step, 3200 per turn</text>
+<text x="1060" y="784" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Carrier 5V pin on 3.3 V: it only feeds the switches</text>
 <text x="1060" y="804" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">10 kΩ on EN: motor off until PF15 goes low</text>
-<text x="1060" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Current: about 0.5 V on the potentiometer = 1 A</text>
-<text x="1060" y="844" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">FLT and the GND above DIR: no wire needed</text>
+<text x="1060" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Current: 0.50 V on the potentiometer = 1 A</text>
+<text x="1060" y="844" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">RST and SLP: held high by the carrier (check 2)</text>
 <text x="1060" y="864" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">Motor: black + green = coil A, red + blue = coil B</text>
 <text x="1460" y="740" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#c62828" text-anchor="start" font-weight="bold">SAFETY</text>
 <text x="1460" y="764" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">1. Wire with the adapter and USB unplugged.</text>
-<text x="1460" y="784" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">2. 12 V only in column 5 (red frame), never</text>
-<text x="1460" y="804" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">   on a rail: top + rail is 5 V.</text>
+<text x="1460" y="784" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">2. 12 V goes from the jack to the carrier only,</text>
+<text x="1460" y="804" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">   never into the breadboard or a rail.</text>
 <text x="1460" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">3. Never plug or unplug the motor with 12 V on.</text>
 <text x="1460" y="844" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">4. Power on: USB, then adapter. Off: adapter first.</text>
 <text x="1460" y="864" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#222" text-anchor="start" font-weight="normal">5. Check every Nucleo pin label before plugging.</text>
-<text x="40" y="944" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#9e9e9e" text-anchor="start" font-weight="normal">Kibbly hardware · circuit 1 of the circuits by part · wires V1 to V19 in hardware/04_wiring_list.md section 6B, rails R2 to R4 in section 4B</text>
+</g>
+<text x="40" y="1284" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#9e9e9e" text-anchor="start" font-weight="normal">Kibbly hardware · circuit 1 of the circuits by part · wires V1 to V23 in hardware/04_wiring_list.md section 6B, rails R2 to R4 in section 4B</text>
 </svg>

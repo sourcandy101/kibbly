@@ -6,7 +6,7 @@ Wiring pictures of the feeder, one part at a time, then the full circuit. Each p
 
 | # | Part | Folder | Picture | Wire table | Status |
 |---|---|---|---|---|---|
-| 1 | Stepper motor and DRV8825 driver | [01_stepper_motor_drv8825/](01_stepper_motor_drv8825/README.md) | [svg](01_stepper_motor_drv8825/01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) | Done |
+| 1 | Stepper motor and DRV8825 driver (on its carrier board) | [01_stepper_motor_drv8825/](01_stepper_motor_drv8825/README.md) | [svg](01_stepper_motor_drv8825/01_stepper_motor_drv8825.svg) | [Section 6B](../04_wiring_list.md#6b-drv8825-driver-and-stepper-motor-demo-driver) | Done |
 | 2 | Load cell and HX711 | [02_load_cell_hx711/](02_load_cell_hx711/README.md) | [svg](02_load_cell_hx711/02_load_cell_hx711.svg) | [Section 7](../04_wiring_list.md#7-load-cell-and-hx711) | Done |
 | 3 | Ultrasonic sensor (HC-SR04) | [03_ultrasonic_hc_sr04/](03_ultrasonic_hc_sr04/README.md) | [svg](03_ultrasonic_hc_sr04/03_ultrasonic_hc_sr04.svg) | [Section 8](../04_wiring_list.md#8-ultrasonic-sensor) | Done |
 | 4 | Sound: MAX98357A amplifier and speaker | [04_sound_max98357a/](04_sound_max98357a/README.md) | [svg](04_sound_max98357a/04_sound_max98357a.svg) | [Section 11](../04_wiring_list.md#11-max98357a-and-speaker) | Done |
@@ -33,7 +33,7 @@ Checked on the team's board (10 November 2026): 830 points, 63 columns, and the 
 | Top + | **5 V** (amplifier, HC-SR04, ESP32-CAM, microSD module), from the XL4015 (circuit 7); before circuit 7, from the Nucleo 5V pin (wire R1) |
 | Top − and bottom − | GND (joined by wire R4 in column 1) |
 | Bottom + | **3.3 V** (HX711, clock, tank sensor, driver logic) |
-| 12 V | **On no rail**: only column 5, top half (the driver VMOT column). Mark it with red tape |
+| 12 V | **Not on the breadboard at all**: the DC jack feeds the motor driver carrier and the XL4015 directly |
 
 Each rail hole takes one wire. The rail column of every wire is listed in [04_wiring_list.md, section 13](../04_wiring_list.md#13-totals-per-rail), so two circuits never need the same hole.
 
@@ -42,14 +42,14 @@ Each rail hole takes one wire. The rail column of every wire is listed in [04_wi
 | Columns | Top half | Bottom half |
 |---|---|---|
 | 1 to 3 | Power entries: R1 (before circuit 7) or P6, R2 to R4, DC jack GND | Power entries |
-| 5 to 12 | 1: driver power and motor (12 V in column 5); 7: XL4015 5 V entry on the top rails at columns 12 and 13 | 1: driver control |
+| 5 to 12 | Free, under the motor driver carrier that sits above the board; 1: carrier GND on the top − rail at column 7; 7: XL4015 5 V entry on the top rails at columns 12 and 13 | 1: carrier control wires meet the Nucleo wires in columns 8 to 11 |
 | 15 to 21 | 4: sound amplifier | 2: HX711 (columns 15 to 18) |
 | 24 to 27 | 3: HC-SR04 wires | 3: voltage divider (column 26) |
 | 29 to 34 | 5: ESP32-CAM link (its 5 V, GND and capacitor on the top rails, columns 36 to 38) | 8: I2C bus: clock (DS3231) in row a, column 31 = SCL, column 32 = SDA; the tank sensor joins these columns |
 | 36 to 41 | Free (the top rails at columns 36 to 39 hold the ESP32-CAM 5 V, GND and capacitor) | Free (spare) |
 | 42 to 49 | 9: microSD in columns 42 to 47; its board covers the top rail holes of columns 40 to 49 | 10: button and LED (44 to 49) |
 
-Parts that must face outside (HC-SR04, ESP32-CAM camera, tank sensor, speaker, load cell, motor) sit off the board and reach their zone with jumper wires.
+Parts that must face outside (HC-SR04, ESP32-CAM camera, tank sensor, speaker, load cell, motor), and the motor driver on its carrier board, sit off the board and reach their zone with jumper wires.
 
 Rail wires shared by every circuit (R1 to R4) are in [04_wiring_list.md, section 4B](../04_wiring_list.md#4b-breadboard-rails-and-power-entries).
 

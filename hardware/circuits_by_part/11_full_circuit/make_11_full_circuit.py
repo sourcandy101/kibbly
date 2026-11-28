@@ -8,7 +8,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "shared"))
-from common import (BLACK, BLUE, BLUEGREY, BROWN, CN7, CN8, CN10, DARKPURPLE, GREEN, GREY, LIGHTGREEN,  # noqa: E402
+from common import (BLACK, BLUE, BLUEGREY, BROWN, CARRIER_MOTOR, CARRIER_PINS, CN7, CN8, CN10, DARKPURPLE,  # noqa: E402
+                    GREEN, GREY, LIGHTGREEN,
                     LIGHTPURPLE, ORANGE, PINK, PURPLE, RED, ROW, WHITE, YELLOW, Drawing, X)
 
 DY = 440  # the whole drawing is shifted down to leave room above the board
@@ -53,13 +54,11 @@ def ntag(pin, text, colour, ty, side="left"):
 
 
 # ---------------------------------------------------------------- circuit 7: power entry (12 V and the XL4015)
-d.twelve_volt_column()
-d.driver_capacitor(labels=False)
 d.dc_jack()
 t(490, 134, "DC jack", 9, "#fff", "middle", "bold")
 d.wire(f"M534,186 C534,250 {X(3)},262 {X(3)},290 L{X(3)},{ROW['top-']}", BLACK, [(X(3), ROW['top-'])])
-d.wire(f"M564,186 C564,198 548,198 548,212 L548,404 C548,412 552,{ROW['g']} {X(4)},{ROW['g']} L{X(5)},{ROW['g']}",
-       RED, [(X(5), ROW['g'])])
+vx, vy = CARRIER_PINS["Vin"]  # V1: 12 V straight from the jack to the carrier, never into the breadboard
+d.wire(f"M564,186 L564,196 C564,202 568,204 574,204 L{vx - 10},204 C{vx - 4},204 {vx},200 {vx},194 L{vx},{vy}", RED, [])
 # XL4015 standing above the adapter: IN at the bottom, OUT at the top
 a('<rect x="380" y="-190" width="80" height="160" rx="5" fill="#1e3a8a" stroke="#0f1f4d" stroke-width="2"/>')
 a('<circle cx="420" cy="-128" r="22" fill="#b87333" stroke="#8d5524" stroke-width="3"/>')
@@ -84,33 +83,27 @@ d.ground_link(1)
 d.three_volt_feed(2)
 d.ground_feed(3)
 
-# ---------------------------------------------------------------- circuit 1: DRV8825 and motor
-a(f'<rect x="{X(5) - 12}" y="424" width="{X(12) - X(5) + 24}" height="64" rx="3" fill="#4a1f7a" stroke="#2e1250" stroke-width="2"/>')
-for k, (tp, bt) in enumerate(zip(["VMOT", "GND", "B2", "B1", "A1", "A2", "FLT", "GND"],
-                                 ["EN", "M0", "M1", "M2", "RST", "SLP", "STEP", "DIR"])):
-    x = X(5 + k)
-    a(f'<circle cx="{x}" cy="436" r="3.5" fill="#d4af37"/>')
-    a(f'<circle cx="{x}" cy="476" r="3.5" fill="#d4af37"/>')
-    t(x, 451, tp, 6.3 if len(tp) > 3 else 7.5, "#fff", "middle", "bold")
-    t(x, 469, bt, 6.3 if len(bt) > 3 else 7.5, "#fff", "middle", "bold")
-a(f'<line x1="{X(5)}" y1="{ROW["a"]}" x2="{X(5)}" y2="{ROW["bot+"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-a(f'<rect x="{X(5) - 7}" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>')
-for y, c in ((573, "#8d4e2b"), (580, "#111"), (587, "#ef6c00"), (597, "#c9a227")):
-    a(f'<rect x="{X(5) - 7}" y="{y}" width="14" height="3.5" fill="{c}"/>')
-d.wire(f"M{X(6)},{ROW['j']} L{X(6)},{ROW['top-']}", BLACK, [(X(6), ROW['j']), (X(6), ROW['top-'])])
-for c in (8, 9, 10):
-    d.wire(f"M{X(c)},{ROW['a']} L{X(c)},{ROW['bot+']}", YELLOW, [(X(c), ROW['a']), (X(c), ROW['bot+'])])
-# motor above columns 6 to 11, cable straight down into columns 7 to 10
-a('<rect x="580" y="-110" width="120" height="112" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>')
-for cx, cy in ((594, -96), (686, -96), (594, -12), (686, -12)):
+# ---------------------------------------------------------------- circuit 1: DRV8825 on its carrier, and motor
+d.carrier()
+gx, gy = CARRIER_PINS["GND"]
+d.wire(f"M{gx},{gy} L{gx},{ROW['top-']}", BLACK, [(gx, ROW['top-'])])
+for name, col, colour in (("5V", 8, YELLOW), ("E", 9, BLUEGREY), ("D", 10, BROWN), ("S", 11, GREY)):
+    x, y = CARRIER_PINS[name]
+    d.wire(f"M{x},{y} L{X(col)},{ROW['e']}", colour, [(X(col), ROW['e'])])
+d.wire(f"M{X(8)},{ROW['a']} L{X(8)},{ROW['bot+']}", YELLOW, [(X(8), ROW['a']), (X(8), ROW['bot+'])])
+d.pull_up_10k(9)
+# motor above the carrier, its cable straight down into the carrier motor connector
+a('<rect x="570" y="-358" width="120" height="96" rx="10" fill="#bdbdbd" stroke="#8a8a8a" stroke-width="2"/>')
+for cx, cy in ((584, -344), (676, -344), (584, -276), (676, -276)):
     a(f'<circle cx="{cx}" cy="{cy}" r="5" fill="#757575"/>')
-a('<circle cx="640" cy="-54" r="24" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>')
-a('<circle cx="640" cy="-54" r="7" fill="#e0e0e0" stroke="#757575"/>')
-a('<rect x="604" y="4" width="92" height="18" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>')
-t(580, -118, "NEMA 17 motor", 13, "#c62828", weight="bold")
-for c, r, col in ((7, "g", BLUE), (8, "h", RED), (9, "i", BLACK), (10, "j", GREEN)):
-    d.wire(f"M{X(c)},22 L{X(c)},{ROW[r]}", col, [(X(c), ROW[r])], width=3.5)
-    a(f'<rect x="{X(c) - 4}" y="14" width="8" height="8" fill="{col[1]}"/>')
+a('<circle cx="630" cy="-310" r="22" fill="#9e9e9e" stroke="#757575" stroke-width="2"/>')
+a('<circle cx="630" cy="-310" r="7" fill="#e0e0e0" stroke="#757575"/>')
+a('<rect x="588" y="-262" width="84" height="14" rx="2" fill="#f5f5f5" stroke="#9e9e9e"/>')
+t(560, -318, "NEMA 17 motor", 13, "#c62828", "end", "bold")
+t(560, -302, "DRV8825 on its carrier below", 11, "#555", "end")
+for name, colour in (("2B", BLUE), ("2A", RED), ("1A", BLACK), ("1B", GREEN)):
+    x, y = CARRIER_MOTOR[name]
+    d.wire(f"M{x},-248 L{x},{y}", colour, [], width=3.5)
 
 # ---------------------------------------------------------------- circuit 2: HX711 and load cell
 x1, x2 = X(15) - 12, X(18) + 12
@@ -313,9 +306,9 @@ d.wire(f"M{bx + 10},{by - 30} L{bx + 10},{ROW['bot-'] + 30} C{bx + 10},{ROW['bot
 
 # ---------------------------------------------------------------- wires to the Nucleo, drawn as tags
 TAGS = [  # (column, row, side, pin text, colour, Nucleo pin position, Nucleo tag text, table text)
-    (5, "b", "left", "PF15", BLUEGREY, CN10(12), "PF15 EN", "PF15 · D2 · CN10 pin 12: driver EN, column 5 b"),
+    (9, "b", "left", "PF15", BLUEGREY, CN10(12), "PF15 EN", "PF15 · D2 · CN10 pin 12: driver EN, column 9 b"),
     (11, "c", "left", "PE9", GREY, CN10(4), "PE9 STEP", "PE9 · D6 · CN10 pin 4: driver STEP, column 11 c"),
-    (12, "d", "left", "PF13", BROWN, CN10(2), "PF13 DIR", "PF13 · D7 · CN10 pin 2: driver DIR, column 12 d"),
+    (10, "d", "left", "PF13", BROWN, CN10(2), "PF13 DIR", "PF13 · D7 · CN10 pin 2: driver DIR, column 10 d"),
     (16, "d", "left", "PF14", BROWN, CN10(8), "PF14 DAT", "PF14 · D4 · CN10 pin 8: HX711 DAT, column 16 d"),
     (17, "c", "left", "PE13", GREY, CN10(10), "PE13 HX CLK", "PE13 · D3 · CN10 pin 10: HX711 CLK, column 17 c"),
     (15, "g", "left", "PA4", LIGHTPURPLE, CN7(17), "PA4 LRC", "PA4 · D24 · CN7 pin 17: amplifier LRC, column 15 g"),
@@ -369,8 +362,8 @@ d.lines(60, 1222, ["1. A dot with a white ring is a wire end in that hole.",
                    "3. Parts outside the board join it with female to male wires.",
                    "4. Every part has its own picture with all its wires drawn",
                    "in full: circuits 1 to 10 in circuits_by_part.",
-                   "5. Rails: top + 5 V, bottom + 3.3 V, both − GND; 12 V only",
-                   "in column 5 (red frame) and on the XL4015 input."], 21)
+                   "5. Rails: top + 5 V, bottom + 3.3 V, both − GND. 12 V only",
+                   "from the jack to the carrier Vin and the XL4015 IN+."], 21)
 t(560, 1198, "BUILD ORDER", 14, "#c62828", weight="bold")
 d.lines(560, 1222, ["1. Rails R2, R3, R4. No R1: the XL4015 feeds the 5 V.",
                     "2. Power (circuit 7): set the XL4015 to 5.0 V first.",

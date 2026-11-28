@@ -131,7 +131,7 @@ flowchart LR
 | Feeder to cloud | ESP32 and Firebase | WiFi, HTTPS | |
 | Recognition | ESP32 and AI server | WiFi, HTTP: JPEG photo in, dog id and confidence out | Answer within about 1 s |
 | Boards | STM32 and ESP32-CAM | UART, 3.3 V, text lines ending with a newline | 115200 baud, 8N1 |
-| Motor driver settings | DRV8825 | Microsteps set by wires (M2 to 3.3 V, M0 and M1 open); current set with the potentiometer | 1/16 step, about 1 A |
+| Motor driver settings | DRV8825 on its carrier board | Microsteps set by the carrier switches (1 OFF, 2 OFF, 3 ON); current set with the potentiometer | 1/16 step, about 1 A |
 | Motor movement | STM32 and DRV8825 | STEP pulses from a timer, DIR and EN levels | 1/16 microsteps, 3200 steps per auger turn |
 | Scale | STM32 and HX711 | 2 wire serial (clock and data) | 10 readings per second, gain 128 |
 | Presence | STM32 and HC-SR04 | TRIG pulse of 10 us, ECHO pulse (through the divider) timed by TIM4 | One reading every 100 ms; distance in cm = pulse in us ÷ 58 |
@@ -203,7 +203,7 @@ The DevKit is a tool, not a part of the feeder: it is plugged in only to load pr
 ```mermaid
 flowchart TB
     AD["12 V wall adapter<br/>2 A, 3 A better"]
-    BUS12["12 V<br/>breadboard column 5 only"]
+    BUS12["12 V<br/>jack to the carrier, never on the breadboard"]
     BK["XL4015 buck converter<br/>set to 5.0 V"]
     BUS5["5 V<br/>top + rail"]
     LDO["Nucleo 3.3 V regulator<br/>500 mA max"]
@@ -238,12 +238,12 @@ Rules:
 
 1. **All grounds are connected together**: adapter, buck, Nucleo, ESP32-CAM, driver, amplifier. Without a common ground, UART and sensors give wrong values.
 2. **Set the buck to 5.0 V with the multimeter before connecting anything** to it. A new XL4015 can come set to any voltage.
-3. A 470 uF capacitor sits at the driver 12 V input (column 5), and another on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
+3. The motor driver carrier has its own 100 uF capacitor on the 12 V input. A 470 uF capacitor sits on the 5 V rail next to the ESP32-CAM wires, so WiFi peaks do not restart it.
 4. The motor driver needs its 12 V before the motor moves, and the motor wires are **never** plugged or unplugged while the driver is powered (this destroys the driver).
 5. During tests the Nucleo runs from the laptop USB (power jumper JP3 on U5V). When the feeder runs alone, wire P6 joins the top + rail to E5V and JP3 goes to E5V (see the Nucleo user manual UM1974); the USB is then plugged in only after the adapter. Before circuit 7 the Nucleo 5V pin fed the top + rail for the tests (wire R1); from circuit 7 on the XL4015 feeds it and R1 is out for good, so two 5 V sources never meet.
 6. Most DS3231 boards (ZS-042) have a charging circuit meant for a rechargeable LIR2032 cell. At our 3.3 V it cannot charge a normal CR2032, so the board is used as it is; remove its 200 ohm charging resistor (marked 201) only if it ever runs on 5 V.
-7. **On the breadboard** the top + rail is 5 V, the bottom + rail is 3.3 V and both − rails are GND. 12 V is on no rail: only in column 5, the driver VMOT column. Column map in [circuits_by_part](circuits_by_part/README.md#board-and-column-map).
-8. **Two wires in each jack screw**: the driver (column 5) and the XL4015 get separate 12 V wires, and the XL4015 output has its own GND wire to the rails, so no breadboard contact carries much more than 1 A. Wiring: [circuit 7](circuits_by_part/07_power/README.md).
+7. **On the breadboard** the top + rail is 5 V, the bottom + rail is 3.3 V and both − rails are GND. 12 V is not on the breadboard at all: it goes from the DC jack straight to the motor driver carrier and the XL4015. Column map in [circuits_by_part](circuits_by_part/README.md#board-and-column-map).
+8. **Two wires in each jack screw**: the motor driver carrier and the XL4015 get separate 12 V wires, and the XL4015 output has its own GND wire to the rails, so no breadboard contact carries much more than 1 A. Wiring: [circuit 7](circuits_by_part/07_power/README.md).
 9. **Set the XL4015 to 5.0 V with a multimeter before its output touches the board**: a new one can give up to 12 V.
 
 ## 6. Pin plan
@@ -297,17 +297,19 @@ Built in parts kept for debugging: LD1 green (PB0), LD2 blue (PB7), LD3 red (PB1
 
 The OV2640 camera is on the board. Its microSD slot stays empty, because a card would share IO14 and IO15 with the link. The ESP32-CAM has no USB port, so programs are loaded through the ESP32 DevKit V1 (see [Loading programs and reading logs](#loading-programs-and-reading-logs)). Wiring: [circuit 5](circuits_by_part/05_esp32_cam_link/README.md).
 
-### DRV8825 module
+### DRV8825 module on its carrier board
 
-| Driver pin | Connects to |
+The DRV8825 plugs into a carrier board (Keyes 4988 PCB, changed on 28 November 2026). The carrier pins are wired, not the driver pins.
+
+| Carrier pin or part | Connects to |
 |---|---|
-| VMOT | 12 V (breadboard column 5), with a 470 uF capacitor |
-| GND (both pins) | Common ground |
-| STEP, DIR, EN | STM32 PE9, PF13, PF15; EN also through 10 kohm to 3.3 V |
-| M0, M1 | Not connected (pulled low inside the driver) |
-| M2, RST, SLP | 3.3 V: 1/16 step, driver running and awake |
-| FLT | Not connected |
-| A1, A2, B1, B2 | Motor coils (find the two pairs first) |
+| Vin (marked 9V) | 12 V straight from the DC jack, with the carrier's own 100 uF capacitor |
+| GND | Common ground (top − rail) |
+| S, D, E | STM32 PE9 (STEP), PF13 (DIR), PF15 (EN); EN also through 10 kohm to 3.3 V unless the carrier pulls it down |
+| 5V | 3.3 V from the Nucleo: it only feeds the micro step switches and the carrier pull ups |
+| Micro step switches | 1 OFF, 2 OFF, 3 ON: 1/16 step (M0 and M1 low, M2 high) |
+| RST, SLP | Held high by the carrier (checked before the first power on) |
+| 1A, 1B, 2A, 2B | Motor coils: 1A and 1B one coil, 2A and 2B the other (find the pairs first) |
 
 Current limit: the motor current is 2 x Vref; set Vref to about 0.5 V for 1 A. Wiring: [circuit 1](circuits_by_part/01_stepper_motor_drv8825/README.md).
 

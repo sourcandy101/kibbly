@@ -35,6 +35,11 @@ ROW = {"top+": 292, "top-": 312, "j": 356, "i": 376, "h": 396, "g": 416, "f": 43
        "e": 476, "d": 496, "c": 516, "b": 536, "a": 556, "bot-": 600, "bot+": 620}
 
 
+# DRV8825 on its carrier board, above columns 1 to 11 (circuits 1 and 11): pin tips, each pin right above
+# the column its wire goes to (5V to column 8, E to 9, D to 10, S to 11; GND to the top − rail, column 7)
+CARRIER_PINS = {"Vin": (600, 34), "GND": (620, 34), "5V": (640, 34), "E": (660, 34), "D": (680, 34), "S": (700, 34)}
+CARRIER_MOTOR = {"2B": (600, -132), "2A": (620, -132), "1A": (640, -132), "1B": (660, -132)}
+
 # ESP32-CAM pin rows as seen from the camera side, left to right
 ESP_BOTTOM = ["IO4", "IO2", "IO14", "IO15", "IO13", "IO12", "GND", "5V"]
 ESP_TOP = ["GND", "U0T", "U0R", "VCC", "GND", "IO0", "IO16", "3V3"]
@@ -272,26 +277,55 @@ class Drawing:
         t(534, 138, "−", 12, "#fff", "middle", "bold")
         t(564, 138, "+", 12, "#fff", "middle", "bold")
 
-    def driver_capacitor(self, labels=True):
-        """470 uF capacitor of the driver: long leg (+) in column 5 row j (12 V), short leg in the top − rail, column 4."""
+    def carrier(self):
+        """The DRV8825 plugged into its carrier board (Keyes 4988 PCB), off the breadboard above columns 1 to 11
+        (x 470 to 710, y -120 to 22): circuits 1 and 11 draw it at the same place. The bottom pins
+        (CARRIER_PINS) point down to the breadboard; the motor connector (CARRIER_MOTOR) points up."""
         a, t = self.add, self.text
-        a(f'<line x1="582" y1="248" x2="{X(5)}" y2="{ROW["j"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-        a(f'<line x1="566" y1="248" x2="{X(4)}" y2="{ROW["top-"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
-        a('<rect x="560" y="206" width="28" height="44" rx="6" fill="#1f2f74"/>')
-        a('<rect x="560" y="206" width="9" height="44" rx="3" fill="#9fb0e8"/>')
-        for y in (216, 228, 240):
-            a(f'<line x1="562" y1="{y}" x2="567" y2="{y}" stroke="#1f2f74" stroke-width="2"/>')
-        a('<ellipse cx="574" cy="207" rx="14" ry="4" fill="#3a4c9a"/>')
-        for x, y in ((X(5), ROW["j"]), (X(4), ROW["top-"])):
-            a(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#757575"/>')
-        if labels:
-            t(466, 222, "470 µF capacitor", 12, "#1f2f74", "end", "bold")
-            t(466, 237, "long leg (+): column 5 →", 10, "#1f2f74", "end")
+        a('<rect x="470" y="-120" width="240" height="142" rx="6" fill="#d32f2f" stroke="#8e1b18" stroke-width="2"/>')
+        t(478, -106, "Keyes 4988 carrier", 8.5, "#fff", weight="bold")
+        # micro step switches, set 1 OFF, 2 OFF, 3 ON (1/16 step with a DRV8825)
+        a('<rect x="480" y="-94" width="50" height="56" rx="3" fill="#ef5350" stroke="#b71c1c"/>')
+        t(484, -85, "ON", 7, "#fff", weight="bold")
+        for k, on in enumerate((False, False, True)):
+            x = 488 + k * 16
+            a(f'<rect x="{x}" y="-80" width="10" height="28" rx="1" fill="#ffffff"/>')
+            a(f'<rect x="{x + 1}" y="{-79 if on else -66}" width="8" height="12" fill="#37474f"/>')
+            t(x + 5, -42, str(k + 1), 7, "#fff", "middle", "bold")
+        t(505, -26, "1 OFF 2 OFF 3 ON", 7, "#fff", "middle", "bold")
+        # DRV8825 module, chip side up, with its current potentiometer
+        a('<rect x="540" y="-98" width="100" height="84" rx="2" fill="#4a1f7a" stroke="#2e1250" stroke-width="1.5"/>')
+        a('<rect x="575" y="-66" width="30" height="30" rx="2" fill="#1a1a1a"/>')
+        a('<circle cx="556" cy="-82" r="7" fill="#cfd8dc" stroke="#90a4ae"/>')
+        a('<line x1="551" y1="-82" x2="561" y2="-82" stroke="#607d8b" stroke-width="2"/>')
+        t(556, -66, "Vref", 7, "#fff", "middle", "bold")
+        t(590, -22, "DRV8825", 9, "#fff", "middle", "bold")
+        # 100 uF capacitor soldered on the carrier, across the motor supply
+        a('<rect x="652" y="-96" width="26" height="50" rx="5" fill="#212121"/>')
+        a('<rect x="652" y="-96" width="8" height="50" rx="3" fill="#9e9e9e"/>')
+        t(665, -34, "100 µF", 7, "#fff", "middle", "bold")
+        # motor connector on the top edge
+        a('<rect x="588" y="-118" width="84" height="16" rx="2" fill="#f5f5f5" stroke="#bdbdbd"/>')
+        for name, (x, y) in CARRIER_MOTOR.items():
+            a(f'<rect x="{x - 3}" y="{y}" width="6" height="14" fill="#d4af37"/>')
+            t(x, -106, name, 6.5, "#555", "middle", "bold")
+        # bottom headers: power (Vin is the 9V pin) and control (S, D, E)
+        a('<rect x="590" y="8" width="60" height="14" rx="1" fill="#1a1a1a"/>')
+        a('<rect x="652" y="8" width="58" height="14" rx="1" fill="#1a1a1a"/>')
+        for name, (x, y) in CARRIER_PINS.items():
+            a(f'<rect x="{x - 3}" y="22" width="6" height="12" fill="#d4af37"/>')
+            t(x, 3, name, 7, "#fff", "middle", "bold")
 
-    def twelve_volt_column(self):
-        """Red frame around column 5, top half: the only place with 12 V."""
-        self.add(f'<rect x="{X(5) - 11}" y="{ROW["j"] - 12}" width="22" height="{ROW["f"] - ROW["j"] + 22}" rx="4" '
-                 f'fill="#ffcdd2" fill-opacity="0.55" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4 3"/>')
+    def pull_up_10k(self, col):
+        """10 kohm resistor standing from row a of a column to the bottom + rail (3.3 V)."""
+        a, x = self.add, X(col)
+        a(f'<line x1="{x}" y1="{ROW["a"]}" x2="{x}" y2="{ROW["bot+"]}" stroke="#9e9e9e" stroke-width="2.5"/>')
+        a(f'<rect x="{x - 7}" y="566" width="14" height="38" rx="6" fill="#e8d5a3" stroke="#b39b62"/>')
+        for y, c in ((573, "#8d4e2b"), (580, "#111"), (587, "#ef6c00"), (597, "#c9a227")):
+            a(f'<rect x="{x - 7}" y="{y}" width="14" height="3.5" fill="{c}"/>')
+        for y in (ROW["a"], ROW["bot+"]):
+            a(f'<circle cx="{x}" cy="{y}" r="3.5" fill="#757575"/>')
+        self.text(x + 11, 588, "10 kΩ", 10, "#6d5a2a", "start", "bold")
 
     def notes_box(self, x, y, w, h):
         self.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="#fafafa" stroke="#dddddd"/>')

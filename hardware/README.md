@@ -75,7 +75,7 @@ We build the hardware in 7 steps, in order. Each step has its own file or folder
 | 1 | List of hardware | [01_hardware_list.md](01_hardware_list.md) | Done on 24 November 2026, except the speaker (still to buy) |
 | 2 | System architecture | [02_system_architecture.md](02_system_architecture.md) | Updated to the real parts on 10 November 2026 (decisions to confirm) |
 | 3 | Wiring and testing each component alone | [03_component_tests/](03_component_tests/) | Not started |
-| 4 | Wiring list for every component, with circuit pictures part by part | [04_wiring_list.md](04_wiring_list.md), [circuits_by_part/](circuits_by_part/README.md) | Written and updated to the real parts; all 11 circuit pictures done, full circuit in circuits_by_part/11_full_circuit |
+| 4 | Wiring list for every component, with circuit pictures part by part | [04_wiring_list.md](04_wiring_list.md), [circuits_by_part/](circuits_by_part/README.md) | Written and updated to the real parts; all 11 circuit pictures done, full circuit in circuits_by_part/11_full_circuit. Circuits 1, 7 and 11 redrawn on 28 November 2026 for the DRV8825 carrier board |
 | 5 | Code for the ESP32 and the STM32 | [`firmware/`](../firmware/) | Not started |
 | 6 | Wiring and testing 2 or more components together | `06_integration/` | Not started |
 | 7 | Final system | `07_final_system.md` | Not started |
