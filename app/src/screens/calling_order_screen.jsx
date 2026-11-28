@@ -1,11 +1,14 @@
 import { useState } from "react";
 import DogAvatar from "../components/dog_avatar.jsx";
+import { dogColors } from "../components/dog_figure.jsx";
+import Icon from "../components/icons.jsx";
 import { saveCallOrder } from "../data/store.js";
 import { pathTo } from "../logic/routes.js";
 
 export default function CallingOrderScreen({ data, refresh }) {
   const [announcement, setAnnouncement] = useState("");
   const dogs = data.dogs;
+  const colors = dogColors(dogs);
 
   const move = async (index, offset) => {
     const reordered = [...dogs];
@@ -21,7 +24,7 @@ export default function CallingOrderScreen({ data, refresh }) {
       <header className="page_header">
         <h1>Calling order</h1>
       </header>
-      <p className="lead">At each meal time, Kibbly calls your dogs in this order. A shy dog can go first.</p>
+      <p className="lead">At each meal, Kibbly calls your dogs one by one in this order. Put a shy dog first.</p>
 
       {dogs.length === 0 ? (
         <div className="card empty">
@@ -35,8 +38,11 @@ export default function CallingOrderScreen({ data, refresh }) {
           {dogs.map((dog, index) => (
             <li key={dog.dog_id} className="card order_row">
               <span className="order_rank">{index + 1}</span>
-              <DogAvatar name={dog.name} />
-              <strong className="order_name">{dog.name}</strong>
+              <DogAvatar color={colors[dog.dog_id]} mood={index === 0 ? "excited" : "happy"} />
+              <div className="order_name">
+                <strong>{dog.name}</strong>
+                {index === 0 && <span className="call_bubble">“{dog.name}!”</span>}
+              </div>
               <div className="order_buttons">
                 <button
                   type="button"
@@ -45,7 +51,7 @@ export default function CallingOrderScreen({ data, refresh }) {
                   onClick={() => move(index, -1)}
                   aria-label={`Move ${dog.name} up`}
                 >
-                  ↑
+                  <Icon name="up" />
                 </button>
                 <button
                   type="button"
@@ -54,7 +60,7 @@ export default function CallingOrderScreen({ data, refresh }) {
                   onClick={() => move(index, 1)}
                   aria-label={`Move ${dog.name} down`}
                 >
-                  ↓
+                  <Icon name="down" />
                 </button>
               </div>
             </li>

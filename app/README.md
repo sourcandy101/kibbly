@@ -2,7 +2,22 @@
 
 Owner web app: dog profiles, meal schedule, calling order, and later notifications and the meal diary. Built with React and Vite as a PWA, so it runs in any phone browser and can be installed.
 
-Owner: Moetaz El Ouaer.
+Owner: Zaineb Sassi since 28 November 2026 (first version by Moetaz El Ouaer).
+
+## Design
+
+The app uses the look of the pitch deck, so the product and the pitch read as one brand.
+
+| Token | Value | Use |
+|---|---|---|
+| Blush `#FFE7F0`, cream `#FFF9FB` | page and cards | surfaces |
+| Plum `#2E1433`, soft plum `#5E3D63` | text | ink |
+| Press pink `#CC2D6E` | main buttons, with a `#9E1F53` press shadow | white text passes contrast here (5:1); the deck's bubblegum `#FF5C9A` does not (2.9:1), so bubblegum is for decoration only |
+| Mint, butter, rose, lilac tints | badges and chips | done, warning, problem, quiet |
+| Fraunces (soft) | headings, numbers, wordmark | bundled with `@fontsource-variable`, so it works without internet |
+| Nunito Sans | everything else | bundled the same way |
+
+Each dog is drawn as the deck character in its own color (`src/components/dog_figure.jsx`). The color comes from the dog id, so it is the same on every phone, and two dogs of one home never share a color. The face shows how the day went: happy, eating, or sad after a skipped or failed meal. The app is light only, like the deck.
 
 ## Status
 

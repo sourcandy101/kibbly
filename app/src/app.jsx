@@ -65,7 +65,7 @@ export default function App() {
 
   return (
     <div className="shell">
-      <p className="preview_banner">Preview mode: your data stays in this browser.</p>
+      <p className="preview_banner">Preview: your data stays in this browser</p>
       <main className="page">{screen}</main>
       <BottomNav current={route.name} />
     </div>
